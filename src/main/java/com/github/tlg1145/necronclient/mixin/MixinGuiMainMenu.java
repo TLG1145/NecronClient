@@ -1,4 +1,4 @@
-package com.example.mixin;
+package com.github.tlg1145.necronclient.mixin;
 
 import net.minecraft.client.gui.GuiMainMenu;
 import org.spongepowered.asm.mixin.Mixin;
