@@ -52,6 +52,7 @@ public class ChatCommands {
                     case "喵7":
                         Utils.modMessage("M7? owo");
                         Utils.chatMessage("/joindungeon MASTER_CATACOMBS 7");
+                        break;
                     case "help":
                         Utils.chatMessage("/pc 命令列表 -> meow, sb, ysj, lobby, tips, 喵7, help");
                         break;
