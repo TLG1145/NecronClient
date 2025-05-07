@@ -1,6 +1,8 @@
 package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
+import cn.boop.necron.module.ChatCommands;
+import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -39,11 +41,19 @@ public class ClientCommands extends CommandBase {
                 case "version":
                     modMessage("当前版本 " + Necron.VERSION);
                     break;
+                case "tips":
+                    modMessage(Utils.randomSelect(ChatCommands.tipList));
+                    break;
+                case "rotation":
+                    modMessage("Rotation{Yaw: " + RotationUtils.yaw() + ", Pitch: " + RotationUtils.pitch() + "}");
+                    break;
+                case "test":
+                    break;
                 default:
                     modMessage("未知参数");
             }
         } else {
-            modMessage("ClassNotFound\nParty > [MVP+] MixinNecron: !version");
+            modMessage("ClassNotFound");
         }
     }
 }

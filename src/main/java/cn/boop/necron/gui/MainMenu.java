@@ -1,5 +1,6 @@
 package cn.boop.necron.gui;
 
+import cn.boop.necron.config.ModConfig;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -26,7 +27,8 @@ public final class MainMenu extends GuiScreen {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(MOD_ICON);
         int xPos = (this.width - 256) / 2;
-        int yPos = (int)(this.height * 0.03);
+        //int yPos = (int)(this.height * 0.03);
+        int yPos = (int)((this.height / 2 ) - 125);
         drawModalRectWithCustomSizedTexture(
                 xPos, yPos,
                 0, 0,
