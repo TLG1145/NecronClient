@@ -7,9 +7,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+
 public class ClientButton extends GuiButton {
     private float hoverAlpha = 0f;
-    private static final int CORNER_RADIUS = 5;
+    private static final int CORNER_RADIUS = 6;
     private static final float HOVER_IN_SPEED = 0.4f;
     private static final float HOVER_OUT_SPEED = 0.15f;
 
@@ -38,8 +40,8 @@ public class ClientButton extends GuiButton {
 
         // 绘制背景
         RenderUtils.drawRoundedRect(xPosition, yPosition,
-            xPosition + width, yPosition + height, CORNER_RADIUS, 0x60111111);
-
+            xPosition + width, yPosition + height, CORNER_RADIUS, new Color(0x80111111, true).getRGB());
+        //0x60111111
         // 绘制白色遮罩
         if (isHovered && hoverAlpha > 0.01f) {
             int alpha = (int)(hoverAlpha * 0.6f * 255);

@@ -2,7 +2,9 @@ package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.ChatCommands;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.RotationUtils;
+import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -47,7 +49,14 @@ public class ClientCommands extends CommandBase {
                 case "rotation":
                     modMessage("Rotation{Yaw: " + RotationUtils.yaw() + ", Pitch: " + RotationUtils.pitch() + "}");
                     break;
-                case "test":
+                case "stats":
+                    //modMessage("Player Stats:\n§7 | inSkyBlock: " + Utils.inSkyBlock + "\n§7 | inDungeon: " + Utils.inDungeon + "\n§7 | Island: " + LocationUtils.getIsland());
+                    break;
+                case "test_title":
+                    //modMessage("Title: " + ScoreboardUtils.getScoreboardTitle() + ", Length: " + ScoreboardUtils.getScoreboardTitle().length());
+                    System.out.println(ScoreboardUtils.getScoreboardTitle());
+                    break;
+                case "test_":
                     break;
                 default:
                     modMessage("未知参数");

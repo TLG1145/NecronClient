@@ -14,10 +14,16 @@ public final class MainMenu extends GuiScreen {
             new ResourceLocation("necron", "gui/bg1.png");
     private static final ResourceLocation MOD_ICON =
             new ResourceLocation("necron", "gui/icon.png");
+    private float mouseXOffset, mouseYOffset;
+    private static final float MAX_OFFSET = 0.02f;
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // 绘制背景纹理
+        float centerX = this.width / 2.0f;
+        float centerY = this.height / 2.0f;
+        mouseXOffset = (mouseX - centerX) / centerX * MAX_OFFSET;
+        mouseYOffset = (mouseY - centerY) / centerY * MAX_OFFSET;
+
         this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         drawBackgroundQuad();
 
@@ -27,7 +33,6 @@ public final class MainMenu extends GuiScreen {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(MOD_ICON);
         int xPos = (this.width - 256) / 2;
-        //int yPos = (int)(this.height * 0.03);
         int yPos = (int)((this.height / 2 ) - 125);
         drawModalRectWithCustomSizedTexture(
                 xPos, yPos,
@@ -87,10 +92,16 @@ public final class MainMenu extends GuiScreen {
         Tessellator tess = Tessellator.getInstance();
         WorldRenderer worldrenderer = tess.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos(0, this.height, 0.0D).tex(0, 1).endVertex();
-        worldrenderer.pos(this.width, this.height, 0.0D).tex(1, 1).endVertex();
-        worldrenderer.pos(this.width, 0, 0.0D).tex(1, 0).endVertex();
-        worldrenderer.pos(0, 0, 0.0D).tex(0, 0).endVertex();
+
+        float uMin = 0.0f + mouseXOffset;
+        float uMax = 1.0f + mouseXOffset;
+        float vMin = 1.0f + mouseYOffset;
+        float vMax = 0.0f + mouseYOffset;
+
+        worldrenderer.pos(0, this.height, 0.0D).tex(uMin, vMin).endVertex();
+        worldrenderer.pos(this.width, this.height, 0.0D).tex(uMax, vMin).endVertex();
+        worldrenderer.pos(this.width, 0, 0.0D).tex(uMax, vMax).endVertex();
+        worldrenderer.pos(0, 0, 0.0D).tex(uMin, vMax).endVertex();
         tess.draw();
     }
 }
