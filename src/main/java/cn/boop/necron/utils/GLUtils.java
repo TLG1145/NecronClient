@@ -38,27 +38,26 @@ public class GLUtils {
         GLUtils.setGLCap(cap, false);
     }
 
-    public static void revertAllCaps() {
-        for (Integer cap : glCapMap.keySet()) {
-            GLUtils.revertGLCap(cap);
-        }
-    }
-
     public static void backupAndSetupRender() {
         depthTestEnabled = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         lightingEnabled = GL11.glGetBoolean(GL11.GL_LIGHTING);
 
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        //System.out.println("Depth Test Enabled (After Disable): " + GL11.glIsEnabled(GL11.GL_DEPTH_TEST));
-
         if (lightingEnabled) GlStateManager.disableLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GL11.glEnable(GL11.GL_BLEND);
+        //GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
     }
 
     public static void restorePreviousRenderState() {
         if (depthTestEnabled) GL11.glEnable(GL11.GL_DEPTH_TEST);
+        else GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+        GL11.glDisable(GL11.GL_BLEND);
         if (lightingEnabled) GlStateManager.enableLighting();
-        GlStateManager.disableBlend();
+
+        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
     }
 }

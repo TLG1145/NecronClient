@@ -29,7 +29,7 @@ public final class HurtCam {
     @SubscribeEvent
     public void onRenderScreen(RenderGameOverlayEvent.Post event) {
         if (event.type == RenderGameOverlayEvent.ElementType.ALL) {
-            if (HurtCam.isHurt()) {
+            if (HurtCam.isHurt() && ModConfig.hurtCam && Minecraft.getMinecraft().currentScreen == null) {
                 ScaledResolution sc = new ScaledResolution(Minecraft.getMinecraft());
                 RenderUtils.drawBorderedRect(
                         0.0f,
