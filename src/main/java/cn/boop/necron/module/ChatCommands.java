@@ -12,34 +12,34 @@ import java.util.regex.Pattern;
 
 public class ChatCommands {
     public static final Pattern ChatRegex = Pattern.compile("Party > \\s*(?:\\[\\w+\\+?]\\s*)?\\w{1,16}:\\s*!(.+)");
-    //public static final List<String> tipList = new java.util.ArrayList<>(JsonLoader.loadTips());
-    public static final List<String> tipList = new java.util.ArrayList<>();
+    public static final List<String> tipList = new java.util.ArrayList<>(JsonLoader.loadTips());
+    //public static final List<String> tipList = new java.util.ArrayList<>();
     public static String tips = "";
 
-    public ChatCommands() {
-        tipList.add("Why not try MelodySky");
-        tipList.add("Try to join SkyBlock");
-        tipList.add("Wither Impact (-150 Mana)");
-        tipList.add("天空方块得了MVP");
-        tipList.add("魔↗术↘技↑巧↓");
-        tipList.add("这是什么？点一下");
-        tipList.add("A player has been removed from your server!");
-        tipList.add("跟我的憨豆说去吧");
-        tipList.add("wtf 爱抚比");
-        tipList.add("Divan钻头是把Diamond necron head围一圈divan fragment合成的");
-        tipList.add("M7? owo");
-        tipList.add("You cannot invite that player since they're monkey.");
-        tipList.add("通过不什·戈门曲线很容易推断出人工饲养的Terminator，他是可以捕获野生的Necron's Handle");
-        tipList.add("不管说Bacte的切面是否具有Chimera，jerry的n次方是否有Iron Punch都不影响Hyperion的掉落率");
-        tipList.add("事态发展到这样，一切责任都在Necron。奉劝Necron认清现实，赶紧给我出个handle");
-        tipList.add("嘟嘟哒嘟嘟哒");
-        tipList.add("Auto SkyBlock ✖   otto SkyBlock ✔");
-        tipList.add("♿♿♿");
-        tipList.add("i have juju cata 24 no dupe arch");
-        tipList.add("♬ 爱的民 能不能放过我这一次 ♬");
-        tipList.add("wiperararat getbanned");
-        tipList.add("我将使用蘑菇牛桶出击Backwater Bayou");
-    }
+//    public ChatCommands() {
+//        tipList.add("Why not try MelodySky");
+//        tipList.add("Try to join SkyBlock");
+//        tipList.add("Wither Impact (-150 Mana)");
+//        tipList.add("天空方块得了MVP");
+//        tipList.add("魔↗术↘技↑巧↓");
+//        tipList.add("这是什么？擦除一下");
+//        tipList.add("A player has been removed from your server!");
+//        tipList.add("跟我的憨豆说去吧");
+//        tipList.add("wtf 爱抚比");
+//        tipList.add("Divan钻头是把Diamond necron head围一圈divan fragment合成的");
+//        tipList.add("M7? owo");
+//        tipList.add("You cannot invite that player since they're monkey.");
+//        tipList.add("通过不什·戈门曲线很容易推断出人工饲养的Terminator，他是可以捕获野生的Necron's Handle");
+//        tipList.add("不管说Bacte的切面是否具有Chimera，jerry的n次方是否有Iron Punch都不影响Hyperion的掉落率");
+//        tipList.add("事态发展到这样，一切责任都在Necron。奉劝Necron认清现实，赶紧给我出个handle");
+//        tipList.add("我梦见一片焦土");
+//        tipList.add("Auto SkyBlock ✖   otto SkyBlock ✔");
+//        tipList.add("♿♿♿");
+//        tipList.add("i have juju cata 24 no dupe arch");
+//        tipList.add("♬ 爱的民 能不能放过我这一次 ♬");
+//        tipList.add("wiperararat getbanned");
+//        tipList.add("我将使用蘑菇牛桶出击Backwater Bayou");
+//    }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -48,7 +48,7 @@ public class ChatCommands {
             String cleanMessage = Utils.removeFormatting(rawMessage);
             Matcher matcher = ChatRegex.matcher(cleanMessage);
                 if (matcher.matches()) {
-                String command = matcher.group(1);  // 直接获取正则分组捕获的命令
+                String command = matcher.group(1);
                 switch (command.toLowerCase()) {
                     case "meow":
                         Utils.chatMessage("/pc 喵❤");
@@ -56,8 +56,8 @@ public class ChatCommands {
                     case "sb":
                         Utils.chatMessage("/pc ntmsb?");
                         break;
-                    case "ysj":
-                        Utils.chatMessage("/pc 余胜军使用jvav实现自动化skyblock");
+                    case "stats":
+                        Utils.chatMessage("/pc {inSkyBlock: " + PlayerStats.inSkyBlock + ", inDungeon: " + PlayerStats.inDungeon + "}");
                         break;
                     case "lobby":
                         if (matcher.group(0).contains("MixinNecron")) Utils.chatMessage("/lobby");
@@ -71,8 +71,15 @@ public class ChatCommands {
                         Utils.modMessage("M7? owo");
                         Utils.chatMessage("/joindungeon MASTER_CATACOMBS 7");
                         break;
+                    case "loc":
+                        String msg;
+                        if (PlayerStats.inDungeon) msg = "/pc 当前位置: CATACOMBS_" + PlayerStats.floor;
+                        else if (PlayerStats.inSkyBlock) msg = "/pc 当前位置: " + PlayerStats.getCurrentIslandName();
+                        else msg = "/pc 未知位置";
+                        Utils.chatMessage(msg);
+                        break;
                     case "help":
-                        Utils.chatMessage("/pc 命令列表 -> meow, sb, ysj, lobby, tips, 喵7, help");
+                        Utils.chatMessage("/pc 命令列表 -> meow, sb, ysj, lobby, tips, 喵7, loc, help");
                         break;
                     default:
                         break;

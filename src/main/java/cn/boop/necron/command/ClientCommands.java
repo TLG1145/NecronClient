@@ -2,7 +2,7 @@ package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.ChatCommands;
-import cn.boop.necron.utils.LocationUtils;
+import cn.boop.necron.module.PlayerStats;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
@@ -38,7 +38,6 @@ public class ClientCommands extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length > 0) {
-            //modMessage("");
             switch (args[0]) {
                 case "version":
                     modMessage("当前版本 " + Necron.VERSION);
@@ -50,10 +49,9 @@ public class ClientCommands extends CommandBase {
                     modMessage("Rotation{Yaw: " + RotationUtils.yaw() + ", Pitch: " + RotationUtils.pitch() + "}");
                     break;
                 case "stats":
-                    //modMessage("Player Stats:\n§7 | inSkyBlock: " + Utils.inSkyBlock + "\n§7 | inDungeon: " + Utils.inDungeon + "\n§7 | Island: " + LocationUtils.getIsland());
+                    modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock + "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon + "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() + "\n§7§l | §r§7Floor: " + PlayerStats.floor);
                     break;
                 case "test_title":
-                    //modMessage("Title: " + ScoreboardUtils.getScoreboardTitle() + ", Length: " + ScoreboardUtils.getScoreboardTitle().length());
                     System.out.println(ScoreboardUtils.getScoreboardTitle());
                     break;
                 case "test_":
