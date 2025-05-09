@@ -42,22 +42,19 @@ public class GLUtils {
         depthTestEnabled = GL11.glGetBoolean(GL11.GL_DEPTH_TEST);
         lightingEnabled = GL11.glGetBoolean(GL11.GL_LIGHTING);
 
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        if (lightingEnabled) GlStateManager.disableLighting();
-        GL11.glEnable(GL11.GL_BLEND);
-        //GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
+        GlStateManager.depthMask(false);
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
     }
 
     public static void restorePreviousRenderState() {
-        if (depthTestEnabled) GL11.glEnable(GL11.GL_DEPTH_TEST);
-        else GL11.glDisable(GL11.GL_DEPTH_TEST);
-
-        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.depthMask(true);
+        if (depthTestEnabled) GlStateManager.enableDepth();
+        else GlStateManager.disableDepth();
         if (lightingEnabled) GlStateManager.enableLighting();
+         else GlStateManager.disableLighting();
 
-        GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1f);
+        GlStateManager.disableBlend();
     }
 }

@@ -5,11 +5,8 @@ import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.event.MouseAimHandler;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.util.Random;
 
 public class AutoClicker {
     private static double nextLeftClick = .0;
