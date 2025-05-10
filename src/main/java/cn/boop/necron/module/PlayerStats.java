@@ -33,7 +33,10 @@ public class PlayerStats {
         DUNGEON_HUB("Dungeon Hub"),
         CRYSTAL_HOLLOWS("Crystal Hollows"),
         JERRYS_WORKSHOP("Jerry's Workshop"),
-        BACKWATER_BAYOU("Backwater Bayou");
+        BACKWATER_BAYOU("Backwater Bayou"),
+        MINESHAFT("Mineshaft"),
+        THE_RIFT("The Rift");
+        //⏣ <- Zone prefix
 
         private final String tabName;
 
@@ -77,7 +80,7 @@ public class PlayerStats {
         return map;
     }
 
-        private int ticks = 0;
+    private int ticks = 0;
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         if (event.world.isRemote) {

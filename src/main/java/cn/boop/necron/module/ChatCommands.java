@@ -13,33 +13,7 @@ import java.util.regex.Pattern;
 public class ChatCommands {
     public static final Pattern ChatRegex = Pattern.compile("Party > \\s*(?:\\[\\w+\\+?]\\s*)?\\w{1,16}:\\s*!(.+)");
     public static final List<String> tipList = new java.util.ArrayList<>(JsonLoader.loadTips());
-    //public static final List<String> tipList = new java.util.ArrayList<>();
     public static String tips = "";
-
-//    public ChatCommands() {
-//        tipList.add("Why not try MelodySky");
-//        tipList.add("Try to join SkyBlock");
-//        tipList.add("Wither Impact (-150 Mana)");
-//        tipList.add("天空方块得了MVP");
-//        tipList.add("魔↗术↘技↑巧↓");
-//        tipList.add("这是什么？擦除一下");
-//        tipList.add("A player has been removed from your server!");
-//        tipList.add("跟我的憨豆说去吧");
-//        tipList.add("wtf 爱抚比");
-//        tipList.add("Divan钻头是把Diamond necron head围一圈divan fragment合成的");
-//        tipList.add("M7? owo");
-//        tipList.add("You cannot invite that player since they're monkey.");
-//        tipList.add("通过不什·戈门曲线很容易推断出人工饲养的Terminator，他是可以捕获野生的Necron's Handle");
-//        tipList.add("不管说Bacte的切面是否具有Chimera，jerry的n次方是否有Iron Punch都不影响Hyperion的掉落率");
-//        tipList.add("事态发展到这样，一切责任都在Necron。奉劝Necron认清现实，赶紧给我出个handle");
-//        tipList.add("我梦见一片焦土");
-//        tipList.add("Auto SkyBlock ✖   otto SkyBlock ✔");
-//        tipList.add("♿♿♿");
-//        tipList.add("i have juju cata 24 no dupe arch");
-//        tipList.add("♬ 爱的民 能不能放过我这一次 ♬");
-//        tipList.add("wiperararat getbanned");
-//        tipList.add("我将使用蘑菇牛桶出击Backwater Bayou");
-//    }
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {

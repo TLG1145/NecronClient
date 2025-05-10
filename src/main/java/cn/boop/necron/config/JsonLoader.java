@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class JsonLoader {
     public static List<String> loadTips() {
         try (InputStream is = ChatCommands.class.getResourceAsStream("/tips.json")) {
             if (is == null) throw new IOException("tips.json not found");
-            JsonObject json = GSON.fromJson(new InputStreamReader(is), JsonObject.class);
+            JsonObject json = GSON.fromJson(new InputStreamReader(is, StandardCharsets.UTF_8), JsonObject.class);
             return GSON.fromJson(json.get("tips"), new TypeToken<List<String>>(){}.getType());
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,9 +28,9 @@ public class JsonLoader {
 
     private static List<String> getDefaultTips() {
         return Arrays.asList(
-            "Default (JSON error)",
-            "(JE) Try to join SkyBlock",
-            "(JE) Wither Impact (-150 Mana)"
+            "(Default) JSON file error",
+            "(Default) Try to join SkyBlock",
+            "(Default) Wither Impact (-150 Mana)"
         );
     }
 }
