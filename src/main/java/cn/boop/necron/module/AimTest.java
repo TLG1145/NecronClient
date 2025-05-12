@@ -18,7 +18,6 @@ public class AimTest {
         boolean autoClickerEnabled = ModConfig.autoClicker;
 
         if (isLeftMouseDown && autoClickerEnabled) {
-            // 每帧执行瞄准逻辑
             RotationUtils.aimAtNearestEntity(6, 0.5F);
         }
     }

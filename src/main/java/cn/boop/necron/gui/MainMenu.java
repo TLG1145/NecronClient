@@ -40,7 +40,7 @@ public final class MainMenu extends GuiScreen {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(MOD_ICON);
         int xPos = (this.width - 64) / 2;
-        int yPos = (this.height / 2 ) - 90;
+        int yPos = (this.height / 2 ) - 76;
         GlStateManager.scale(0.5f, 0.5f, 1.0f);
         drawModalRectWithCustomSizedTexture(
                 xPos * 2, yPos * 2,
@@ -59,11 +59,11 @@ public final class MainMenu extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.buttonList.add(new ClientButton(0, this.width / 2 - 90, this.height / 2 - 14, 180, 18, "Singleplayer"));
-        this.buttonList.add(new ClientButton(1, this.width / 2 - 90, this.height / 2 + 8, 180, 18, "Multiplayer"));
-        this.buttonList.add(new ClientButton(2, this.width / 2 - 90, this.height / 2 + 30, 180, 18, "Mods"));
-        this.buttonList.add(new ClientButton(3, this.width / 2 - 90, this.height / 2 + 52, 88, 18, "Options"));
-        this.buttonList.add(new ClientButton(4, this.width / 2 + 2, this.height / 2 + 52, 88, 18, "Quit"));
+        this.buttonList.add(new ClientButton(0, this.width / 2 - 90, this.height / 2 + 1, 180, 18, "Singleplayer"));
+        this.buttonList.add(new ClientButton(1, this.width / 2 - 90, this.height / 2 + 23, 180, 18, "Multiplayer"));
+        this.buttonList.add(new ClientButton(2, this.width / 2 - 90, this.height / 2 + 45, 180, 18, "Mods"));
+        this.buttonList.add(new ClientButton(3, this.width / 2 - 90, this.height / 2 + 67, 88, 18, "Options"));
+        this.buttonList.add(new ClientButton(4, this.width / 2 + 2, this.height / 2 + 67, 88, 18, "Quit"));
         super.initGui();
     }
 
@@ -119,15 +119,12 @@ public final class MainMenu extends GuiScreen {
     }
 
     private void drawBackgroundRect() {
-        int rectWidth = 190;   // 矩形宽度
-        int rectHeight = 180;  // 矩形高度
-        int centerY = height / 2 - 75; // 垂直偏移量
+        int rectWidth = 190;
+        int rectHeight = 180;
 
-        // 计算居中坐标
         int x = (width - rectWidth) / 2;
-        int y = centerY - 30;
+        int y = (height - rectHeight) / 2;
 
-        // 绘制带边框的圆角矩形组合
         RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0x14AEAEAE, true).getRGB()); // 80% 透明度深灰背景
         RenderUtils.drawBorderedRoundedRect(x, y, rectWidth, rectHeight, 8.0f, 2.0f, new Color(0x73969696, true).getRGB()); // 白色边框
     }

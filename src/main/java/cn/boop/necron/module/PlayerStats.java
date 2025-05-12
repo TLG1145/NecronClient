@@ -35,7 +35,8 @@ public class PlayerStats {
         JERRYS_WORKSHOP("Jerry's Workshop"),
         BACKWATER_BAYOU("Backwater Bayou"),
         MINESHAFT("Mineshaft"),
-        THE_RIFT("The Rift");
+        THE_RIFT("The Rift"),
+        GARDEN("Garden");
         //⏣ <- Zone prefix
 
         private final String tabName;

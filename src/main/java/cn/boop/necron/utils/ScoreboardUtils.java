@@ -20,7 +20,6 @@ public class ScoreboardUtils {
         StringBuilder cleaned = new StringBuilder();
 
         for(char c : nvString) {
-            //if((int) c > 20 && (int) c < 127)
             if (c <= '\u0014' || c >= '\u007f') continue;
             cleaned.append(c);
         }

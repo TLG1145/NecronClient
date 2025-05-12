@@ -31,21 +31,19 @@ public class ClientButton extends GuiButton {
         hoverAlpha = MathHelper.clamp_float(hoverAlpha, 0.0F, 0.5F);
         if (!isHovered && hoverAlpha < 0.005F) hoverAlpha = 0.0F;
 
-        // 启用抗锯齿
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
         int baseColor = new Color(0x33AAAAAA, true).getRGB(); // 基础背景色
         int borderColor = new Color(0x73969696, true).getRGB(); // 边框颜色
 
-        // 绘制背景
         RenderUtils.drawRoundedRect(xPosition, yPosition,
             xPosition + width, yPosition + height, CORNER_RADIUS, baseColor);
         RenderUtils.drawBorderedRoundedRect(xPosition, yPosition,
                 width, height, CORNER_RADIUS, 1.5f, // 边框宽度
                 isHovered ? new Color(0x88AAAAAA, true).getRGB() : borderColor // 悬停时边框变亮
         );
-        // 绘制白色遮罩
+
         if (isHovered && hoverAlpha > 0.01f) {
             int alpha = (int)(hoverAlpha * 0.6f * 255);
             int overlayColor = (alpha << 24) | 0x00FFFFFF; // 修正颜色格式
@@ -54,7 +52,6 @@ public class ClientButton extends GuiButton {
                     CORNER_RADIUS, overlayColor);
         }
 
-        // 绘制文字
         int textAlpha = (int)((0.7f + hoverAlpha*0.3f)*255);
         this.drawCenteredString(mc.fontRendererObj, this.displayString,
             this.xPosition + this.width/2,
