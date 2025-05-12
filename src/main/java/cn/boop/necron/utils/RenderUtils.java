@@ -49,7 +49,7 @@ public class RenderUtils {
         float f6 = x1 - radius;
         float f7 = y0 + radius;
         GL11.glVertex2f(f6, f7);
-        int j = 0;
+        int j;
         for (j = 0; j <= 18; ++j) {
             float f8 = (float)j * 5.0f;
             GL11.glVertex2f((float)((double)f6 + (double)radius * Math.cos(Math.toRadians(f8))), (float)((double)f7 - (double)radius * Math.sin(Math.toRadians(f8))));
@@ -90,7 +90,8 @@ public class RenderUtils {
         GlStateManager.resetColor();
     }
 
-    public static void drawBorderedRect(float x, float y, float width, float height, float lineWidth, int borderColor) {
+    public static void drawBorderedRect(float x, float y, float width, float height,
+                                        float lineWidth, int borderColor) {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -105,6 +106,55 @@ public class RenderUtils {
         GL11.glVertex2f(x + width, y);
         GL11.glEnd();
 
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    public static void drawBorderedRoundedRect(float x, float y, float width, float height,
+                                               float radius, float borderWidth, int borderColor) {
+        if (width <= 0 || height <= 0 || radius <= 0) return;
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(borderWidth);
+        glColor(borderColor);
+
+        GL11.glBegin(GL11.GL_LINE_LOOP);
+        for (int i = 0; i <= 9; i++) {
+            float angle = (float) (Math.PI * 1.5 + (Math.PI * i / 18));
+            GL11.glVertex2f(
+                    (float)(x + width - radius + Math.cos(angle) * radius),
+                    (float)(y + radius + Math.sin(angle) * radius)
+            );
+        }
+
+        for (int i = 0; i <= 9; i++) {
+            float angle = (float) (Math.PI * 0.0 + (Math.PI * i / 18));
+            GL11.glVertex2f(
+                    (float)(x + width - radius + Math.cos(angle) * radius),
+                    (float)(y + height - radius + Math.sin(angle) * radius)
+            );
+        }
+
+        for (int i = 0; i <= 9; i++) {
+            float angle = (float) (Math.PI * 0.5 + (Math.PI * i / 18));
+            GL11.glVertex2f(
+                    (float)(x + radius + Math.cos(angle) * radius),
+                    (float)(y + height - radius + Math.sin(angle) * radius)
+            );
+        }
+
+        for (int i = 0; i <= 9; i++) {
+            float angle = (float) (Math.PI + (Math.PI * i / 18));
+            GL11.glVertex2f(
+                    (float)(x + radius + Math.cos(angle) * radius),
+                    (float)(y + radius + Math.sin(angle) * radius)
+            );
+        }
+        GL11.glEnd();
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);

@@ -1,5 +1,6 @@
 package cn.boop.necron.gui;
 
+import cn.boop.necron.utils.RenderUtils;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -8,36 +9,44 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiModList;
 
+import java.awt.*;
+
 public final class MainMenu extends GuiScreen {
     private static final ResourceLocation BACKGROUND_TEXTURE =
             new ResourceLocation("necron", "gui/bg1.png");
     private static final ResourceLocation MOD_ICON =
             new ResourceLocation("necron", "gui/icon.png");
     private float mouseXOffset, mouseYOffset;
-    private static final float MAX_OFFSET = 0.02f;
+    private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
+    private static final float SMOOTH_FACTOR = 0.15f;  // 平滑系数（0.1~0.3之间调整效果）
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         float centerX = this.width / 2.0f;
         float centerY = this.height / 2.0f;
-        mouseXOffset = (mouseX - centerX) / centerX * MAX_OFFSET;
-        mouseYOffset = (mouseY - centerY) / centerY * MAX_OFFSET;
+        float targetXOffset = (mouseX - centerX) / centerX * MAX_OFFSET;
+        float targetYOffset = (mouseY - centerY) / centerY * MAX_OFFSET;
+        mouseXOffset += (targetXOffset - mouseXOffset) * SMOOTH_FACTOR;
+        mouseYOffset += (targetYOffset - mouseYOffset) * SMOOTH_FACTOR;
+
         this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
         drawBackgroundQuad();
+        drawBackgroundRect();
 
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(MOD_ICON);
-        int xPos = (this.width - 256) / 2;
-        int yPos = (this.height / 2 ) - 125;
+        int xPos = (this.width - 64) / 2;
+        int yPos = (this.height / 2 ) - 90;
+        GlStateManager.scale(0.5f, 0.5f, 1.0f);
         drawModalRectWithCustomSizedTexture(
-                xPos, yPos,
+                xPos * 2, yPos * 2,
                 0, 0,
-                256, 128,
-                256, 128
+                128, 128,
+                128, 128
         );
         GlStateManager.popMatrix();
 
@@ -50,11 +59,11 @@ public final class MainMenu extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.buttonList.add(new ClientButton(0, this.width / 2 - 100, this.height / 2 - 28, 200, 20, "Singleplayer"));
-        this.buttonList.add(new ClientButton(1, this.width / 2 - 100, this.height / 2 - 4, 200, 20, "Multiplayer"));
-        this.buttonList.add(new ClientButton(2, this.width / 2 - 100, this.height / 2 + 20, 200, 20, "Mods"));
-        this.buttonList.add(new ClientButton(3, this.width / 2 - 100, this.height / 2 + 60, 98, 20, "Options"));
-        this.buttonList.add(new ClientButton(4, this.width / 2 + 2, this.height / 2 + 60, 98, 20, "Quit"));
+        this.buttonList.add(new ClientButton(0, this.width / 2 - 90, this.height / 2 - 14, 180, 18, "Singleplayer"));
+        this.buttonList.add(new ClientButton(1, this.width / 2 - 90, this.height / 2 + 8, 180, 18, "Multiplayer"));
+        this.buttonList.add(new ClientButton(2, this.width / 2 - 90, this.height / 2 + 30, 180, 18, "Mods"));
+        this.buttonList.add(new ClientButton(3, this.width / 2 - 90, this.height / 2 + 52, 88, 18, "Options"));
+        this.buttonList.add(new ClientButton(4, this.width / 2 + 2, this.height / 2 + 52, 88, 18, "Quit"));
         super.initGui();
     }
 
@@ -107,5 +116,19 @@ public final class MainMenu extends GuiScreen {
 
         tess.draw();
         GlStateManager.popMatrix();
+    }
+
+    private void drawBackgroundRect() {
+        int rectWidth = 190;   // 矩形宽度
+        int rectHeight = 180;  // 矩形高度
+        int centerY = height / 2 - 75; // 垂直偏移量
+
+        // 计算居中坐标
+        int x = (width - rectWidth) / 2;
+        int y = centerY - 30;
+
+        // 绘制带边框的圆角矩形组合
+        RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0x14AEAEAE, true).getRGB()); // 80% 透明度深灰背景
+        RenderUtils.drawBorderedRoundedRect(x, y, rectWidth, rectHeight, 8.0f, 2.0f, new Color(0x73969696, true).getRGB()); // 白色边框
     }
 }

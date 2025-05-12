@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class ClientButton extends GuiButton {
     private float hoverAlpha = 0f;
-    private static final int CORNER_RADIUS = 6;
+    private static final int CORNER_RADIUS = 4;
     private static final float HOVER_IN_SPEED = 0.4f;
     private static final float HOVER_OUT_SPEED = 0.15f;
 
@@ -22,14 +22,11 @@ public class ClientButton extends GuiButton {
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (!this.visible) return;
-
-        // 鼠标悬停检测
         boolean isHovered = mouseX >= this.xPosition &&
                           mouseY >= this.yPosition &&
                           mouseX < this.xPosition + this.width &&
                           mouseY < this.yPosition + this.height;
 
-        // 透明度动画
         hoverAlpha += (isHovered ? HOVER_IN_SPEED : -HOVER_OUT_SPEED);
         hoverAlpha = MathHelper.clamp_float(hoverAlpha, 0.0F, 0.5F);
         if (!isHovered && hoverAlpha < 0.005F) hoverAlpha = 0.0F;
@@ -38,10 +35,16 @@ public class ClientButton extends GuiButton {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
+        int baseColor = new Color(0x33AAAAAA, true).getRGB(); // 基础背景色
+        int borderColor = new Color(0x73969696, true).getRGB(); // 边框颜色
+
         // 绘制背景
         RenderUtils.drawRoundedRect(xPosition, yPosition,
-            xPosition + width, yPosition + height, CORNER_RADIUS, new Color(0x80111111, true).getRGB());
-        //0x60111111
+            xPosition + width, yPosition + height, CORNER_RADIUS, baseColor);
+        RenderUtils.drawBorderedRoundedRect(xPosition, yPosition,
+                width, height, CORNER_RADIUS, 1.5f, // 边框宽度
+                isHovered ? new Color(0x88AAAAAA, true).getRGB() : borderColor // 悬停时边框变亮
+        );
         // 绘制白色遮罩
         if (isHovered && hoverAlpha > 0.01f) {
             int alpha = (int)(hoverAlpha * 0.6f * 255);
