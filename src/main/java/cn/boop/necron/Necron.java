@@ -40,6 +40,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new AimTest());
         MinecraftForge.EVENT_BUS.register(new AutoClicker());
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
+        MinecraftForge.EVENT_BUS.register(new RandomRNG());
     }
 
     @Mod.EventHandler

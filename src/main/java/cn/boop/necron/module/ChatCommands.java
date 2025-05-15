@@ -32,10 +32,10 @@ public class ChatCommands {
                         Utils.chatMessage("/pc ntmsb?");
                         break;
                     case "stats":
-                        Utils.chatMessage("/pc Spongepowered Mixin v" + Necron.VERSION);
+                        Utils.chatMessage("/pc MixinNecron v" + Necron.VERSION);
                         break;
                     case "zako":
-                        if (matcher.group(2) != null) Utils.chatMessage("/pc " + matcher.group(2) + " zako zako~");
+                        if (matcher.group(2) != null) Utils.chatMessage("/pc " + matcher.group(2) + " 杂鱼杂鱼~");
                         break;
                     case "tips":
                         tips = Utils.randomSelect(tipList);
@@ -51,8 +51,13 @@ public class ChatCommands {
                         else msg = "/pc 未知位置";
                         Utils.chatMessage(msg);
                         break;
+                    case "roll":
+                        String result = RandomRNG.sendRNG();
+                        if (result == null) Utils.modMessage("No RNG item selected!");
+                        else Utils.chatMessage("/pc " + matcher.group(2) + " unlocked " + result + "!");
+                        break;
                     case "help":
-                        Utils.chatMessage("/pc 命令列表 -> meow, sb, stats, sex, tips, 喵7, loc, help");
+                        Utils.chatMessage("/pc 命令列表 -> meow, sb, stats, zako, tips, 喵7, loc, roll, help");
                         break;
                     default:
                         break;

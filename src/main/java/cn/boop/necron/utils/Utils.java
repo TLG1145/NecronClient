@@ -2,6 +2,7 @@ package cn.boop.necron.utils;
 
 import cn.boop.necron.Necron;
 import net.minecraft.util.ChatComponentText;
+import kotlin.Pair;
 
 import java.util.List;
 import java.util.Random;
@@ -24,5 +25,28 @@ public class Utils {
     public static <T> T randomSelect(List<T> list) {
         int index = random.nextInt(list.size());
         return list.get(index);
+    }
+
+    public static int randomNumber(int min, int max) {
+    	return random.nextInt(max - min + 1) + min;
+    }
+
+    public static <T> Pair<T, Double> weightedRandom(List<Pair<T, Double>> weightedList) {
+        double total = weightedList.stream()
+                .mapToDouble(Pair::getSecond)
+                .sum();
+
+        if (total == 0) return null;
+
+        double randomPoint = random.nextDouble() * total;
+        double cumulative = 0.0;
+
+        for (Pair<T, Double> entry : weightedList) {
+            cumulative += entry.getSecond();
+            if (randomPoint <= cumulative) {
+                return entry;
+            }
+        }
+        return null;
     }
 }
