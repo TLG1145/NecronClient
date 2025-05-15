@@ -41,7 +41,7 @@ public class ClientButton extends GuiButton {
             xPosition + width, yPosition + height, CORNER_RADIUS, baseColor);
         RenderUtils.drawBorderedRoundedRect(xPosition, yPosition,
                 width, height, CORNER_RADIUS, 1.5f, // 边框宽度
-                isHovered ? new Color(0x88AAAAAA, true).getRGB() : borderColor // 悬停时边框变亮
+                isHovered ? new Color(0x99AAAAAA, true).getRGB() : borderColor // 悬停时边框变亮
         );
 
         if (isHovered && hoverAlpha > 0.01f) {

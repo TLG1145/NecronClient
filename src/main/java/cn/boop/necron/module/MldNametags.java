@@ -29,7 +29,6 @@ public final class MldNametags {
             double pY = entity.prevPosY + (entity.posY - entity.prevPosY) * getPartialTicks() - Necron.mc.getRenderManager().viewerPosY;
             double pZ = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * getPartialTicks() - Necron.mc.getRenderManager().viewerPosZ;
             float distance = Necron.mc.thePlayer.getDistanceToEntity(entity);
-            if (distance > ModConfig.nametagDistance) return;
 
             float size = Necron.mc.thePlayer.getDistanceToEntity(entity) / 10.0f;
             if (size < 1.1f) size = 1.1f;

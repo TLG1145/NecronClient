@@ -19,7 +19,7 @@ public final class MainMenu extends GuiScreen {
     private float mouseXOffset, mouseYOffset;
     private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
-    private static final float SMOOTH_FACTOR = 0.15f;  // 平滑系数（0.1~0.3之间调整效果）
+    private static final float SMOOTH_FACTOR = 0.15f;
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {

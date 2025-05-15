@@ -11,7 +11,7 @@ public class TitleManager {
     public void ClientTickEvent(TickEvent.ClientTickEvent event) {
         if (ModConfig.customTitle) {
             try  {
-                Display.setTitle("Minecraft 1.8.9" + " - Spongepowered Mixin" + " v" + Necron.VERSION);
+                Display.setTitle("Minecraft 1.8.9" + " - Spongepowered Mixin v" + Necron.VERSION);
             } catch (Exception e) {
                 e.printStackTrace();
             }

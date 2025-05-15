@@ -21,6 +21,7 @@ public class PlayerStats {
     public enum Island {
         PRIVATE_ISLAND("Private Island"),
         HUB("Hub"),
+        DARK_AUCTION("Dark Auction"),
         SPIDERS_DEN("Spider's Den"),
         CRIMSON_ISLE("Crimson Isle"),
         KUUDRAS_HOLLOW("Kuudra's Hollow"),

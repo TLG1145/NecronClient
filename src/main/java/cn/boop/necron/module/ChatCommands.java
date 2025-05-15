@@ -1,5 +1,6 @@
 package cn.boop.necron.module;
 
+import cn.boop.necron.Necron;
 import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.Utils;
@@ -11,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatCommands {
-    public static final Pattern ChatRegex = Pattern.compile("Party > \\s*(?:\\[\\w+\\+?]\\s*)?\\w{1,16}:\\s*!(.+)");
+    public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*!(.+)");
     public static final List<String> tipList = new java.util.ArrayList<>(JsonLoader.loadTips());
     public static String tips = "";
 
@@ -22,7 +23,7 @@ public class ChatCommands {
             String cleanMessage = Utils.removeFormatting(rawMessage);
             Matcher matcher = ChatRegex.matcher(cleanMessage);
                 if (matcher.matches()) {
-                String command = matcher.group(1);
+                String command = matcher.group(3);
                 switch (command.toLowerCase()) {
                     case "meow":
                         Utils.chatMessage("/pc 喵❤");
@@ -31,18 +32,16 @@ public class ChatCommands {
                         Utils.chatMessage("/pc ntmsb?");
                         break;
                     case "stats":
-                        Utils.chatMessage("/pc {inSkyBlock: " + PlayerStats.inSkyBlock + ", inDungeon: " + PlayerStats.inDungeon + "}");
+                        Utils.chatMessage("/pc Spongepowered Mixin v" + Necron.VERSION);
                         break;
-                    case "lobby":
-                        if (matcher.group(0).contains("MixinNecron")) Utils.chatMessage("/lobby");
-                        else Utils.chatMessage("/pc zako~ 不可以哦");
+                    case "zako":
+                        if (matcher.group(2) != null) Utils.chatMessage("/pc " + matcher.group(2) + " zako zako~");
                         break;
                     case "tips":
                         tips = Utils.randomSelect(tipList);
                         Utils.chatMessage("/pc " + tips);
                         break;
                     case "喵7":
-                        Utils.modMessage("M7? owo");
                         Utils.chatMessage("/joindungeon MASTER_CATACOMBS 7");
                         break;
                     case "loc":
@@ -53,7 +52,7 @@ public class ChatCommands {
                         Utils.chatMessage(msg);
                         break;
                     case "help":
-                        Utils.chatMessage("/pc 命令列表 -> meow, sb, ysj, lobby, tips, 喵7, loc, help");
+                        Utils.chatMessage("/pc 命令列表 -> meow, sb, stats, sex, tips, 喵7, loc, help");
                         break;
                     default:
                         break;
