@@ -1,6 +1,8 @@
 package cn.boop.necron.utils;
 
 import cn.boop.necron.Necron;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import kotlin.Pair;
 
@@ -27,8 +29,14 @@ public class Utils {
         return list.get(index);
     }
 
-    public static int randomNumber(int min, int max) {
-    	return random.nextInt(max - min + 1) + min;
+    public static String getSkyBlockID(ItemStack item) {
+        if(item != null) {
+            NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
+            if (extraAttributes != null && extraAttributes.hasKey("id")) {
+                return extraAttributes.getString("id");
+            }
+        }
+        return "";
     }
 
     public static <T> Pair<T, Double> weightedRandom(List<Pair<T, Double>> weightedList) {

@@ -16,6 +16,7 @@ public final class HurtCam {
 
     @SubscribeEvent
     public void onHurt(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) return;
         if (Necron.mc.thePlayer != null && ModConfig.hurtCam) {
             if (Necron.mc.thePlayer.hurtTime > 0) {
                 isHurt = true;

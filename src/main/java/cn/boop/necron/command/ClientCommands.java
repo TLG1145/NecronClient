@@ -4,7 +4,6 @@ import cn.boop.necron.Necron;
 import cn.boop.necron.module.ChatCommands;
 import cn.boop.necron.module.PlayerStats;
 import cn.boop.necron.utils.RotationUtils;
-import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -51,10 +50,22 @@ public class ClientCommands extends CommandBase {
                 case "stats":
                     modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock + "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon + "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() + "\n§7§l | §r§7Floor: " + PlayerStats.floor);
                     break;
-                case "test_title":
-                    System.out.println(ScoreboardUtils.getScoreboardTitle());
+                case "test":
                     break;
-                case "test_":
+                case "rotate":
+                    if (args.length < 4) {
+                        modMessage("Usage: rotate <x> <y> <z>");
+                        break;
+                    }
+                    try {
+                        double x = Double.parseDouble(args[1]);
+                        double y = Double.parseDouble(args[2]);
+                        double z = Double.parseDouble(args[3]);
+                        RotationUtils.rotatingToBlock(x + 0.5, y + 1, z + 0.5);
+                        modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number format");
+                    }
                     break;
                 default:
                     modMessage("未知参数");

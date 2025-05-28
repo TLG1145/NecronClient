@@ -12,12 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.util.HashMap;
 
 public class PlayerStats {
-    public static boolean inSkyBlock = false;
-    public static boolean inDungeon = false;
-    private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
-    public static Island currentIsland = null;
-    public static Floor floor = null;
-
     public enum Island {
         PRIVATE_ISLAND("Private Island"),
         HUB("Hub"),
@@ -38,7 +32,6 @@ public class PlayerStats {
         MINESHAFT("Mineshaft"),
         THE_RIFT("The Rift"),
         GARDEN("Garden");
-        //⏣ <- Zone prefix
 
         private final String tabName;
 
@@ -74,6 +67,12 @@ public class PlayerStats {
         }
     }
 
+    private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
+    public static Island currentIsland = null;
+    public static Floor floor = null;
+    public static boolean inSkyBlock = false;
+    public static boolean inDungeon = false;
+
     private static HashMap<String, Island> createIslandMapping() {
         HashMap<String, Island> map = new HashMap<>();
         for (Island island : Island.values()) {
@@ -82,7 +81,6 @@ public class PlayerStats {
         return map;
     }
 
-    private int ticks = 0;
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         if (event.world.isRemote) {
@@ -91,6 +89,21 @@ public class PlayerStats {
             detectCurrentIsland();
             updateFloor();
         }
+    }
+
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (ticks % 20 == 0) {
+            updateWorldStates();
+            detectCurrentIsland();
+            updateFloor();
+            ticks = 0;
+        }
+        ticks++;
+    }
+
+    public static String getCurrentIslandName() {
+        return currentIsland != null ? currentIsland.getDisplayName() : "N/A";
     }
 
     private void updateWorldStates() {
@@ -127,18 +140,5 @@ public class PlayerStats {
         }
     }
 
-    public static String getCurrentIslandName() {
-        return currentIsland != null ? currentIsland.getDisplayName() : "N/A";
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (ticks % 20 == 0) {
-            updateWorldStates();
-            detectCurrentIsland();
-            updateFloor();
-            ticks = 0;
-        }
-        ticks++;
-    }
+    private int ticks = 0;
 }

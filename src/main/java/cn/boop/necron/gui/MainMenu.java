@@ -103,7 +103,7 @@ public final class MainMenu extends GuiScreen {
         WorldRenderer worldrenderer = tess.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
 
-        float scale = 1.1f; // 基础缩放系数
+        float scale = 1.1f;
         float scaledWidth = width * scale;
         float scaledHeight = height * scale;
         float offsetX = (width - scaledWidth) / 2;
@@ -125,7 +125,7 @@ public final class MainMenu extends GuiScreen {
         int x = (width - rectWidth) / 2;
         int y = (height - rectHeight) / 2;
 
-        RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0x14AEAEAE, true).getRGB()); // 80% 透明度深灰背景
-        RenderUtils.drawBorderedRoundedRect(x, y, rectWidth, rectHeight, 8.0f, 2.0f, new Color(0x73969696, true).getRGB()); // 白色边框
+        RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0x14AEAEAE, true).getRGB());
+        RenderUtils.drawBorderedRoundedRect(x, y, rectWidth, rectHeight, 8.0f, 2.0f, new Color(0x73969696, true).getRGB());
     }
 }
