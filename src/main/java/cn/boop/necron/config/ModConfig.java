@@ -20,6 +20,10 @@ public class ModConfig extends Config {
     public static boolean customTitle = false;
     @Switch(name = "Etherwarp", description = "Left click to use Etherwarp ability", category = "Hypixel")
     public static boolean etherwarp = false;
+    @Switch(name = "Waypoints", description = "Custom Waypoint", category = "Hypixel")
+    public static boolean waypoints = false;
+    @Switch(name = "Router", description = "Half-auto Etherwarp route", category = "Hypixel")
+    public static boolean router = false;
 
     public static final ModConfig INSTANCE = new ModConfig();
 }

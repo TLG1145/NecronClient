@@ -1,8 +1,14 @@
 package cn.boop.necron.utils;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
+import cn.boop.necron.Necron;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 
 public class RenderUtils {
     public static void glColor(int hex) {
@@ -158,5 +164,92 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    public static void drawOutlinedBlockESP(double x, double y, double z, Color color, float lineWidth, float partialTicks) {
+        Entity viewer = Minecraft.getMinecraft().getRenderViewEntity();
+        if (viewer == null) return;
+
+        double viewerX = viewer.prevPosX + (viewer.posX - viewer.prevPosX) * partialTicks;
+        double viewerY = viewer.prevPosY + (viewer.posY - viewer.prevPosY) * partialTicks;
+        double viewerZ = viewer.prevPosZ + (viewer.posZ - viewer.prevPosZ) * partialTicks;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.disableDepth();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.disableTexture2D();
+        //GlStateManager.depthMask(false);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glLineWidth(lineWidth);
+        GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+        RenderUtils.drawOutlinedBoundingBox(new AxisAlignedBB(
+                x - viewerX, y - viewerY, z - viewerZ,
+                x + 1 - viewerX, y + 1 - viewerY, z + 1 - viewerZ
+        ));
+        //GlStateManager.depthMask(true);
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+    }
+
+    public static void drawOutlinedBoundingBox(AxisAlignedBB aa) {
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(aa.minX, aa.minY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.minY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.minY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.minY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.minY, aa.minZ).endVertex();
+        tessellator.draw();
+        worldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(aa.minX, aa.maxY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.maxY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.maxY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.maxY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.maxY, aa.minZ).endVertex();
+        tessellator.draw();
+        worldRenderer.begin(1, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(aa.minX, aa.minY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.maxY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.minY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.maxY, aa.minZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.minY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.maxX, aa.maxY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.minY, aa.maxZ).endVertex();
+        worldRenderer.pos(aa.minX, aa.maxY, aa.maxZ).endVertex();
+        tessellator.draw();
+    }
+
+    public static void draw3DLine(double x, double y, double z, double x1, double y1, double z1, float red, float green, float blue, float alpha, float lineWidth) {
+        double viewerX = Necron.mc.getRenderManager().viewerPosX;
+        double viewerY = Necron.mc.getRenderManager().viewerPosY;
+        double viewerZ = Necron.mc.getRenderManager().viewerPosZ;
+        x -= viewerX;
+        x1 -= viewerX;
+        y -= viewerY;
+        y1 -= viewerY;
+        z -= viewerZ;
+        z1 -= viewerZ;
+
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_DEPTH_TEST); // 关闭深度测试，实现穿墙效果
+        GL11.glDisable(GL11.GL_TEXTURE_2D); // 禁用纹理
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glLineWidth(lineWidth);
+        GL11.glColor4f(red, green, blue, alpha);
+
+        GL11.glBegin(GL11.GL_LINES);
+        GL11.glVertex3d(x, y, z);
+        GL11.glVertex3d(x1, y1, z1);
+        GL11.glEnd();
+
+        GL11.glEnable(GL11.GL_TEXTURE_2D); // 恢复纹理
+        GL11.glEnable(GL11.GL_DEPTH_TEST); // 恢复深度测试
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
     }
 }

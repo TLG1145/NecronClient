@@ -113,7 +113,7 @@ public class RotationUtils {
         return exposedFaces;
     }
 
-    public Vec3 getClosestExposedFaceCenter(World world, BlockPos pos, EntityPlayerSP player) {
+    public static Vec3 getClosestExposedFaceCenter(World world, BlockPos pos, EntityPlayerSP player) {
         Vec3 playerPos = new Vec3(player.posX, player.posY + player.getEyeHeight(), player.posZ);
         List<Vec3> exposedFaceCenters = getExposedFaceCenters(world, pos);
 

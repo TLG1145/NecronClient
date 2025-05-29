@@ -4,6 +4,7 @@ import cn.boop.necron.command.ClientCommands;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.gui.MainMenu;
 import cn.boop.necron.module.*;
+import cn.boop.necron.utils.event.WaypointEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,6 +18,7 @@ public class Necron {
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
     public static final String VERSION = "0.0.1";
+    public static final String WP_FILE_PATH = "./config/necron/waypoints/";
     public static final String CHAT_PREFIX = "§bNecron §8»§r§7 ";
 
     @SuppressWarnings("InstantiationOfUtilityClass")
@@ -30,6 +32,8 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
         MinecraftForge.EVENT_BUS.register(new RandomRNG());
         MinecraftForge.EVENT_BUS.register(new Etherwarp());
+        MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
+        MinecraftForge.EVENT_BUS.register(new EWarpRouter());
     }
 
     @Mod.EventHandler

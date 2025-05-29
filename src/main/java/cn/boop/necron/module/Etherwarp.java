@@ -16,6 +16,7 @@ public class Etherwarp {
         boolean currentLeftClick = Mouse.isButtonDown(0);
 
         if (ModConfig.etherwarp && PlayerStats.inSkyBlock) {
+            if (ModConfig.router) return;
             if (!lastLeftClick && currentLeftClick) {
                 useEtherwarp();
             }

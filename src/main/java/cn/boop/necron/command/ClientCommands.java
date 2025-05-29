@@ -1,8 +1,11 @@
 package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
+import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.module.ChatCommands;
+import cn.boop.necron.module.EWarpRouter;
 import cn.boop.necron.module.PlayerStats;
+import cn.boop.necron.module.Waypoint;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -15,6 +18,8 @@ import java.util.List;
 import static cn.boop.necron.utils.Utils.modMessage;
 
 public class ClientCommands extends CommandBase {
+    public static int waypointCounter = 1;
+
     @Override
     public String getCommandName() {
         return "necron";
@@ -65,6 +70,40 @@ public class ClientCommands extends CommandBase {
                         System.out.println("Invalid number format");
                     }
                     break;
+                case "waypoint":
+                    if (args.length < 2) {
+                        modMessage("Usage: waypoint load <file> | add <name> | remove <name>");
+                        break;
+                    }
+                    String subCmd = args[1];
+                    switch (subCmd) {
+                        case "load":
+                            if (args.length < 3) {
+                                modMessage("Usage: waypoint load <name>");
+                                break;
+                            }
+                            EWarpRouter.loadWaypoints(args[2]);
+                            Waypoint.loadWaypoints(args[2]);
+                            break;
+                        case "add":
+                            Waypoint.addWaypoint();
+                            break;
+                        case "remove":
+                            if (args.length < 3) {
+                                modMessage("Usage: waypoint remove <name>");
+                                break;
+                            }
+                            try {
+                                int idToRemove = Integer.parseInt(args[2]);
+                                Waypoint.removeWaypoint(idToRemove);
+                            } catch (NumberFormatException e) {
+                                modMessage("请输入有效的数字序号");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
                 default:
                     modMessage("未知参数");
             }
@@ -84,6 +123,7 @@ public class ClientCommands extends CommandBase {
             "§b/necron rotation ->§r§7 查看当前Yaw和Pitch",
             "§b/necron stats ->§r§7 查看当前玩家信息",
             "§b/necron rotate <x> <y> <z> ->§r§7 将视角旋转至x, y, z",
+            "§b/necron waypoint load|add|remove ->§r§7 加载|添加|删除 路径点文件",
             "§r§8§m-----------------------------"
     };
 }
