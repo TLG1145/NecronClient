@@ -42,21 +42,13 @@ public class ChatCommands {
                     case "roll":
                         Map<String, Integer> results = new HashMap<>();
                         for (int i = 0; i < 10; i++) {
-                            String result10 = RandomRNG.sendRNG();
+                            String result10 = RandomRNG.getRNG();
                             if (result10 != null) {
                                 results.put(result10, results.getOrDefault(result10, 0) + 1);
                             }
                         }
-
-                        if (results.isEmpty()) {
-                            Utils.chatMessage("/pc " + sender + " Nothing :<");
-                        } else {
-                            StringBuilder sb = new StringBuilder("/pc ");
-                            sb.append(sender).append(" unlocked -> ");
-                            results.forEach((item, count) ->
-                                    sb.append(String.format("%s ×%d ", item, count)));
-                            Utils.chatMessage(sb.toString().trim());
-                        }
+                        String response = RandomRNG.sendResult(results, sender);
+                        Utils.chatMessage(response);
                         break;
                     case "sb":
                         Utils.chatMessage("/pc ntmsb?");

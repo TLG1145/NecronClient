@@ -7,6 +7,7 @@ import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.ChatComponentText;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,9 +39,6 @@ public class ClientCommands extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length > 0) {
             switch (args[0]) {
-                case "version":
-                    modMessage("当前版本 " + Necron.VERSION);
-                    break;
                 case "tips":
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
@@ -71,7 +69,21 @@ public class ClientCommands extends CommandBase {
                     modMessage("未知参数");
             }
         } else {
-            modMessage("ClassNotFound");
+            int i;
+            for (i = 0; i < helpMsg.length; ++i) { // §
+                Necron.mc.thePlayer.addChatMessage(new ChatComponentText(helpMsg[i]));
+            }
         }
     }
+
+    private static final String[] helpMsg = new String[]{
+            "§8§m-----------------------------",
+            "§b       NecronClient §7v0.0.1",
+            "§r ",
+            "§b/necron tips ->§r§7 获取一些神秘文本 (?",
+            "§b/necron rotation ->§r§7 查看当前Yaw和Pitch",
+            "§b/necron stats ->§r§7 查看当前玩家信息",
+            "§b/necron rotate <x> <y> <z> ->§r§7 将视角旋转至x, y, z",
+            "§r§8§m-----------------------------"
+    };
 }
