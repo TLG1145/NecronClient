@@ -45,7 +45,14 @@ public class Waypoint {
 
         currentFile = Necron.WP_FILE_PATH + filename + ".json";
         waypoints = JsonLoader.loadWaypoints(currentFile);
-        Utils.modMessage("Loaded " + waypoints.size() + " waypoints. §8[" + filename + "]");
+
+        if (waypoints.isEmpty()) {
+            waypoints = new ArrayList<>();
+            boolean created = JsonLoader.saveWaypoints(waypoints, currentFile);
+            if (!created) return;
+        } else {
+            Utils.modMessage("Loaded " + waypoints.size() + " waypoints. §8[" + filename + "]");
+        }
 
         if (!waypoints.isEmpty()) {
             int maxId = waypoints.stream()
@@ -60,13 +67,14 @@ public class Waypoint {
 
     public static void addWaypoint() {
         if (currentFile == null) {
-            Utils.modMessage("请先加载一个路径点文件");
+            Utils.modMessage("Waypoints file not loaded.");
             return;
         }
+        if (waypoints == null) waypoints = new ArrayList<>();
         EntityPlayerSP player = Necron.mc.thePlayer;
         BlockPos pos = new BlockPos(player.posX, player.posY, player.posZ);
         int x = pos.getX();
-        int y = pos.getY() - 1;  // 往下偏移一层
+        int y = pos.getY() - 1;
         int z = pos.getZ();
 
         Waypoint newWaypoint = new Waypoint(waypointCounter++, x, y, z);
@@ -89,7 +97,6 @@ public class Waypoint {
         Utils.modMessage("Removed waypoint #" + id);
     }
 
-    // 保存路径点到当前文件
     private static void saveWaypoints() {
         if (currentFile != null) {
             JsonLoader.saveWaypoints(waypoints, currentFile);
@@ -109,7 +116,6 @@ public class Waypoint {
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glLineWidth(2F);
 
-        // 渲染路径点之间的连线
         for (int i = 0; i < waypoints.size() - 1; i++) {
             Waypoint wp1 = waypoints.get(i);
             Waypoint wp2 = waypoints.get(i + 1);
@@ -121,21 +127,21 @@ public class Waypoint {
             double y2 = wp2.y + 0.5;
             double z2 = wp2.z + 0.5;
 
-            Color lineColor = new Color(47, 164, 228, 255); // 红色
+            Color lineColor = new Color(39, 161, 227, 255); // 红色
             float r = (float) lineColor.getRed() / 255;
             float g = (float) lineColor.getGreen() / 255;
             float b = (float) lineColor.getBlue() / 255;
             float a = (float) lineColor.getAlpha() / 255;
             RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2,
-                    r, g, b, a, 1.5f); // 红色连线
+                    r, g, b, a, 1.5f);
         }
-        // 渲染每个路径点的 ESP 方块
+
         for (Waypoint wp : waypoints) {
             RenderUtils.drawOutlinedBlockESP(
                     wp.x,
                     wp.y,
                     wp.z,
-                    new Color(47, 164, 228, 255),
+                    new Color(197, 229, 248, 255),
                     2f,
                     partialTicks
             );

@@ -17,7 +17,7 @@ val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
 val transformerFile = file("src/main/resources/accesstransformer.cfg")
 
-group = "com.example.archloomtemplate"
+group = "cn.boop.necron"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
@@ -88,7 +88,7 @@ tasks {
         filesMatching(listOf("mcmod.info", "mixins.necronclient.json")) {
             expand(
                 mapOf(
-                    "version" to project.version,
+                    "version" to "0.0.3",
                     "mcversion" to "1.8.9",
                     "modid" to modid,
                     "basePackage" to baseGroup

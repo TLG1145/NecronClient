@@ -1,7 +1,6 @@
 package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.module.ChatCommands;
 import cn.boop.necron.module.EWarpRouter;
 import cn.boop.necron.module.PlayerStats;
@@ -12,8 +11,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static cn.boop.necron.utils.Utils.modMessage;
 
@@ -47,9 +45,6 @@ public class ClientCommands extends CommandBase {
                 case "tips":
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
-                case "rotation":
-                    modMessage("Rotation{Yaw: " + RotationUtils.yaw() + ", Pitch: " + RotationUtils.pitch() + "}");
-                    break;
                 case "stats":
                     modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock + "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon + "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() + "\n§7§l | §r§7Floor: " + PlayerStats.floor);
                     break;
@@ -64,48 +59,37 @@ public class ClientCommands extends CommandBase {
                         double x = Double.parseDouble(args[1]);
                         double y = Double.parseDouble(args[2]);
                         double z = Double.parseDouble(args[3]);
-                        RotationUtils.rotatingToBlock(x + 0.5, y + 1, z + 0.5);
+                        RotationUtils.rotatingToBlock(x + 0.5, y + 0.5, z + 0.5);
                         modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
                     } catch (NumberFormatException e) {
-                        System.out.println("Invalid number format");
+                        System.out.println("Invalid position format");
                     }
                     break;
-                case "waypoint":
+                case "wp_load":
                     if (args.length < 2) {
-                        modMessage("Usage: waypoint load <file> | add <name> | remove <name>");
+                        modMessage("Usage: wp_load <file>");
                         break;
                     }
-                    String subCmd = args[1];
-                    switch (subCmd) {
-                        case "load":
-                            if (args.length < 3) {
-                                modMessage("Usage: waypoint load <name>");
-                                break;
-                            }
-                            EWarpRouter.loadWaypoints(args[2]);
-                            Waypoint.loadWaypoints(args[2]);
-                            break;
-                        case "add":
-                            Waypoint.addWaypoint();
-                            break;
-                        case "remove":
-                            if (args.length < 3) {
-                                modMessage("Usage: waypoint remove <name>");
-                                break;
-                            }
-                            try {
-                                int idToRemove = Integer.parseInt(args[2]);
-                                Waypoint.removeWaypoint(idToRemove);
-                            } catch (NumberFormatException e) {
-                                modMessage("请输入有效的数字序号");
-                            }
-                            break;
-                        default:
-                            break;
+                    EWarpRouter.loadWaypoints(args[1]);
+                    Waypoint.loadWaypoints(args[1]);
+                    break;
+                case "wp_add":
+                    Waypoint.addWaypoint();
+                    break;
+                case "wp_remove":
+                    if (args.length < 2) {
+                        modMessage("Usage: wp_remove <id>");
+                        break;
+                    }
+                    try {
+                        int idToRemove = Integer.parseInt(args[1]);
+                        Waypoint.removeWaypoint(idToRemove);
+                    } catch (NumberFormatException e) {
+                        modMessage("Invalid id");
                     }
                     break;
                 default:
-                    modMessage("未知参数");
+                    modMessage("Unknown command.");
             }
         } else {
             int i;
@@ -116,14 +100,15 @@ public class ClientCommands extends CommandBase {
     }
 
     private static final String[] helpMsg = new String[]{
-            "§8§m-----------------------------",
-            "§b       NecronClient §7v0.0.1",
+            "§8§m--------------------------------",
+            "§b           NecronClient §7v0.0.1",
             "§r ",
-            "§b/necron tips ->§r§7 获取一些神秘文本 (?",
-            "§b/necron rotation ->§r§7 查看当前Yaw和Pitch",
-            "§b/necron stats ->§r§7 查看当前玩家信息",
-            "§b/necron rotate <x> <y> <z> ->§r§7 将视角旋转至x, y, z",
-            "§b/necron waypoint load|add|remove ->§r§7 加载|添加|删除 路径点文件",
-            "§r§8§m-----------------------------"
+            "§b/necron tips §f§l»§r§7 获取一些神秘文本 (?",
+            "§b/necron stats §f§l»§r§7 查看当前玩家信息",
+            "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
+            "§b/necron wp_load <file> §f§l»§r§7 加载路径点文件",
+            "§b/necron wp_add §f§l»§r§7 添加脚下方块为路径点",
+            "§b/necron wp_remove <id> §f§l»§r§7 删除指定id的路径点",
+            "§r§8§m--------------------------------"
     };
 }

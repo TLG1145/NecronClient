@@ -5,7 +5,6 @@ import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,12 +16,11 @@ import java.util.List;
 
 public class EWarpRouter {
     private boolean lastLeftClick = false;
-    private static final Minecraft mc = Minecraft.getMinecraft();
-    private static List<Waypoint> waypointCache = new ArrayList<>();
+    static List<Waypoint> waypointCache = new ArrayList<>();
     private static int currentWaypointIndex = 0;
     private boolean isProcessing = false;
-    private static boolean routeCompleted = false;
-    private static boolean routeCompletedNotified = false;
+    static boolean routeCompleted = false;
+    public static boolean routeCompletedNotified = false;
 
     public static void loadWaypoints(String filename) {
         String currentFile = Necron.WP_FILE_PATH + filename + ".json";
@@ -37,7 +35,7 @@ public class EWarpRouter {
         boolean currentLeftClick = Mouse.isButtonDown(0);
 
         if (ModConfig.router && PlayerStats.inSkyBlock) {
-            if (!lastLeftClick && currentLeftClick) {
+            if (!lastLeftClick && currentLeftClick && Necron.mc.currentScreen == null) {
                 handleLeftClick();
             }
         }
@@ -47,7 +45,7 @@ public class EWarpRouter {
     private void handleLeftClick() {
         if (isProcessing) return;
         if (waypointCache.isEmpty()) {
-            Utils.modMessage("No waypoints loaded.");
+            Utils.modMessage("Waypoints file not loaded.");
             return;
         }
         if (currentWaypointIndex >= waypointCache.size()) {
@@ -64,15 +62,15 @@ public class EWarpRouter {
         Waypoint wp = waypointCache.get(currentWaypointIndex);
         BlockPos pos = new BlockPos(wp.getX(), wp.getY(), wp.getZ());
 
-        Vec3 closestFaceCenter = RotationUtils.getClosestExposedFaceCenter(mc.theWorld, pos, mc.thePlayer);
+        Vec3 closestFaceCenter = RotationUtils.getClosestExposedFaceCenter(Necron.mc.theWorld, pos, Necron.mc.thePlayer);
         if (closestFaceCenter == null) {
-            Utils.modMessage("No exposed face found for waypoint " + wp.getId());
+            Utils.modMessage("Unable to etherwarp to waypoint #" + wp.getId());
             isProcessing = false;
             currentWaypointIndex++;
             return;
         }
 
-        RotationUtils.asyncAimAt(closestFaceCenter, 0.35f);
+        RotationUtils.asyncAimAt(closestFaceCenter, 0.30f);
         Utils.modMessage("Rotating.");
 
         new Thread(() -> {

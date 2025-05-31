@@ -3,19 +3,16 @@ package cn.boop.necron.utils;
 import cn.boop.necron.Necron;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class RotationUtils {
     private static final int[][] DIRECTIONS = {
-            {-1, 0, 0}, {1, 0, 0}, // X轴
-            {0, -1, 0}, {0, 1, 0}, // Y轴
-            {0, 0, -1}, {0, 0, 1}  // Z轴
+            {-1, 0, 0}, {1, 0, 0},
+            {0, -1, 0}, {0, 1, 0},
+            {0, 0, -1}, {0, 0, 1}
     };
     private static final java.util.concurrent.ScheduledExecutorService scheduler =
             java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
@@ -59,7 +56,6 @@ public class RotationUtils {
         float deltaYaw = MathHelper.wrapAngleTo180_float(targetYaw - currentYaw);
         float deltaPitch = MathHelper.wrapAngleTo180_float(targetPitch - currentPitch);
 
-        // 根据距离动态调整速度
         float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         float dynamicSpeed = baseSpeed * (float) Math.atan(distance * 0.1);
         dynamicSpeed = Math.max(dynamicSpeed, 0.07f);
@@ -80,22 +76,12 @@ public class RotationUtils {
                 }
 
                 try {
-                    Thread.sleep(10); // 10ms间隔
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     break;
                 }
             }
         }).start();
-    }
-
-    public static boolean hasFullyExposedFace(World world, BlockPos pos) {
-        for (int[] dir : DIRECTIONS) {
-            BlockPos offsetPos = pos.add(dir[0], dir[1], dir[2]);
-            if (world.getBlockState(offsetPos).getBlock() == Blocks.air) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static List<Vec3> getExposedFaceCenters(World world, BlockPos pos) {
@@ -148,7 +134,7 @@ public class RotationUtils {
             }
 
             try {
-                Thread.sleep(10); // 每 10ms 更新一次角度
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 break;
             }

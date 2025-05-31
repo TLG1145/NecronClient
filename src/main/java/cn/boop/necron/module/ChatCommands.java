@@ -2,15 +2,13 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
+import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
+import java.util.regex.*;
 
 public class ChatCommands {
     public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*!(.+)");
@@ -33,7 +31,12 @@ public class ChatCommands {
                         String msg;
                         if (PlayerStats.inDungeon) msg = "/pc 当前位置: CATACOMBS_" + PlayerStats.floor;
                         else if (PlayerStats.inSkyBlock) msg = "/pc 当前位置: " + PlayerStats.getCurrentIslandName();
-                        else msg = "/pc 未知位置";
+                        else {
+                            String title = ScoreboardUtils.getScoreboardTitle();
+                            if (title.isEmpty()) msg = "/pc 当前位置: Limbo";
+                            else msg = "/pc " + title + " (In game or Lobby)";
+                        }
+
                         Utils.chatMessage(msg);
                         break;
                     case "meow":

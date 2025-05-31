@@ -6,14 +6,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import kotlin.Pair;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Utils {
     private static final Random random = new Random();
 
     public static void modMessage(String msg) {
-        Necron.mc.thePlayer.addChatMessage(new ChatComponentText(Necron.CHAT_PREFIX + msg));
+        Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bNecron §8»§r§7 " + msg));
     }
 
     public static void chatMessage(String msg) {

@@ -34,19 +34,19 @@ public class ClientButton extends GuiButton {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-        int baseColor = new Color(0x33AAAAAA, true).getRGB(); // 基础背景色
-        int borderColor = new Color(0x73969696, true).getRGB(); // 边框颜色
+        int baseColor = new Color(0x33AAAAAA, true).getRGB();
+        int borderColor = new Color(0x73969696, true).getRGB();
 
         RenderUtils.drawRoundedRect(xPosition, yPosition,
             xPosition + width, yPosition + height, CORNER_RADIUS, baseColor);
         RenderUtils.drawBorderedRoundedRect(xPosition, yPosition,
-                width, height, CORNER_RADIUS, 1.5f, // 边框宽度
-                isHovered ? new Color(0x99AAAAAA, true).getRGB() : borderColor // 悬停时边框变亮
+                width, height, CORNER_RADIUS, 1.5f,
+                isHovered ? new Color(0x99AAAAAA, true).getRGB() : borderColor
         );
 
         if (isHovered && hoverAlpha > 0.01f) {
             int alpha = (int)(hoverAlpha * 0.6f * 255);
-            int overlayColor = (alpha << 24) | 0x00FFFFFF; // 修正颜色格式
+            int overlayColor = (alpha << 24) | 0x00FFFFFF;
             RenderUtils.drawRoundedRect(xPosition, yPosition,
                     xPosition + width, yPosition + height,
                     CORNER_RADIUS, overlayColor);

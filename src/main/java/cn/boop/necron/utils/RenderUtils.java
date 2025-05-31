@@ -103,7 +103,6 @@ public class RenderUtils {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glLineWidth(lineWidth);
-
         glColor(borderColor);
         GL11.glBegin(GL11.GL_LINE_LOOP);
         GL11.glVertex2f(x, y);
@@ -111,7 +110,6 @@ public class RenderUtils {
         GL11.glVertex2f(x + width, y + height);
         GL11.glVertex2f(x + width, y);
         GL11.glEnd();
-
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
@@ -127,7 +125,6 @@ public class RenderUtils {
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glLineWidth(borderWidth);
         glColor(borderColor);
-
         GL11.glBegin(GL11.GL_LINE_LOOP);
         for (int i = 0; i <= 9; i++) {
             float angle = (float) (Math.PI * 1.5 + (Math.PI * i / 18));
@@ -179,7 +176,6 @@ public class RenderUtils {
         GlStateManager.disableDepth();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.disableTexture2D();
-        //GlStateManager.depthMask(false);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glLineWidth(lineWidth);
         GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
@@ -187,7 +183,6 @@ public class RenderUtils {
                 x - viewerX, y - viewerY, z - viewerZ,
                 x + 1 - viewerX, y + 1 - viewerY, z + 1 - viewerZ
         ));
-        //GlStateManager.depthMask(true);
         GlStateManager.enableDepth();
         GlStateManager.enableTexture2D();
         GlStateManager.disableBlend();
@@ -236,8 +231,8 @@ public class RenderUtils {
 
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_DEPTH_TEST); // 关闭深度测试，实现穿墙效果
-        GL11.glDisable(GL11.GL_TEXTURE_2D); // 禁用纹理
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glLineWidth(lineWidth);
         GL11.glColor4f(red, green, blue, alpha);
@@ -247,8 +242,8 @@ public class RenderUtils {
         GL11.glVertex3d(x1, y1, z1);
         GL11.glEnd();
 
-        GL11.glEnable(GL11.GL_TEXTURE_2D); // 恢复纹理
-        GL11.glEnable(GL11.GL_DEPTH_TEST); // 恢复深度测试
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
