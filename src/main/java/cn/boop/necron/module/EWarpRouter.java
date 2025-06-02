@@ -5,6 +5,7 @@ import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -70,12 +71,13 @@ public class EWarpRouter {
             return;
         }
 
+        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
         RotationUtils.asyncAimAt(closestFaceCenter, 0.30f);
         Utils.modMessage("Rotating.");
 
         new Thread(() -> {
             try {
-                Thread.sleep(350);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

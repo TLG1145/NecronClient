@@ -59,7 +59,7 @@ public class ClientCommands extends CommandBase {
                         double x = Double.parseDouble(args[1]);
                         double y = Double.parseDouble(args[2]);
                         double z = Double.parseDouble(args[3]);
-                        RotationUtils.rotatingToBlock(x + 0.5, y + 0.5, z + 0.5);
+                        RotationUtils.rotatingToBlock(x + 0.9, y + 0.5, z + 0.5);
                         modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid position format");

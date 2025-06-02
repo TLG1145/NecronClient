@@ -16,12 +16,14 @@ public class Etherwarp {
         boolean currentLeftClick = Mouse.isButtonDown(0);
         if (ModConfig.etherwarp && PlayerStats.inSkyBlock && EWarpRouter.routeCompletedNotified) {
             if (!lastLeftClick && currentLeftClick) {
+                KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
                 useEtherwarp();
             }
         }
         else if (ModConfig.etherwarp && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null) {
             if (EWarpRouter.waypointCache.isEmpty() || EWarpRouter.routeCompleted) {
                 if (!lastLeftClick && currentLeftClick) {
+                    KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
                     useEtherwarp();
                 }
             }
@@ -36,7 +38,6 @@ public class Etherwarp {
         if (itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID")) {
             new Thread(() -> {
                 try {
-                    KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
                     Thread.sleep(100);
                     Necron.mc.playerController.sendUseItem(Necron.mc.thePlayer, Necron.mc.theWorld, Necron.mc.thePlayer.inventory.getCurrentItem());
                     Thread.sleep(50);

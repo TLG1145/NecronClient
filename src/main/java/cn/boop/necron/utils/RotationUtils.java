@@ -69,7 +69,7 @@ public class RotationUtils {
             while (true) {
                 float currentYaw = RotationUtils.yaw();
                 float currentPitch = RotationUtils.pitch();
-                RotationUtils.aimAtBlockPosition(target, 0.15f);
+                RotationUtils.aimAtBlockPosition(target, 0.5f);
                 if (Math.abs(RotationUtils.yaw() - currentYaw) < 0.1f &&
                         Math.abs(RotationUtils.pitch() - currentPitch) < 0.1f) {
                     break;
