@@ -5,7 +5,6 @@ import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,8 +23,7 @@ public class EWarpRouter {
     public static boolean routeCompletedNotified = false;
 
     public static void loadWaypoints(String filename) {
-        String currentFile = Necron.WP_FILE_PATH + filename + ".json";
-        waypointCache = JsonLoader.loadWaypoints(currentFile);
+        waypointCache = JsonLoader.loadWaypoints(Necron.WP_FILE_PATH + filename + ".json");
         currentWaypointIndex = 0;
         routeCompleted = false;
         routeCompletedNotified = false;
@@ -71,7 +69,6 @@ public class EWarpRouter {
             return;
         }
 
-        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
         RotationUtils.asyncAimAt(closestFaceCenter, 0.30f);
         Utils.modMessage("Rotating.");
 

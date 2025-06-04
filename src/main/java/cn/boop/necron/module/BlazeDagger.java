@@ -13,9 +13,19 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Mouse;
 
 public class BlazeDagger {
     private long lastClickTime = 0L;
+    public static boolean isLeftMouseDown = false;
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (Necron.mc.theWorld == null || Necron.mc.thePlayer == null) return;
+        if (Necron.mc.currentScreen != null) return;
+        isLeftMouseDown = Mouse.isButtonDown(0);
+    }
 
     @SubscribeEvent(priority= EventPriority.LOWEST, receiveCanceled=true)
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
@@ -28,7 +38,7 @@ public class BlazeDagger {
             double x = event.entity.posX;
             double y = event.entity.posY;
             double z = event.entity.posZ;
-            if (ModConfig.blazeDagger && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
+            if (ModConfig.blazeDagger && isLeftMouseDown() && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
                 if (entityName.startsWith("CRYSTAL")) {
                     if (this.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
                         swapToCrystal();
@@ -153,5 +163,9 @@ public class BlazeDagger {
 
     public boolean isVecInXY(Vec3 vec, AxisAlignedBB aabb) {
         return vec != null && vec.xCoord >= aabb.minX && vec.xCoord <= aabb.maxX && vec.yCoord >= aabb.minY && vec.yCoord <= aabb.maxY;
+    }
+
+    public static boolean isLeftMouseDown() {
+        return isLeftMouseDown;
     }
 }

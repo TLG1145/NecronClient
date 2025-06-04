@@ -2,8 +2,8 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.config.ModConfig;
+import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.Utils;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
@@ -16,14 +16,12 @@ public class Etherwarp {
         boolean currentLeftClick = Mouse.isButtonDown(0);
         if (ModConfig.etherwarp && PlayerStats.inSkyBlock && EWarpRouter.routeCompletedNotified) {
             if (!lastLeftClick && currentLeftClick) {
-                KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
                 useEtherwarp();
             }
         }
         else if (ModConfig.etherwarp && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null) {
             if (EWarpRouter.waypointCache.isEmpty() || EWarpRouter.routeCompleted) {
                 if (!lastLeftClick && currentLeftClick) {
-                    KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), true);
                     useEtherwarp();
                 }
             }
@@ -38,10 +36,11 @@ public class Etherwarp {
         if (itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID")) {
             new Thread(() -> {
                 try {
+                    PlayerUtils.setSneak(true);
                     Thread.sleep(100);
                     Necron.mc.playerController.sendUseItem(Necron.mc.thePlayer, Necron.mc.theWorld, Necron.mc.thePlayer.inventory.getCurrentItem());
                     Thread.sleep(50);
-                    KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), false);
+                    PlayerUtils.setSneak(false);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

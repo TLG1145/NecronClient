@@ -97,7 +97,7 @@ public final class MainMenu extends GuiScreen {
         GlStateManager.pushMatrix();
         float parallaxX = mouseXOffset * width * PARALLAX_FACTOR;
         float parallaxY = mouseYOffset * height * PARALLAX_FACTOR;
-        GlStateManager.translate(-parallaxX, -parallaxY, 0);
+        GlStateManager.translate(parallaxX, parallaxY, 0);
 
         Tessellator tess = Tessellator.getInstance();
         WorldRenderer worldrenderer = tess.getWorldRenderer();

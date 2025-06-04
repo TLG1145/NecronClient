@@ -1,10 +1,7 @@
 package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.module.ChatCommands;
-import cn.boop.necron.module.EWarpRouter;
-import cn.boop.necron.module.PlayerStats;
-import cn.boop.necron.module.Waypoint;
+import cn.boop.necron.module.*;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -42,14 +39,6 @@ public class ClientCommands extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length > 0) {
             switch (args[0]) {
-                case "tips":
-                    modMessage(Utils.randomSelect(ChatCommands.tipList));
-                    break;
-                case "stats":
-                    modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock + "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon + "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() + "\n§7§l | §r§7Floor: " + PlayerStats.floor);
-                    break;
-                case "test":
-                    break;
                 case "rotate":
                     if (args.length < 4) {
                         modMessage("Usage: rotate <x> <y> <z>");
@@ -64,6 +53,17 @@ public class ClientCommands extends CommandBase {
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid position format");
                     }
+                    break;
+                case "stats":
+                    modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
+                            "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon +
+                            "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() +
+                            "\n§7§l | §r§7Floor: " + PlayerStats.floor);
+                    break;
+                case "tips":
+                    modMessage(Utils.randomSelect(ChatCommands.tipList));
+                    break;
+                case "test":
                     break;
                 case "wp_load":
                     if (args.length < 2) {
@@ -101,11 +101,11 @@ public class ClientCommands extends CommandBase {
 
     private static final String[] helpMsg = new String[]{
             "§8§m--------------------------------",
-            "§b           NecronClient §7v0.0.1",
+            "§b           NecronClient §7v0.0.3",
             "§r ",
-            "§b/necron tips §f§l»§r§7 获取一些神秘文本 (?",
-            "§b/necron stats §f§l»§r§7 查看当前玩家信息",
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
+            "§b/necron stats §f§l»§r§7 查看当前玩家信息",
+            "§b/necron tips §f§l»§r§7 获取一些神秘文本 (?",
             "§b/necron wp_load <file> §f§l»§r§7 加载路径点文件",
             "§b/necron wp_add §f§l»§r§7 添加脚下方块为路径点",
             "§b/necron wp_remove <id> §f§l»§r§7 删除指定id的路径点",

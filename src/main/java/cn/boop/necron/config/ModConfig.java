@@ -10,14 +10,13 @@ public class ModConfig extends Config {
     public ModConfig() {
         super(new Mod(Necron.MODNAME, ModType.UTIL_QOL), "necronclient.json");
         initialize();
-        addDependency("Router", "Waypoints");
     }
 
-    @Switch(name = "Chat Commands", description = "Party commands in Hypixel", subcategory = "General")
+    @Switch(name = "Chat Commands", description = "Party commands in Hypixel", category = "Hypixel")
     public static boolean chatCommands = true;
-    @Switch(name = "Color HurtCam", description = "Render your hurt camera", subcategory = "General")
+    @Switch(name = "Color HurtCam", description = "Render your hurt camera", category = "Client")
     public static boolean hurtCam = false;
-    @Switch(name = "Custom Title", description = "Custom window title", subcategory = "General")
+    @Switch(name = "Custom Title", description = "Custom window title", category = "Client")
     public static boolean customTitle = false;
     @Switch(name = "Etherwarp", description = "Left click to use Etherwarp ability", category = "SkyBlock")
     public static boolean etherwarp = false;
@@ -27,9 +26,7 @@ public class ModConfig extends Config {
     public static boolean router = false;
     @Switch(name = "AutoGG", description = "Auto send GG after a game", category = "Hypixel")
     public static boolean autoGG = false;
-    @Switch(name = "Auto Clicker", description = "Automatically click your mouse", category = "SkyBlock")
-    public static boolean autoClicker = false;
-    @Switch(name = "Blaze Dagger", description = "Auto swap BS daggers mode", category = "SkyBlock")
+    @Switch(name = "Blaze Dagger", description = "Auto swap blaze daggers' mode", category = "SkyBlock")
     public static boolean blazeDagger = false;
 
     public static final ModConfig INSTANCE = new ModConfig();
