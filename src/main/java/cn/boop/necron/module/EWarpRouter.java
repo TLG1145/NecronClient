@@ -5,6 +5,7 @@ import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
+import cn.boop.necron.utils.event.WaypointEventHandler;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,19 +34,25 @@ public class EWarpRouter {
     public void onTick(TickEvent.ClientTickEvent event) {
         boolean currentLeftClick = Mouse.isButtonDown(0);
 
-        if (ModConfig.router && PlayerStats.inSkyBlock) {
+        if (ModConfig.router && PlayerStats.inSkyBlock ) {
             if (!lastLeftClick && currentLeftClick && Necron.mc.currentScreen == null) {
-                handleLeftClick();
+                if (!WaypointEventHandler.isEditingWaypoint) handleLeftClick();
             }
         }
         lastLeftClick = currentLeftClick;
     }
 
+
+
     private void handleLeftClick() {
         if (isProcessing) return;
+        if (!Etherwarp.isCorrectItemInHand()) return;
         if (waypointCache.isEmpty()) {
-            Utils.modMessage("Waypoints file not loaded.");
-            return;
+            if(!routeCompletedNotified) {
+                Utils.modMessage("Waypoints file not loaded.");
+                routeCompletedNotified = true;
+                return;
+            }
         }
         if (currentWaypointIndex >= waypointCache.size()) {
             if (!routeCompletedNotified) {

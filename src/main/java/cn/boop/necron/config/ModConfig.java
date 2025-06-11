@@ -18,16 +18,20 @@ public class ModConfig extends Config {
     public static boolean hurtCam = false;
     @Switch(name = "Custom Title", description = "Custom window title", category = "Client")
     public static boolean customTitle = false;
-    @Switch(name = "Etherwarp", description = "Left click to use Etherwarp ability", category = "SkyBlock")
+    @Switch(name = "Etherwarp", description = "Left click to use Etherwarp ability", category = "SkyBlock", subcategory = "QoL")
     public static boolean etherwarp = false;
-    @Switch(name = "Waypoints", description = "Custom waypoint", category = "SkyBlock")
+    @Switch(name = "Waypoints", description = "Custom waypoint", category = "SkyBlock", subcategory = "QoL")
     public static boolean waypoints = false;
-    @Switch(name = "Router", description = "Etherwarp route", category = "SkyBlock")
+    @Switch(name = "Router", description = "Etherwarp route", category = "SkyBlock", subcategory = "UOYR")
     public static boolean router = false;
     @Switch(name = "AutoGG", description = "Auto send GG after a game", category = "Hypixel")
     public static boolean autoGG = false;
-    @Switch(name = "Blaze Dagger", description = "Auto swap blaze daggers' mode", category = "SkyBlock")
+    @Switch(name = "Blaze Dagger", description = "Auto swap blaze daggers' mode", category = "SkyBlock", subcategory = "Slayer")
     public static boolean blazeDagger = false;
+    @Switch(name = "SimonSays", description = "Features for SimonSays (Not complete!)", category = "Hypixel", subcategory = "Simon Says")
+    public static boolean simonSays = false;
+    @Dropdown(name = "Mode", options = {"Legit", "Auto"}, description = "SimonSays mode", category = "Hypixel", subcategory = "Simon Says")
+    public static int simonSaysMode = 0;
 
     public static final ModConfig INSTANCE = new ModConfig();
 }

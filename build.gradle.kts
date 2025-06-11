@@ -88,7 +88,7 @@ tasks {
         filesMatching(listOf("mcmod.info", "mixins.necronclient.json")) {
             expand(
                 mapOf(
-                    "version" to "0.0.3",
+                    "version" to "0.0.4",
                     "mcversion" to "1.8.9",
                     "modid" to modid,
                     "basePackage" to baseGroup

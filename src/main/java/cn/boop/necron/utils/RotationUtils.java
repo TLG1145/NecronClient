@@ -62,14 +62,14 @@ public class RotationUtils {
         setRotation(currentYaw + deltaYaw * dynamicSpeed, currentPitch + deltaPitch * dynamicSpeed);
     }
 
-    public static void rotatingToBlock(double x, double y, double z) {
+    public static void rotatingToBlock(double x, double y, double z, double speed) {
         new Thread(() -> {
             Vec3 target = new Vec3(x, y, z);
 
             while (true) {
                 float currentYaw = RotationUtils.yaw();
                 float currentPitch = RotationUtils.pitch();
-                RotationUtils.aimAtBlockPosition(target, 0.5f);
+                RotationUtils.aimAtBlockPosition(target, (float) speed);
                 if (Math.abs(RotationUtils.yaw() - currentYaw) < 0.1f &&
                         Math.abs(RotationUtils.pitch() - currentPitch) < 0.1f) {
                     break;

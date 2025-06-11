@@ -40,7 +40,7 @@ public class RandomRNG {
             return "/pc " + username + " Nothing :<";
         }
 
-        StringBuilder sb = new StringBuilder("/pc " + username + "unlocked -> ");
+        StringBuilder sb = new StringBuilder("/pc " + username + " unlocked -> ");
         results.forEach((item, count) -> sb.append(String.format("%s ×%d ", item, count)));
 
         return sb.toString().trim();

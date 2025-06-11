@@ -6,7 +6,6 @@ import cn.boop.necron.Necron;
 import cn.boop.necron.utils.RenderUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
@@ -52,6 +51,7 @@ public class Waypoint {
             if (!created) return;
         } else {
             Utils.modMessage("Loaded " + waypoints.size() + " waypoints. §8[" + filename + "]");
+            Utils.modMessage("Press LALT to edit waypoints! ");
         }
 
         if (!waypoints.isEmpty()) {
@@ -65,36 +65,36 @@ public class Waypoint {
         }
     }
 
-    public static void addWaypoint() {
+    public static void addWaypoint(int x, int y, int z) {
         if (currentFile == null) {
             Utils.modMessage("Waypoints file not loaded.");
             return;
         }
         if (waypoints == null) waypoints = new ArrayList<>();
-        EntityPlayerSP player = Necron.mc.thePlayer;
-        BlockPos pos = new BlockPos(player.posX, player.posY, player.posZ);
-        int x = pos.getX();
-        int y = pos.getY() - 1;
-        int z = pos.getZ();
 
         Waypoint newWaypoint = new Waypoint(waypointCounter++, x, y, z);
         waypoints.add(newWaypoint);
         JsonLoader.saveWaypoints(waypoints, currentFile);
-        Utils.modMessage("Added waypoint #" + (waypointCounter - 1) + " at (" + x + ", " + y + ", " + z + ")");
+        Utils.modMessage("Added waypoint #" + (waypointCounter - 1) + " at BlockPos{x=" + x + ", y=" + y + ", z=" + z + "}");
     }
 
-    public static void removeWaypoint(int id) {
+    public static void removeWaypoint(BlockPos pos) {
         if (currentFile == null) {
             Utils.modMessage("Waypoints file not loaded.");
             return;
         }
-        waypoints.removeIf(wp -> wp.getId() == id);
-        for (int i = 0; i < waypoints.size(); i++) {
-            waypoints.get(i).setId(i + 1);
+        boolean removed = waypoints.removeIf(wp -> wp.x == pos.getX() && wp.y == pos.getY() && wp.z == pos.getZ());
+
+        if (removed) {
+            for (int i = 0; i < waypoints.size(); i++) {
+                waypoints.get(i).setId(i + 1);
+            }
+            ClientCommands.waypointCounter = waypoints.size() + 1;
+            saveWaypoints();
+            Utils.modMessage("Removed waypoint at BlockPos{x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ() + "}");
+        } else {
+            Utils.modMessage("No waypoint found at BlockPos{x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ() + "}");
         }
-        ClientCommands.waypointCounter = waypoints.size() + 1;
-        saveWaypoints();
-        Utils.modMessage("Removed waypoint #" + id);
     }
 
     private static void saveWaypoints() {

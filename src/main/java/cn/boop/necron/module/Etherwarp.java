@@ -30,21 +30,26 @@ public class Etherwarp {
         lastLeftClick = currentLeftClick;
     }
 
+    public static boolean isCorrectItemInHand() {
+        if (Necron.mc.thePlayer == null || Necron.mc.thePlayer.inventory.getCurrentItem() == null) {
+            return false;
+        }
+        String itemID = Utils.getSkyBlockID(Necron.mc.thePlayer.inventory.getCurrentItem());
+        return itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID");
+    }
+
     public static void useEtherwarp() {
         if (Necron.mc.currentScreen != null) return;
-        String itemID = Utils.getSkyBlockID(Necron.mc.thePlayer.inventory.getCurrentItem());
-        if (itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID")) {
-            new Thread(() -> {
-                try {
-                    PlayerUtils.setSneak(true);
-                    Thread.sleep(100);
-                    Necron.mc.playerController.sendUseItem(Necron.mc.thePlayer, Necron.mc.theWorld, Necron.mc.thePlayer.inventory.getCurrentItem());
-                    Thread.sleep(50);
-                    PlayerUtils.setSneak(false);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        }
+        new Thread(() -> {
+            try {
+                PlayerUtils.setSneak(true);
+                Thread.sleep(100);
+                Necron.mc.playerController.sendUseItem(Necron.mc.thePlayer, Necron.mc.theWorld, Necron.mc.thePlayer.inventory.getCurrentItem());
+                Thread.sleep(50);
+                PlayerUtils.setSneak(false);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

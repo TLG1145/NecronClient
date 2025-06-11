@@ -17,7 +17,7 @@ public class Necron {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
-    public static final String VERSION = "0.0.3";
+    public static final String VERSION = "0.0.4";
     public static final String WP_FILE_PATH = "./config/necron/waypoints/";
 
     @SuppressWarnings("InstantiationOfUtilityClass")
@@ -35,6 +35,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new EWarpRouter());
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new AutoGG());
+        MinecraftForge.EVENT_BUS.register(new SimonSays());
     }
 
     @Mod.EventHandler
