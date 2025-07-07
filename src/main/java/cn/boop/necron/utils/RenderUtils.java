@@ -247,4 +247,51 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
+
+    public static void draw3DText(String text, double x, double y, double z, int color, float partialTicks) {
+        Minecraft mc = Minecraft.getMinecraft();
+        Entity viewer = mc.getRenderViewEntity();
+
+        if (viewer == null) return;
+
+        double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
+        double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
+        double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
+
+        double distance = viewer.getDistance(x, y, z);
+
+        float minScale = 0.1f;
+        float maxScale = 0.15f;
+        float maxDistance = 70f;
+
+        float scale = minScale + (maxScale - minScale) * (float) Math.max(0, distance / maxDistance);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(
+                x - viewerX,
+                y - viewerY + 0.1F,
+                z - viewerZ
+        );
+        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+
+        GlStateManager.scale(-scale, -scale, scale);
+        GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+
+        int width = mc.fontRendererObj.getStringWidth(text) / 2;
+        float r = (float)(color >> 16 & 0xFF) / 255.0f;
+        float g = (float)(color >> 8 & 0xFF) / 255.0f;
+        float b = (float)(color & 0xFF) / 255.0f;
+        float a = (float)(color >> 24 & 0xFF) / 255.0f;
+
+        GlStateManager.color(r, g, b, a);
+        mc.fontRendererObj.drawString(text, -width, 0, color, true);
+
+        GlStateManager.color(1, 1, 1, 1);
+        GlStateManager.disableBlend();
+        GlStateManager.enableDepth();
+        GlStateManager.popMatrix();
+    }
 }

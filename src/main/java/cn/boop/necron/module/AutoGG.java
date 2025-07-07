@@ -21,7 +21,8 @@ public class AutoGG {
             "Last team standing!",
             "Top Survivors",
             "Winners - ",
-            "Duel - "
+            "Duel - ",
+            "GAME OVER!"
     };
 
     @SubscribeEvent

@@ -18,7 +18,7 @@ import java.util.List;
 public class EWarpRouter {
     private boolean lastLeftClick = false;
     static List<Waypoint> waypointCache = new ArrayList<>();
-    private static int currentWaypointIndex = 0;
+    public static int currentWaypointIndex = 0;
     private boolean isProcessing = false;
     static boolean routeCompleted = false;
     public static boolean routeCompletedNotified = false;
@@ -28,6 +28,10 @@ public class EWarpRouter {
         currentWaypointIndex = 0;
         routeCompleted = false;
         routeCompletedNotified = false;
+        if (waypointCache.isEmpty()) {
+            routeCompleted = true;
+            routeCompletedNotified = true;
+        }
     }
 
     @SubscribeEvent
@@ -46,21 +50,24 @@ public class EWarpRouter {
 
     private void handleLeftClick() {
         if (isProcessing) return;
-        if (!Etherwarp.isCorrectItemInHand()) return;
-        if (waypointCache.isEmpty()) {
-            if(!routeCompletedNotified) {
-                Utils.modMessage("Waypoints file not loaded.");
-                routeCompletedNotified = true;
+        String itemID = Utils.getSkyBlockID(Necron.mc.thePlayer.inventory.getCurrentItem());
+        if (itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID")){
+            if (waypointCache.isEmpty()) {
+                if (!routeCompletedNotified) {
+                    Utils.modMessage("Waypoints file not loaded.");
+                    routeCompletedNotified = true;
+                    return;
+                }
+            }
+            if (currentWaypointIndex >= waypointCache.size() || currentWaypointIndex < 0) {
+                if (!routeCompletedNotified) {
+                    Utils.modMessage("Route completed.");
+                    routeCompleted = true;
+                    routeCompletedNotified = true;
+                }
+                currentWaypointIndex = Math.max(0, waypointCache.size() - 1);
                 return;
             }
-        }
-        if (currentWaypointIndex >= waypointCache.size()) {
-            if (!routeCompletedNotified) {
-                Utils.modMessage("Route completed.");
-                routeCompleted = true;
-                routeCompletedNotified = true;
-            }
-            return;
         }
 
         isProcessing = true;
@@ -70,7 +77,7 @@ public class EWarpRouter {
 
         Vec3 closestFaceCenter = RotationUtils.getClosestExposedFaceCenter(Necron.mc.theWorld, pos, Necron.mc.thePlayer);
         if (closestFaceCenter == null) {
-            Utils.modMessage("Unable to etherwarp to waypoint #" + wp.getId());
+            Utils.modMessage("Exception at #" + wp.getId());
             isProcessing = false;
             currentWaypointIndex++;
             return;

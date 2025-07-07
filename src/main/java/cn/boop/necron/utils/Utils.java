@@ -15,8 +15,8 @@ public class Utils {
         Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bNecron §8»§r§7 " + msg));
     }
 
-    public static void chatMessage(String msg) {
-        Necron.mc.thePlayer.sendChatMessage(msg);
+    public static void chatMessage(String cmd) {
+        Necron.mc.thePlayer.sendChatMessage(cmd);
     }
 
     public static String removeFormatting(String input) {

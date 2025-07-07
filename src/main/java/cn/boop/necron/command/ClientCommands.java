@@ -13,8 +13,6 @@ import java.util.*;
 import static cn.boop.necron.utils.Utils.modMessage;
 
 public class ClientCommands extends CommandBase {
-    public static int waypointCounter = 1;
-
     @Override
     public String getCommandName() {
         return "necron";
@@ -48,7 +46,7 @@ public class ClientCommands extends CommandBase {
                         double x = Double.parseDouble(args[1]);
                         double y = Double.parseDouble(args[2]);
                         double z = Double.parseDouble(args[3]);
-                        RotationUtils.rotatingToBlock(x + 0.5, y + 0.5, z + 0.5, 0.5);
+                        RotationUtils.rotatingToBlock(x, y, z, 0.5f);
                         modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid position format");
@@ -64,7 +62,6 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
-                    System.out.println(SimonSays.sequence);
                     break;
                 case "wp_load":
                     if (args.length < 2) {
@@ -87,7 +84,7 @@ public class ClientCommands extends CommandBase {
 
     private static final String[] helpMsg = new String[]{
             "§8§m--------------------------------",
-            "§b           NecronClient §7v0.0.4",
+            "§b           NecronClient §7v" + Necron.VERSION,
             "§r ",
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
             "§b/necron stats §f§l»§r§7 查看当前玩家信息",

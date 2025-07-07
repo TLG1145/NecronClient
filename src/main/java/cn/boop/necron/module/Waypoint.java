@@ -1,6 +1,5 @@
 package cn.boop.necron.module;
 
-import cn.boop.necron.command.ClientCommands;
 import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.RenderUtils;
@@ -15,10 +14,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.boop.necron.command.ClientCommands.waypointCounter;
-
 public class Waypoint {
     private int id, x, y, z;
+    private static int waypointCounter = 1;
 
     public Waypoint(int id, int x, int y, int z) {
         this.id = id;
@@ -41,7 +39,6 @@ public class Waypoint {
 
     public static void loadWaypoints(String filename) {
         if (filename == null || filename.isEmpty()) return;
-
         currentFile = Necron.WP_FILE_PATH + filename + ".json";
         waypoints = JsonLoader.loadWaypoints(currentFile);
 
@@ -51,7 +48,7 @@ public class Waypoint {
             if (!created) return;
         } else {
             Utils.modMessage("Loaded " + waypoints.size() + " waypoints. §8[" + filename + "]");
-            Utils.modMessage("Press LALT to edit waypoints! ");
+            Utils.modMessage("Press ALT to edit waypoints! ");
         }
 
         if (!waypoints.isEmpty()) {
@@ -59,23 +56,26 @@ public class Waypoint {
                     .mapToInt(Waypoint::getId)
                     .max()
                     .orElse(0);
-            ClientCommands.waypointCounter = maxId + 1;
+            waypointCounter = maxId + 1;
         } else {
-            ClientCommands.waypointCounter = 1;
+            waypointCounter = 1;
         }
     }
 
-    public static void addWaypoint(int x, int y, int z) {
+    public static void addWaypoint(BlockPos pos) {
         if (currentFile == null) {
             Utils.modMessage("Waypoints file not loaded.");
             return;
         }
+
         if (waypoints == null) waypoints = new ArrayList<>();
 
-        Waypoint newWaypoint = new Waypoint(waypointCounter++, x, y, z);
+        Waypoint newWaypoint = new Waypoint(waypointCounter++, pos.getX(), pos.getY(), pos.getZ());
         waypoints.add(newWaypoint);
         JsonLoader.saveWaypoints(waypoints, currentFile);
-        Utils.modMessage("Added waypoint #" + (waypointCounter - 1) + " at BlockPos{x=" + x + ", y=" + y + ", z=" + z + "}");
+        Utils.modMessage("Added BlockPos{x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ() + "} as waypoint #" + (waypointCounter - 1));
+
+        onWaypointsChanged();
     }
 
     public static void removeWaypoint(BlockPos pos) {
@@ -89,7 +89,7 @@ public class Waypoint {
             for (int i = 0; i < waypoints.size(); i++) {
                 waypoints.get(i).setId(i + 1);
             }
-            ClientCommands.waypointCounter = waypoints.size() + 1;
+            waypointCounter = waypoints.size() + 1;
             saveWaypoints();
             Utils.modMessage("Removed waypoint at BlockPos{x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ() + "}");
         } else {
@@ -145,10 +145,32 @@ public class Waypoint {
                     2f,
                     partialTicks
             );
+
+
+            RenderUtils.draw3DText(
+                    "#" + wp.id,
+                    wp.x + 0.5,
+                    wp.y + 0.5,
+                    wp.z + 0.5,
+                    new Color(162, 102, 232, 255).getRGB(),
+                    partialTicks
+            );
         }
 
         GlStateManager.disableBlend();
         GlStateManager.enableTexture2D();
         GlStateManager.popMatrix();
     }
+
+    public static void onWaypointsChanged() {
+        EWarpRouter.currentWaypointIndex = 0;
+        if (waypoints.isEmpty()) {
+            EWarpRouter.routeCompleted = true;
+            EWarpRouter.routeCompletedNotified = true;
+        } else {
+            EWarpRouter.routeCompleted = false;
+            EWarpRouter.routeCompletedNotified = false;
+        }
+    }
+
 }

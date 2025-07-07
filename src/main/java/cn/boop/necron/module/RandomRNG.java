@@ -1,6 +1,7 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.utils.Utils;
+import cn.boop.necron.utils.event.RollLogger;
 import kotlin.Pair;
 
 import java.util.*;
@@ -41,7 +42,10 @@ public class RandomRNG {
         }
 
         StringBuilder sb = new StringBuilder("/pc " + username + " unlocked -> ");
-        results.forEach((item, count) -> sb.append(String.format("%s ×%d ", item, count)));
+        results.forEach((item, count) -> {
+            sb.append(String.format("%s ×%d ", item, count));
+            RollLogger.logRollResult(username, item, count);
+        });
 
         return sb.toString().trim();
     }

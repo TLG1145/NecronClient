@@ -20,7 +20,6 @@ public class PlayerStats {
         CRIMSON_ISLE("Crimson Isle"),
         KUUDRAS_HOLLOW("Kuudra's Hollow"),
         THE_END("The End"),
-        THE_PARK("The Park"),
         GOLD_MINE("Gold Mine"),
         DEEP_CAVERNS("Deep Caverns"),
         DWARVEN_MINES("Dwarven Mines"),

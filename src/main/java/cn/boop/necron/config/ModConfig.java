@@ -12,7 +12,7 @@ public class ModConfig extends Config {
         initialize();
     }
 
-    @Switch(name = "Chat Commands", description = "Party commands in Hypixel", category = "Hypixel")
+    @Switch(name = "Chat Commands", description = "Party commands in Hypixel", category = "Hypixel", subcategory = "Chat")
     public static boolean chatCommands = true;
     @Switch(name = "Color HurtCam", description = "Render your hurt camera", category = "Client")
     public static boolean hurtCam = false;
@@ -22,16 +22,14 @@ public class ModConfig extends Config {
     public static boolean etherwarp = false;
     @Switch(name = "Waypoints", description = "Custom waypoint", category = "SkyBlock", subcategory = "QoL")
     public static boolean waypoints = false;
-    @Switch(name = "Router", description = "Etherwarp route", category = "SkyBlock", subcategory = "UOYR")
+    @Switch(name = "Router", description = "Etherwarp route (WIP)", category = "SkyBlock", subcategory = "UYOR")
     public static boolean router = false;
-    @Switch(name = "AutoGG", description = "Auto send GG after a game", category = "Hypixel")
+    @Switch(name = "AutoGG", description = "Auto send GG after a game", category = "Hypixel", subcategory = "Chat")
     public static boolean autoGG = false;
     @Switch(name = "Blaze Dagger", description = "Auto swap blaze daggers' mode", category = "SkyBlock", subcategory = "Slayer")
     public static boolean blazeDagger = false;
-    @Switch(name = "SimonSays", description = "Features for SimonSays (Not complete!)", category = "Hypixel", subcategory = "Simon Says")
-    public static boolean simonSays = false;
-    @Dropdown(name = "Mode", options = {"Legit", "Auto"}, description = "SimonSays mode", category = "Hypixel", subcategory = "Simon Says")
-    public static int simonSaysMode = 0;
+    @Switch(name = "Nametags", description = "Display nametags of players", category = "Hypixel", subcategory = "Nametags")
+    public static boolean nametags = false;
 
     public static final ModConfig INSTANCE = new ModConfig();
 }
