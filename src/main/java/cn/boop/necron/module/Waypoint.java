@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Waypoint {
-    private int id, x, y, z;
+    private int id;
+    private final int x;
+    private final int y;
+    private final int z;
     private static int waypointCounter = 1;
 
     public Waypoint(int id, int x, int y, int z) {
@@ -127,34 +130,12 @@ public class Waypoint {
             double y2 = wp2.y + 0.5;
             double z2 = wp2.z + 0.5;
 
-            Color lineColor = new Color(39, 161, 227, 255); // 红色
-            float r = (float) lineColor.getRed() / 255;
-            float g = (float) lineColor.getGreen() / 255;
-            float b = (float) lineColor.getBlue() / 255;
-            float a = (float) lineColor.getAlpha() / 255;
-            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2,
-                    r, g, b, a, 1.5f);
+            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2, new Color(130, 205, 251, 255), 1.5f);
         }
 
         for (Waypoint wp : waypoints) {
-            RenderUtils.drawOutlinedBlockESP(
-                    wp.x,
-                    wp.y,
-                    wp.z,
-                    new Color(197, 229, 248, 255),
-                    2f,
-                    partialTicks
-            );
-
-
-            RenderUtils.draw3DText(
-                    "#" + wp.id,
-                    wp.x + 0.5,
-                    wp.y + 0.5,
-                    wp.z + 0.5,
-                    new Color(162, 102, 232, 255).getRGB(),
-                    partialTicks
-            );
+            RenderUtils.drawOutlinedBlockESP(wp.x, wp.y, wp.z, new Color(63, 191, 237, 255), 2f, partialTicks);
+            RenderUtils.draw3DText("#" + wp.id, wp.x + 0.5, wp.y + 0.5, wp.z + 0.5, new Color(59, 141, 243, 255), partialTicks);
         }
 
         GlStateManager.disableBlend();
