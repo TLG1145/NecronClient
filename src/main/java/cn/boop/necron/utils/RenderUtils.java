@@ -178,7 +178,13 @@ public class RenderUtils {
         GlStateManager.disableTexture2D();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glLineWidth(lineWidth);
-        GL11.glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
+
+        float r = (float) color.getRed() / 255;
+        float g = (float) color.getGreen() / 255;
+        float b = (float) color.getBlue() / 255;
+        float a = (float) color.getAlpha() / 255;
+
+        GL11.glColor4f(r, g, b, a);
         RenderUtils.drawOutlinedBoundingBox(new AxisAlignedBB(
                 x - viewerX, y - viewerY, z - viewerZ,
                 x + 1 - viewerX, y + 1 - viewerY, z + 1 - viewerZ
@@ -218,7 +224,7 @@ public class RenderUtils {
         tessellator.draw();
     }
 
-    public static void draw3DLine(double x, double y, double z, double x1, double y1, double z1, float red, float green, float blue, float alpha, float lineWidth) {
+    public static void draw3DLine(double x, double y, double z, double x1, double y1, double z1, Color color, float lineWidth) {
         double viewerX = Necron.mc.getRenderManager().viewerPosX;
         double viewerY = Necron.mc.getRenderManager().viewerPosY;
         double viewerZ = Necron.mc.getRenderManager().viewerPosZ;
@@ -235,7 +241,13 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glLineWidth(lineWidth);
-        GL11.glColor4f(red, green, blue, alpha);
+
+        float r = (float) color.getRed() / 255;
+        float g = (float) color.getGreen() / 255;
+        float b = (float) color.getBlue() / 255;
+        float a = (float) color.getAlpha() / 255;
+
+        GL11.glColor4f(r, g, b, a);
 
         GL11.glBegin(GL11.GL_LINES);
         GL11.glVertex3d(x, y, z);
@@ -248,7 +260,7 @@ public class RenderUtils {
         GL11.glPopMatrix();
     }
 
-    public static void draw3DText(String text, double x, double y, double z, int color, float partialTicks) {
+    public static void draw3DText(String text, double x, double y, double z, Color color, float partialTicks) {
         Minecraft mc = Minecraft.getMinecraft();
         Entity viewer = mc.getRenderViewEntity();
 
@@ -258,18 +270,17 @@ public class RenderUtils {
         double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
         double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
 
-        double distance = viewer.getDistance(x, y, z);
+        float width = mc.fontRendererObj.getStringWidth(text) / 2.0f;
+        float height = mc.fontRendererObj.FONT_HEIGHT / 2.0f;
 
-        float minScale = 0.1f;
-        float maxScale = 0.15f;
-        float maxDistance = 70f;
-
-        float scale = minScale + (maxScale - minScale) * (float) Math.max(0, distance / maxDistance);
+        float size = (float)Necron.mc.thePlayer.getDistance(x, y, z) / 10.0f;
+        if (size < 1.1f) size = 1.1f;
+        float scale = (size * 2f) / 100.0f;
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(
                 x - viewerX,
-                y - viewerY + 0.1F,
+                y - viewerY,
                 z - viewerZ
         );
         GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
@@ -280,14 +291,15 @@ public class RenderUtils {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-        int width = mc.fontRendererObj.getStringWidth(text) / 2;
-        float r = (float)(color >> 16 & 0xFF) / 255.0f;
-        float g = (float)(color >> 8 & 0xFF) / 255.0f;
-        float b = (float)(color & 0xFF) / 255.0f;
-        float a = (float)(color >> 24 & 0xFF) / 255.0f;
+        float r = (float) color.getRed() / 255;
+        float g = (float) color.getGreen() / 255;
+        float b = (float) color.getBlue() / 255;
+        float a = (float) color.getAlpha() / 255;
+
+        GL11.glColor4f(r, g, b, a);
 
         GlStateManager.color(r, g, b, a);
-        mc.fontRendererObj.drawString(text, -width, 0, color, true);
+        mc.fontRendererObj.drawString(text, -width, -height, color.getRGB(), true);
 
         GlStateManager.color(1, 1, 1, 1);
         GlStateManager.disableBlend();
