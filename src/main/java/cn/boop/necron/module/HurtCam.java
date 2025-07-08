@@ -32,13 +32,7 @@ public final class HurtCam {
         if (event.type == RenderGameOverlayEvent.ElementType.ALL) {
             if (HurtCam.isHurt() && ModConfig.hurtCam && Minecraft.getMinecraft().currentScreen == null) {
                 ScaledResolution sc = new ScaledResolution(Minecraft.getMinecraft());
-                RenderUtils.drawBorderedRect(
-                        0.0f,
-                        0.0f,
-                        sc.getScaledWidth(),
-                        sc.getScaledHeight(),
-                        10.0f,
-                        new Color(255, 0, 0, 25 * Necron.mc.thePlayer.hurtTime).getRGB()  // 纯红色描边
+                RenderUtils.drawBorderedRect(0.0f, 0.0f, sc.getScaledWidth(), sc.getScaledHeight(), 10.0f, new Color(255, 0, 0, 25 * Necron.mc.thePlayer.hurtTime).getRGB()
                 );
             }
         }

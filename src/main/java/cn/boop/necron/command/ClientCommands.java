@@ -2,6 +2,7 @@ package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.*;
+import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -62,14 +63,14 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
-                    modMessage("Index: " + EWarpRouter.currentWaypointIndex);
+                    PlayerUtils.rightClick();
                     break;
                 case "load":
                     if (args.length < 2) {
-                        modMessage("Usage: wp_load <file>");
+                        modMessage("Usage: load <file>");
                         break;
                     }
-                    EWarpRouter.loadWaypoints(args[1]);
+                    EtherwarpRouter.loadWaypoints(args[1]);
                     Waypoint.loadWaypoints(args[1]);
                     break;
                 default:
@@ -89,7 +90,7 @@ public class ClientCommands extends CommandBase {
             "§r ",
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
             "§b/necron stats §f§l»§r§7 查看当前玩家信息",
-            "§b/necron tips §f§l»§r§7 获取一些神秘文本 (?",
+            "§b/necron tips §f§l»§r§7 获取一些神秘文本",
             "§b/necron load <file> §f§l»§r§7 加载路径点文件",
             "§r§8§m--------------------------------"
     };

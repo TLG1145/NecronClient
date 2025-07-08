@@ -58,7 +58,7 @@ public class RotationUtils {
 
         float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         float dynamicSpeed = baseSpeed * (float) Math.atan(distance * 0.1);
-        dynamicSpeed = Math.max(dynamicSpeed, 0.07f);
+        dynamicSpeed = Math.max(dynamicSpeed, 0.1f);
         setRotation(currentYaw + deltaYaw * dynamicSpeed, currentPitch + deltaPitch * dynamicSpeed);
     }
 

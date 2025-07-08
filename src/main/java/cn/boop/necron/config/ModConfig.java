@@ -22,7 +22,7 @@ public class ModConfig extends Config {
     public static boolean etherwarp = false;
     @Switch(name = "Waypoints", description = "Custom waypoint", category = "SkyBlock", subcategory = "QoL")
     public static boolean waypoints = false;
-    @Switch(name = "Router", description = "Etherwarp route (WIP)", category = "SkyBlock", subcategory = "UYOR")
+    @Switch(name = "Router", description = "Etherwarp route (WIP)", category = "SkyBlock", subcategory = "Router")
     public static boolean router = false;
     @Switch(name = "AutoGG", description = "Auto send GG after a game", category = "Hypixel", subcategory = "Chat")
     public static boolean autoGG = false;
@@ -30,6 +30,8 @@ public class ModConfig extends Config {
     public static boolean blazeDagger = false;
     @Switch(name = "Nametags", description = "Display nametags of players", category = "Hypixel", subcategory = "Nametags")
     public static boolean nametags = false;
+    @Switch(name = "Loop Mode", description = "If you are doing gemstone mining, enable this", category = "SkyBlock", subcategory = "Router")
+    public static boolean isLoop = false;
 
     public static final ModConfig INSTANCE = new ModConfig();
 }

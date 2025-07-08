@@ -9,7 +9,10 @@ public class PlayerUtils {
     }
 
     public static void rightClick() {
-        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindUseItem.getKeyCode(), true);
         KeyBinding.onTick(Necron.mc.gameSettings.keyBindUseItem.getKeyCode());
+    }
+
+    public static void leftClick() {
+        KeyBinding.onTick(Necron.mc.gameSettings.keyBindAttack.getKeyCode());
     }
 }

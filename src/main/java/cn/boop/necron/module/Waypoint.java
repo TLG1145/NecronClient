@@ -1,7 +1,7 @@
 package cn.boop.necron.module;
 
-import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.Necron;
+import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.RenderUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -43,11 +43,11 @@ public class Waypoint {
     public static void loadWaypoints(String filename) {
         if (filename == null || filename.isEmpty()) return;
         currentFile = Necron.WP_FILE_PATH + filename + ".json";
-        waypoints = JsonLoader.loadWaypoints(currentFile);
+        waypoints = JsonUtils.loadWaypoints(currentFile);
 
         if (waypoints.isEmpty()) {
             waypoints = new ArrayList<>();
-            boolean created = JsonLoader.saveWaypoints(waypoints, currentFile);
+            boolean created = JsonUtils.saveWaypoints(waypoints, currentFile);
             if (!created) return;
         } else {
             Utils.modMessage("Loaded " + waypoints.size() + " waypoints. §8[" + filename + "]");
@@ -75,7 +75,7 @@ public class Waypoint {
 
         Waypoint newWaypoint = new Waypoint(waypointCounter++, pos.getX(), pos.getY(), pos.getZ());
         waypoints.add(newWaypoint);
-        JsonLoader.saveWaypoints(waypoints, currentFile);
+        JsonUtils.saveWaypoints(waypoints, currentFile);
         Utils.modMessage("Added BlockPos{x=" + pos.getX() + ", y=" + pos.getY() + ", z=" + pos.getZ() + "} as waypoint #" + (waypointCounter - 1));
 
         onWaypointsChanged();
@@ -102,7 +102,7 @@ public class Waypoint {
 
     private static void saveWaypoints() {
         if (currentFile != null) {
-            JsonLoader.saveWaypoints(waypoints, currentFile);
+            JsonUtils.saveWaypoints(waypoints, currentFile);
         }
     }
 
@@ -130,12 +130,12 @@ public class Waypoint {
             double y2 = wp2.y + 0.5;
             double z2 = wp2.z + 0.5;
 
-            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2, new Color(130, 205, 251, 255), 1.5f);
+            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2, new Color(58, 160, 239, 255), 1.5f);
         }
 
         for (Waypoint wp : waypoints) {
-            RenderUtils.drawOutlinedBlockESP(wp.x, wp.y, wp.z, new Color(63, 191, 237, 255), 2f, partialTicks);
-            RenderUtils.draw3DText("#" + wp.id, wp.x + 0.5, wp.y + 0.5, wp.z + 0.5, new Color(59, 141, 243, 255), partialTicks);
+            RenderUtils.drawOutlinedBlockESP(wp.x, wp.y, wp.z, new Color(163, 212, 244, 255), 2f, partialTicks);
+            RenderUtils.draw3DText("#" + wp.id, wp.x + 0.5, wp.y + 0.5, wp.z + 0.5, new Color(79, 170, 225, 255), partialTicks);
         }
 
         GlStateManager.disableBlend();
@@ -144,13 +144,13 @@ public class Waypoint {
     }
 
     public static void onWaypointsChanged() {
-        EWarpRouter.currentWaypointIndex = 0;
+        EtherwarpRouter.currentWaypointIndex = 0;
         if (waypoints.isEmpty()) {
-            EWarpRouter.routeCompleted = true;
-            EWarpRouter.routeCompletedNotified = true;
+            EtherwarpRouter.routeCompleted = true;
+            EtherwarpRouter.routerNotified = true;
         } else {
-            EWarpRouter.routeCompleted = false;
-            EWarpRouter.routeCompletedNotified = false;
+            EtherwarpRouter.routeCompleted = false;
+            EtherwarpRouter.routerNotified = false;
         }
     }
 

@@ -6,6 +6,7 @@ import cn.boop.necron.module.Waypoint;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -33,8 +34,13 @@ public class WaypointEventHandler {
             return;
         }
 
-        BlockPos lookingAt = Necron.mc.thePlayer.rayTrace(5.0d, 1.0f).getBlockPos();
-        if (lookingAt == null) return;
+        MovingObjectPosition rayTraceResult = Necron.mc.thePlayer.rayTrace(5.0d, 1.0f);
+        if (rayTraceResult == null || rayTraceResult.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK) {
+            resetEditingState();
+            return;
+        }
+
+        BlockPos lookingAt = rayTraceResult.getBlockPos();
 
         IBlockState state = Necron.mc.theWorld.getBlockState(lookingAt);
         if (state == null) {

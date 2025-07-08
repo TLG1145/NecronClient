@@ -32,7 +32,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new RandomRNG());
         MinecraftForge.EVENT_BUS.register(new Etherwarp());
         MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
-        MinecraftForge.EVENT_BUS.register(new EWarpRouter());
+        MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new AutoGG());
         MinecraftForge.EVENT_BUS.register(new Nametags());

@@ -1,4 +1,4 @@
-package cn.boop.necron.config;
+package cn.boop.necron.utils;
 
 import cn.boop.necron.module.ChatCommands;
 import cn.boop.necron.module.Waypoint;
@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
-public class JsonLoader {
+public class JsonUtils {
     private static final Gson GSON = new Gson();
 
     public static List<String> loadTips() {

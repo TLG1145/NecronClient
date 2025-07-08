@@ -1,7 +1,7 @@
 package cn.boop.necron.module;
 
-import cn.boop.necron.config.JsonLoader;
 import cn.boop.necron.config.ModConfig;
+import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -12,7 +12,7 @@ import java.util.regex.*;
 
 public class ChatCommands {
     public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*!(.+)");
-    public static final List<String> tipList = new java.util.ArrayList<>(JsonLoader.loadTips());
+    public static final List<String> tipList = new java.util.ArrayList<>(JsonUtils.loadTips());
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
