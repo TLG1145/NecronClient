@@ -15,7 +15,7 @@ public class Etherwarp {
     public void onTick(TickEvent.ClientTickEvent event) {
         boolean currentLeftClick = Mouse.isButtonDown(0);
         if (ModConfig.etherwarp && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null) {
-            if (EWarpRouter.waypointCache.isEmpty() || !EWarpRouter.routeCompleted) {
+            if (EWarpRouter.waypointCache.isEmpty() || EWarpRouter.currentWaypointIndex == -1) {
                 if (!lastLeftClick && currentLeftClick) {
                     useEtherwarp();
                 }

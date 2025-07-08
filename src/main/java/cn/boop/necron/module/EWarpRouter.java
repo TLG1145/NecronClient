@@ -18,7 +18,7 @@ import java.util.List;
 public class EWarpRouter {
     private boolean lastLeftClick = false;
     static List<Waypoint> waypointCache = new ArrayList<>();
-    public static int currentWaypointIndex = 0;
+    public static int currentWaypointIndex = -1;
     private boolean isProcessing = false;
     static boolean routeCompleted = false;
     public static boolean routeCompletedNotified = false;
@@ -49,7 +49,7 @@ public class EWarpRouter {
 
 
     private void handleLeftClick() {
-        if (isProcessing) return;
+        if (isProcessing || Necron.mc.thePlayer.inventory.getCurrentItem() == null) return;
         String itemID = Utils.getSkyBlockID(Necron.mc.thePlayer.inventory.getCurrentItem());
         if (itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID")){
             if (waypointCache.isEmpty()) {
@@ -65,7 +65,8 @@ public class EWarpRouter {
                     routeCompleted = true;
                     routeCompletedNotified = true;
                 }
-                currentWaypointIndex = Math.max(0, waypointCache.size() - 1);
+                currentWaypointIndex = -1;
+                //currentWaypointIndex = Math.max(0, waypointCache.size() - 1);
                 return;
             }
         }
@@ -83,7 +84,7 @@ public class EWarpRouter {
             return;
         }
 
-        RotationUtils.asyncAimAt(closestFaceCenter, 0.30f);
+        RotationUtils.asyncAimAt(closestFaceCenter, 0.35f);
         Utils.modMessage("Rotating.");
 
         new Thread(() -> {

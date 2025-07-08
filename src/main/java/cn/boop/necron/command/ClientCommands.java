@@ -62,8 +62,9 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
+                    modMessage("Index: " + EWarpRouter.currentWaypointIndex);
                     break;
-                case "wp_load":
+                case "load":
                     if (args.length < 2) {
                         modMessage("Usage: wp_load <file>");
                         break;
@@ -89,7 +90,7 @@ public class ClientCommands extends CommandBase {
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
             "§b/necron stats §f§l»§r§7 查看当前玩家信息",
             "§b/necron tips §f§l»§r§7 获取一些神秘文本 (?",
-            "§b/necron wp_load <file> §f§l»§r§7 加载路径点文件",
+            "§b/necron load <file> §f§l»§r§7 加载路径点文件",
             "§r§8§m--------------------------------"
     };
 }
