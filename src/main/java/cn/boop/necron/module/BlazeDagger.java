@@ -19,13 +19,23 @@ import org.lwjgl.input.Mouse;
 public class BlazeDagger {
     private long lastClickTime = 0L;
     public static boolean isLeftMouseDown = false;
+    private boolean lastLeftMouseDown = false;
+    private boolean isLeftMouseClicked = false;
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
+        boolean currentLeftClick = Mouse.isButtonDown(0);
         if (Necron.mc.theWorld == null || Necron.mc.thePlayer == null) return;
         if (Necron.mc.currentScreen != null) return;
-        isLeftMouseDown = Mouse.isButtonDown(0);
+
+        isLeftMouseDown = currentLeftClick;
+        isLeftMouseClicked = currentLeftClick && !lastLeftMouseDown;
+        lastLeftMouseDown = currentLeftClick;
     }
+
+    /*
+     *   Source code from MelodySky.
+     */
 
     @SubscribeEvent(priority= EventPriority.LOWEST, receiveCanceled=true)
     public void onRenderEntity(RenderLivingEvent.Pre<EntityLivingBase> event) {
@@ -38,7 +48,7 @@ public class BlazeDagger {
             double x = event.entity.posX;
             double y = event.entity.posY;
             double z = event.entity.posZ;
-            if (ModConfig.blazeDagger && isLeftMouseDown() && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
+            if (ModConfig.blazeDagger && (isLeftMouseDown() || isLeftMouseClicked) && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
                 if (entityName.startsWith("CRYSTAL")) {
                     if (this.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
                         swapToCrystal();

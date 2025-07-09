@@ -6,7 +6,7 @@
 
 ## 用法
 
-在Release中下载最新的mod.jar，将其放入你的mods文件夹，然后启动游戏
+该MOD仅用于提升游戏体验，没有不合法功能
 
 前置模组：
 
@@ -14,18 +14,15 @@
 
 [Forge 1.8.9](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html)
 
+> [!NOTE]
+> 本项目默认使用[DevAuth](https://github.com/DJtheRedstoner/DevAuth)
 
-## 部分功能列表
+## 功能列表
 
-- Hypixel的组队命令和AutoGG
+- Hypixel组队命令和AutoGG
 - 可自定义的路径点
-- 仅在SkyBlock中可用的Nametags
+- 仅在SkyBlock/Pit中可用的Nametags
 - Slayer辅助功能
-- 半自动Etherwarp路线 [WIP]
+- 半自动Etherwarp路线
 
-**TODO: 将部分功能移植到Fabric 1.21.5版本，以跟进最新的[伐木更新](https://hypixel.net/threads/hypixel-skyblock-0-23-the-foraging-update.5921261/)。**
-
-
-> [!WARNING]
-> Necron Forge仍处于开发阶段！！
-> 
+**TODO: 支持Fabric 1.21.5版本，以跟进最新的[伐木更新](https://hypixel.net/threads/hypixel-skyblock-0-23-the-foraging-update.5921261/)。**
