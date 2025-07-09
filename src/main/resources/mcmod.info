@@ -2,10 +2,10 @@
   {
     "modid": "necronclient",
     "name": "Necron",
-    "description": "A Qol mod used on Hypixel Network",
+    "description": "A QoL mod used on Hypixel Network",
     "version": "0.0.5",
     "mcversion": "1.8.9",
-    "url": "www.baidu.com",
+    "url": "https://github.com/TLG1145/NecronClient",
     "updateUrl": "",
     "authorList": [
       "MixinNecron"
