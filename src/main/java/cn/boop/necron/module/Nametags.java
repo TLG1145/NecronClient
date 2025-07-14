@@ -87,7 +87,7 @@ public final class Nametags {
 
     @SubscribeEvent
     public void onRenderName(RenderLivingEvent.Specials.Pre<EntityPlayer> event) {
-        if (event.entity instanceof EntityPlayer && event.entity != Necron.mc.thePlayer && ModConfig.nametags) {
+        if (event.entity instanceof EntityPlayer && event.entity != Necron.mc.thePlayer && PlayerStats.inSkyBlock) {
             event.setCanceled(true);
         }
     }

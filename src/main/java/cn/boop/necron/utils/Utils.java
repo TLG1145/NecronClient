@@ -9,7 +9,7 @@ import kotlin.Pair;
 import java.util.*;
 
 public class Utils {
-    private static final Random random = new Random();
+    public static final Random random = new Random();
 
     public static void modMessage(String msg) {
         Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bNecron §8»§r§7 " + msg));

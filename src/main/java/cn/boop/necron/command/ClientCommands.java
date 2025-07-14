@@ -2,7 +2,6 @@ package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.*;
-import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
@@ -63,7 +62,6 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
-                    PlayerUtils.rightClick();
                     break;
                 case "load":
                     if (args.length < 2) {

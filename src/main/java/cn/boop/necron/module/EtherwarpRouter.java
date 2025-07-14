@@ -17,13 +17,13 @@ import java.util.List;
 
 public class EtherwarpRouter {
     private boolean lastLeftClick = false;
-    static List<Waypoint> waypointCache = new ArrayList<>();
+    public static List<Waypoint> waypointCache = new ArrayList<>();
     public static int currentWaypointIndex = -1;
     private static String currentFilename = null;
     private static String lastFilename = null;
     private static int lastWaypointIndex = -1;
     private boolean isProcessing = false;
-    static boolean routeCompleted = false;
+    public static boolean routeCompleted = false;
     public static boolean routerNotified = false;
     private static BlockPos targetPosition = null;
 
@@ -119,7 +119,7 @@ public class EtherwarpRouter {
                 Utils.modMessage("Etherwarp.");
 
                 try {
-                    Thread.sleep(400);
+                    Thread.sleep(200);
                 } catch (InterruptedException ignored) {}
 
                 if (hasReachedTarget(targetPosition)) {

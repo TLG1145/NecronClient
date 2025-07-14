@@ -44,7 +44,7 @@ public class RandomRNG {
         StringBuilder sb = new StringBuilder("/pc " + username + " unlocked -> ");
         results.forEach((item, count) -> {
             sb.append(String.format("%s ×%d ", item, count));
-            RollLogger.logRollResult(username, item, count);
+            RollLogger.logRollResult(username, item);
         });
 
         return sb.toString().trim();

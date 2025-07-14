@@ -10,9 +10,9 @@ public class RollLogger {
     private static final String LOG_FILE = "logs/roll_log.txt";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static void logRollResult(String username, String itemName, int count) {
+    public static void logRollResult(String username, String itemName) {
         String timestamp = LocalDateTime.now().format(formatter);
-        String line = String.format("[%s] Player: %s, Item: %s, Count: %d%n", timestamp, username, itemName, count);
+        String line = String.format("[%s] Player: %s, Item: %s%n", timestamp, username, itemName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
             writer.write(line);
