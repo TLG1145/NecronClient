@@ -36,6 +36,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new AutoGG());
         MinecraftForge.EVENT_BUS.register(new Nametags());
+        MinecraftForge.EVENT_BUS.register(new FakeWipe());
     }
 
     @Mod.EventHandler

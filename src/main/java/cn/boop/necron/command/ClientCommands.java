@@ -53,7 +53,8 @@ public class ClientCommands extends CommandBase {
                     }
                     break;
                 case "stats":
-                    modMessage("Player Stats:\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
+                    modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + PlayerStats.inHypixel +
+                            "\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
                             "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon +
                             "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() +
                             "\n§7§l | §r§7Floor: " + PlayerStats.floor);

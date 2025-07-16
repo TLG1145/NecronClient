@@ -69,6 +69,7 @@ public class PlayerStats {
     private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
     public static Island currentIsland = null;
     public static Floor floor = null;
+    public static boolean inHypixel = false;
     public static boolean inSkyBlock = false;
     public static boolean inDungeon = false;
 
@@ -107,6 +108,7 @@ public class PlayerStats {
 
     private void updateWorldStates() {
         if (Necron.mc.thePlayer != null && Necron.mc.theWorld != null) {
+            inHypixel = isInHypixel();
             ScoreObjective scoreboardObj = Necron.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
             inSkyBlock = scoreboardObj != null &&
                     Utils.removeFormatting(ScoreboardUtils.getScoreboardTitle()).contains("SKYBLOCK");
@@ -137,6 +139,19 @@ public class PlayerStats {
                 }
             }
         }
+    }
+
+    private boolean isInHypixel() {
+        String serverIpLine = ScoreboardUtils.getLineThatContains("hypixel");
+        if (Necron.mc.getCurrentServerData() != null) {
+            String serverIP = Necron.mc.getCurrentServerData().serverIP.toLowerCase();
+            return serverIP.contains("hypixel");
+        }
+        if (serverIpLine != null) {
+            return serverIpLine.contains("hypixel.net");
+        }
+
+        return false;
     }
 
     private int ticks = 0;
