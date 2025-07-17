@@ -74,7 +74,7 @@ public class FakeWipe {
         tag.setString("title", "SkyBlock Wipe Book");
 
         NBTTagList pages = new NBTTagList();
-        pages.appendTag(new NBTTagString("\nYour SkyBlock Profile §6Necron §c§lhas been wiped§r as co-op member was determined to be boosting or cheating.\nIf you believe this to be in error, you can contact our support team：\n§9§nsupport.hypixel.net§r\n\n        §2§lDISMISS"));
+        pages.appendTag(new NBTTagString("\nYour SkyBlock Profile §6Necron §c§lhas been wiped§r as co-op member was determined to be boosting or cheating.\nIf you believe this to be in error, you can contact our support team:   \n§9§nsupport.hypixel.net§r\n\n        §2§lDISMISS"));
 
         tag.setTag("pages", pages);
         book.setTagCompound(tag);
@@ -99,7 +99,7 @@ public class FakeWipe {
 
             Necron.mc.displayGuiScreen(new GuiScreenBook(Necron.mc.thePlayer, book, false));
 
-            Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§eYour SkyBlock Profile §bNecron §c§lhas been wiped §r§eas co-op member was determined to be boosting or cheating.\n§eIf you believe this to be in error, you can contact our support team："));
+            Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§eYour SkyBlock Profile §bNecron §c§lhas been wiped §r§eas co-op member was determined to be boosting or cheating.\n§eIf you believe this to be in error, you can contact our support team:"));
             Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§b§nsupport.hypixel.net")
                     .setChatStyle(new ChatStyle()
                             .setChatHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ChatComponentText("§eClick to open!")))
