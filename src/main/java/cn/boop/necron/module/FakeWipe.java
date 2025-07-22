@@ -1,5 +1,6 @@
 package cn.boop.necron.module;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cn.boop.necron.Necron;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.event.ClickEvent;
@@ -25,12 +26,7 @@ public class FakeWipe {
         if (event.phase != TickEvent.Phase.END) return;
         if (tickCounter++ % 20 != 0) return;
 
-/*
- *      TODO: 如果加速ip的地址中不包含hypixel字样，每次切换世界都会显示一次wipe book
- *          >> PlayerStats.isInHypixel()
- */
-
-        boolean isOnHypixel = PlayerStats.inHypixel;
+        boolean isOnHypixel = HypixelUtils.INSTANCE.isHypixel();
         if (!wasOnHypixel && isOnHypixel) {
             wasOnHypixel = true;
             triggerWipeBook();
@@ -57,9 +53,7 @@ public class FakeWipe {
             new Thread(() -> {
                 try {
                     Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                } catch (InterruptedException ignore) {}
 
                 openWipeBook();
             }).start();
@@ -82,9 +76,7 @@ public class FakeWipe {
     }
 
     private void openWipeBook() {
-        if (Necron.mc == null || Necron.mc.thePlayer == null) {
-            return;
-        }
+        if (Necron.mc == null || Necron.mc.thePlayer == null) return;
 
         ItemStack book = getWipeBook();
 

@@ -1,5 +1,6 @@
 package cn.boop.necron.module;
 
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.TabUtils;
@@ -108,7 +109,7 @@ public class PlayerStats {
 
     private void updateWorldStates() {
         if (Necron.mc.thePlayer != null && Necron.mc.theWorld != null) {
-            inHypixel = isInHypixel();
+            inHypixel = HypixelUtils.INSTANCE.isHypixel();
             ScoreObjective scoreboardObj = Necron.mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
             inSkyBlock = scoreboardObj != null &&
                     Utils.removeFormatting(ScoreboardUtils.getScoreboardTitle()).contains("SKYBLOCK");
@@ -139,19 +140,6 @@ public class PlayerStats {
                 }
             }
         }
-    }
-
-    private boolean isInHypixel() {
-        String serverIpLine = ScoreboardUtils.getLineThatContains("hypixel");
-        if (Necron.mc.getCurrentServerData() != null) {
-            String serverIP = Necron.mc.getCurrentServerData().serverIP.toLowerCase();
-            return serverIP.contains("hypixel");
-        }
-        if (serverIpLine != null) {
-            return serverIpLine.contains("hypixel.net");
-        }
-
-        return false;
     }
 
     private int ticks = 0;
