@@ -107,7 +107,6 @@ public class EtherwarpRouter {
             isProcessing = true;
 
             RotationUtils.asyncAimAt(closestFaceCenter, 0.35f);
-            Utils.modMessage("Rotating.");
 
             new Thread(() -> {
                 try {
@@ -116,7 +115,6 @@ public class EtherwarpRouter {
                     e.printStackTrace();
                 }
                 Etherwarp.useEtherwarp();
-                Utils.modMessage("Etherwarp.");
 
                 try {
                     Thread.sleep(500);

@@ -5,15 +5,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.MathHelper;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
 public class ClientButton extends GuiButton {
     private float hoverAlpha = 0f;
     private static final int CORNER_RADIUS = 4;
-    private static final float HOVER_IN_SPEED = 0.4f;
-    private static final float HOVER_OUT_SPEED = 0.15f;
+    private static final float HOVER_IN_SPEED = 1f;
+    private static final float HOVER_OUT_SPEED = 0.3f;
 
     public ClientButton(int id, int x, int y, int widthIn, int heightIn ,String text) {
         super(id, x, y, widthIn, heightIn, text);
@@ -32,16 +31,17 @@ public class ClientButton extends GuiButton {
         if (!isHovered && hoverAlpha < 0.005F) hoverAlpha = 0.0F;
 
         GlStateManager.enableBlend();
-        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 
         int baseColor = new Color(0x33AAAAAA, true).getRGB();
         int borderColor = new Color(0x73969696, true).getRGB();
+        int hoverColor = new Color(0xB3AAAAAA, true).getRGB();
 
         RenderUtils.drawRoundedRect(xPosition, yPosition,
             xPosition + width, yPosition + height, CORNER_RADIUS, baseColor);
         RenderUtils.drawBorderedRoundedRect(xPosition, yPosition,
                 width, height, CORNER_RADIUS, 1.5f,
-                isHovered ? new Color(0xB3AAAAAA, true).getRGB() : borderColor
+                isHovered ? hoverColor : borderColor
         );
 
         if (isHovered && hoverAlpha > 0.01f) {

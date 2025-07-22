@@ -2,8 +2,8 @@
   {
     "modid": "necronclient",
     "name": "Necron",
-    "description": "A QoL mod used on Hypixel Network",
-    "version": "0.0.5",
+    "description": "Maybe a SkyBlock Mod",
+    "version": "0.0.6",
     "mcversion": "1.8.9",
     "url": "https://github.com/TLG1145/NecronClient",
     "updateUrl": "",
@@ -11,7 +11,7 @@
       "MixinNecron"
     ],
     "credits": "",
-    "logoFile": "",
+    "logoFile": "assets/necron/gui/icon.png",
     "screenshots": [],
     "dependencies": []
   }
