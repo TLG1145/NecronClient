@@ -1,7 +1,6 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
@@ -14,6 +13,8 @@ import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.boop.necron.config.sub.RouterOptionsImpl.*;
 
 public class EtherwarpRouter {
     private boolean lastLeftClick = false;
@@ -50,7 +51,7 @@ public class EtherwarpRouter {
     public void onTick(TickEvent.ClientTickEvent event) {
         boolean currentLeftClick = Mouse.isButtonDown(0);
 
-        if (ModConfig.router && PlayerStats.inSkyBlock ) {
+        if (router && PlayerStats.inSkyBlock ) {
             if (!lastLeftClick && currentLeftClick && Necron.mc.currentScreen == null) {
                 if (!WaypointEventHandler.isEditingWaypoint) handleLeftClick();
             }
@@ -71,7 +72,7 @@ public class EtherwarpRouter {
             }
             if (currentWaypointIndex >= waypointCache.size() || currentWaypointIndex < 0) {
                 if (!routerNotified) {
-                    if (ModConfig.isLoop) {
+                    if (isLoop) {
                         currentWaypointIndex = 0;
                         routeCompleted = false;
                         routerNotified = false;
@@ -107,6 +108,7 @@ public class EtherwarpRouter {
             isProcessing = true;
 
             RotationUtils.asyncAimAt(closestFaceCenter, 0.35f);
+            if (devMsg) Utils.modMessage("Rotating.");
 
             new Thread(() -> {
                 try {
@@ -115,6 +117,7 @@ public class EtherwarpRouter {
                     e.printStackTrace();
                 }
                 Etherwarp.useEtherwarp();
+                if (devMsg) Utils.modMessage("Etherwarp.");
 
                 try {
                     Thread.sleep(500);

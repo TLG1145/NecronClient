@@ -1,7 +1,6 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -15,6 +14,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
+
+import static cn.boop.necron.config.sub.BlazeSwapPotionsImpl.blazeSwap;
 
 public class BlazeDagger {
     private long lastClickTime = 0L;
@@ -48,7 +49,7 @@ public class BlazeDagger {
             double x = event.entity.posX;
             double y = event.entity.posY;
             double z = event.entity.posZ;
-            if (ModConfig.blazeDagger && (isLeftMouseDown() || isLeftMouseClicked) && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
+            if (blazeSwap && (isLeftMouseDown() || isLeftMouseClicked) && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick()) {
                 if (entityName.startsWith("CRYSTAL")) {
                     if (this.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
                         swapToCrystal();

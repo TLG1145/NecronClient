@@ -1,9 +1,10 @@
 package cn.boop.necron.module;
 
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import static cn.boop.necron.config.sub.AutoGGOptionsImpl.autoGG;
 
 public class AutoGG {
     private static final String[] WIN_MESSAGE = {
@@ -27,7 +28,7 @@ public class AutoGG {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (ModConfig.autoGG && !PlayerStats.inSkyBlock && event.type == 0) {
+        if (autoGG && !PlayerStats.inSkyBlock && event.type == 0) {
             String message = event.message.getUnformattedText();
             for (String winMsg : WIN_MESSAGE) {
                 if (message.contains(winMsg)) {

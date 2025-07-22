@@ -10,9 +10,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.boop.necron.config.sub.WaypointOptionsImpl.*;
 
 public class Waypoint {
     private int id;
@@ -130,12 +131,12 @@ public class Waypoint {
             double y2 = wp2.y + 0.5;
             double z2 = wp2.z + 0.5;
 
-            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2, new Color(58, 160, 239, 255), 1.5f);
+            RenderUtils.draw3DLine(x1, y1, z1, x2, y2, z2, lineColor.toJavaColor(), 1.5f);
         }
 
         for (Waypoint wp : waypoints) {
-            RenderUtils.drawOutlinedBlockESP(wp.x, wp.y, wp.z, new Color(163, 212, 244, 255), 2f, partialTicks);
-            RenderUtils.draw3DText("#" + wp.id, wp.x + 0.5, wp.y + 0.5, wp.z + 0.5, new Color(79, 170, 225, 255), partialTicks);
+            RenderUtils.drawOutlinedBlockESP(wp.x, wp.y, wp.z, boxColor.toJavaColor(), 2f, partialTicks);
+            RenderUtils.draw3DText("#" + wp.id, wp.x + 0.5, wp.y + 0.5, wp.z + 0.5, textColor.toJavaColor(), partialTicks);
         }
 
         GlStateManager.disableBlend();

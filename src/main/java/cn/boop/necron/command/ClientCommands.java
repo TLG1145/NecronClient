@@ -77,7 +77,7 @@ public class ClientCommands extends CommandBase {
             }
         } else {
             int i;
-            for (i = 0; i < helpMsg.length; ++i) { // §
+            for (i = 0; i < helpMsg.length; ++i) {
                 Necron.mc.thePlayer.addChatMessage(new ChatComponentText(helpMsg[i]));
             }
         }

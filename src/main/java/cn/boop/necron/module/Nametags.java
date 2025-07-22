@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.regex.Pattern;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.GLUtils;
 import cn.boop.necron.utils.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -18,10 +17,12 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
+import static cn.boop.necron.config.sub.NametagsOptionsImpl.nametags;
+
 public final class Nametags {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (!ModConfig.nametags) return;
+        if (!nametags) return;
 
         Minecraft mc = Necron.mc;
         Entity viewer = mc.getRenderViewEntity();
@@ -90,7 +91,7 @@ public final class Nametags {
         if (event.entity instanceof EntityPlayer && event.entity != Necron.mc.thePlayer) {
             EntityPlayer player = (EntityPlayer) event.entity;
 
-            if (PlayerStats.inSkyBlock && ModConfig.nametags && isValidSkyBlockPlayer(player))
+            if (PlayerStats.inSkyBlock && nametags && isValidSkyBlockPlayer(player))
                 event.setCanceled(true);
         }
     }

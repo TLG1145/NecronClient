@@ -1,7 +1,6 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.BufferUtils;
@@ -13,16 +12,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import static cn.boop.necron.config.sub.TitleOptionsImpl.*;
+
 public class TitleManager {
     private static boolean iconsSet = false;
 
     @SubscribeEvent
     public void ClientTickEvent(TickEvent.ClientTickEvent event) {
-        if (ModConfig.customTitle) {
-            try  {
-                Display.setTitle("Minecraft 1.8.9" + " - Spongepowered Mixin v" + Necron.VERSION);
+        if (title) {
+            try {
+                if (urTitle) {
+                    Display.setTitle(titleText);
+                } else {
+                    Display.setTitle("Minecraft 1.8.9" + " - Spongepowered Mixin v" + Necron.VERSION);
+                }
 
-                if (!iconsSet) {
+                if (!iconsSet && icon) {
                     setWindowIcon();
                     iconsSet = true;
                 }

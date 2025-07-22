@@ -1,7 +1,6 @@
 package cn.boop.necron.utils.event;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.module.Waypoint;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +12,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import static cn.boop.necron.config.sub.WaypointOptionsImpl.waypoints;
+
 public class WaypointEventHandler {
     private boolean lastLeftPressed = false;
     private boolean lastRightPressed = false;
@@ -20,7 +21,7 @@ public class WaypointEventHandler {
 
     @SubscribeEvent
     public void onRenderWorldLast(RenderWorldLastEvent event) {
-        if (ModConfig.waypoints) {
+        if (waypoints) {
             Waypoint.renderWaypoints(event.partialTicks);
         }
     }
@@ -29,7 +30,7 @@ public class WaypointEventHandler {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         if (Necron.mc.theWorld == null || Necron.mc.thePlayer == null) return;
-        if (!ModConfig.waypoints) {
+        if (!waypoints) {
             isEditingWaypoint = false;
             return;
         }

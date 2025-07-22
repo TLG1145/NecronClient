@@ -1,12 +1,13 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
+
+import static cn.boop.necron.config.sub.EtherwarpOptionsImpl.etherwarp;
 
 public class Etherwarp {
     private boolean lastLeftClick = false;
@@ -14,7 +15,7 @@ public class Etherwarp {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         boolean currentLeftClick = Mouse.isButtonDown(0);
-        if (ModConfig.etherwarp && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null) {
+        if (etherwarp && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null) {
             if (EtherwarpRouter.waypointCache.isEmpty() || EtherwarpRouter.currentWaypointIndex == -1) {
                 if (!lastLeftClick && currentLeftClick) {
                     useEtherwarp();
