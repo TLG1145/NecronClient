@@ -66,7 +66,7 @@ public class ChatCommands {
                         else break;
                     case "zako":
                         if (zako) Utils.chatMessage("/pc " + sender + " 杂鱼杂鱼~");
-                        break;
+                        else break;
                     default:
                         break;
                 }
