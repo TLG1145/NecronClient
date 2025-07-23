@@ -48,6 +48,7 @@ sourceSets.main {
 }
 
 repositories {
+    maven("https://maven.aliyun.com/repository/public")
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
@@ -70,7 +71,7 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.7:processor")
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.2.4")
     compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.2-alpha+") // Should not be included in jar
     compileOnly(files("${project.rootDir}/lib/oneconfig-internal.jar"))
     shadowImpl("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta17")

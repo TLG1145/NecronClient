@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         mavenCentral()
+        maven("https://maven.aliyun.com/repository/public")
         gradlePluginPortal()
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         maven("https://maven.architectury.dev/")

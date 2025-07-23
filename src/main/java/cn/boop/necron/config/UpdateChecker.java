@@ -55,7 +55,7 @@ public class UpdateChecker {
                     }
                     reader.close();
 
-                    JsonObject json = JsonParser.parseString(response.toString()).getAsJsonObject();
+                    JsonObject json = new JsonParser().parse(response.toString()).getAsJsonObject();
                     String latestVersion = json.get("tag_name").getAsString().replaceAll("^v", "");
 
                     ComparableVersion current = new ComparableVersion(currentVersion.replaceAll("^v", ""));
