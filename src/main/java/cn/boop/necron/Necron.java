@@ -20,7 +20,7 @@ public class Necron {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
     public static final String WP_FILE_PATH = "./config/necron/waypoints/";
 
     private static boolean playerEnteredWorld = false;

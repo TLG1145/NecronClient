@@ -9,6 +9,6 @@ public class AutoGGOptionsImpl extends ModConfig {
         initialize();
     }
 
-    @Switch(name = "Enabled", description = "Auto send GG after a game", category = "Miscellaneous")
+    @Switch(name = "Enabled", description = "Auto send GG after a game")
     public static boolean autoGG = false;
 }

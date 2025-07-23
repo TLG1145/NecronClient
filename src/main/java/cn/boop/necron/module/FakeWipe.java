@@ -16,6 +16,8 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import static cn.boop.necron.config.sub.FakeWipeOptionsImpl.fakeWipe;
+
 public class FakeWipe {
     public static boolean hasTriggered = false;
     private boolean wasOnHypixel = false;
@@ -39,12 +41,11 @@ public class FakeWipe {
 
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
-        hasTriggered = false;
         if(!PlayerStats.inHypixel) wasOnHypixel = false;
     }
 
     private void triggerWipeBook() {
-        if (hasTriggered) return;
+        if (hasTriggered || !fakeWipe) return;
         if (Necron.mc == null || Necron.mc.thePlayer == null || Necron.mc.theWorld == null) return;
 
         if (Necron.mc.isSingleplayer() || Necron.mc.getCurrentServerData() != null) {

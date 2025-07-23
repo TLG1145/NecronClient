@@ -5,7 +5,7 @@ import cn.boop.necron.config.ModConfig;
 
 public class BlazeSwapPotionsImpl extends ModConfig {
     public BlazeSwapPotionsImpl() {
-        super("BlazeSwap", "necron/blazeswap.json");
+        super("Blaze Swap", "necron/blazeswap.json");
         initialize();
     }
 

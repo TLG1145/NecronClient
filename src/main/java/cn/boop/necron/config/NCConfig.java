@@ -22,7 +22,9 @@ public class NCConfig extends Config {
     @SubConfig
     public static EtherwarpOptionsImpl etherwarpOptions = new EtherwarpOptionsImpl();
     @SubConfig
-    public static HurtCamOptionsImpl hurtCamOptions = new HurtCamOptionsImpl();
+    public static FakeWipeOptionsImpl fakeWipeOptions = new FakeWipeOptionsImpl();
+    @SubConfig
+    public static HurtCameraOptionsImpl hurtCamOptions = new HurtCameraOptionsImpl();
     @SubConfig
     public static NametagsOptionsImpl nametagsOptions = new NametagsOptionsImpl();
     @SubConfig

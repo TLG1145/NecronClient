@@ -22,7 +22,7 @@ import static cn.boop.necron.config.sub.NametagsOptionsImpl.nametags;
 public final class Nametags {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (!nametags) return;
+        if (!nametags || !PlayerStats.inSkyBlock) return;
 
         Minecraft mc = Necron.mc;
         Entity viewer = mc.getRenderViewEntity();

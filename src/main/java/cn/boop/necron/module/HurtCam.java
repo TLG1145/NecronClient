@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
 
-import static cn.boop.necron.config.sub.HurtCamOptionsImpl.hurtCam;
+import static cn.boop.necron.config.sub.HurtCameraOptionsImpl.hurtCam;
 
 public final class HurtCam {
     private static boolean isHurt = false;

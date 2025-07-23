@@ -1,5 +1,6 @@
 package cn.boop.necron.config.sub;
 
+import cc.polyfrost.oneconfig.config.annotations.Checkbox;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cn.boop.necron.config.ModConfig;
 
@@ -9,6 +10,20 @@ public class ChatCommandsOptionsImpl extends ModConfig {
         initialize();
     }
 
-    @Switch(name = "Enabled", description = "Party commands in Hypixel", category = "Miscellaneous")
+    @Switch(name = "Enabled", description = "Party commands in Hypixel")
     public static boolean chatCommands = true;
+    @Checkbox(name = "Help", subcategory = "Commands")
+    public static boolean help = true;
+    @Checkbox(name = "Location", subcategory = "Commands")
+    public static boolean location = true;
+    @Checkbox(name = "Meow", subcategory = "Commands")
+    public static boolean meow = true;
+    @Checkbox(name = "M7 Drops Roll", subcategory = "Commands")
+    public static boolean roll = true;
+    @Checkbox(name = "NTMSB?", subcategory = "Commands")
+    public static boolean sb = true;
+    @Checkbox(name = "Useful Tips", subcategory = "Commands")
+    public static boolean tips = true;
+    @Checkbox(name = "Zako~", subcategory = "Commands")
+    public static boolean zako = true;
 }

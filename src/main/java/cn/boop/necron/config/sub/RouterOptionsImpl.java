@@ -5,14 +5,14 @@ import cn.boop.necron.config.ModConfig;
 
 public class RouterOptionsImpl extends ModConfig {
     public RouterOptionsImpl() {
-        super("Router", "necron/router.json");
+        super("Etherwarp Router", "necron/router.json");
         initialize();
     }
 
-    @Switch(name = "Router", description = "Etherwarp route (WIP)")
+    @Switch(name = "Enabled", description = "Etherwarp route (WIP)")
     public static boolean router = false;
-    @Switch(name = "Loop", description = "Let current waypoints can loop")
+    @Switch(name = "Loop", description = "Enable loop mode for current waypoints")
     public static boolean isLoop = false;
-    @Switch(name = "Dev Message", description = "Display debug message while use Router")
+    @Switch(name = "Dev Message", description = "Display debug message while use Etherwarp Router")
     public static boolean devMsg = false;
 }

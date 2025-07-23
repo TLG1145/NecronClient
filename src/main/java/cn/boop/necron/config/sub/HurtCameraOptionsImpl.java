@@ -3,9 +3,9 @@ package cn.boop.necron.config.sub;
 import cc.polyfrost.oneconfig.config.annotations.Switch;
 import cn.boop.necron.config.ModConfig;
 
-public class HurtCamOptionsImpl extends ModConfig {
-    public HurtCamOptionsImpl() {
-        super("HurtCam", "necron/hurtcam.json");
+public class HurtCameraOptionsImpl extends ModConfig {
+    public HurtCameraOptionsImpl() {
+        super("Hurt Camera", "necron/hurtcamera.json");
         initialize();
     }
 

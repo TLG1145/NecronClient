@@ -6,16 +6,16 @@ import cn.boop.necron.config.ModConfig;
 
 public class TitleOptionsImpl extends ModConfig {
     public TitleOptionsImpl() {
-        super("TitleManager", "necron/titlemanager.json");
+        super("Title Manager", "necron/titlemanager.json");
         initialize();
     }
 
-    @Switch(name = "Change Title", description = "Custom window title")
+    @Switch(name = "Change Title", description = "Use custom window title")
     public static boolean title = true;
     @Switch(name = "Change Icon", description = "Use Custom window icon")
     public static boolean icon = true;
-    @Switch(name = "Use your title text")
+    @Switch(name = "Use your title text", size = 2)
     public static boolean urTitle = false;
-    @Text(name = "Title Text", placeholder = "You can change title by this!")
+    @Text(name = "Title Text", placeholder = "Text here")
     public static String titleText = "";
 }
