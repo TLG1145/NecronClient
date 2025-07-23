@@ -6,8 +6,6 @@
 
 ## 用法
 
-该MOD仅用于提升游戏体验，没有不合法功能
-
 前置模组：
 
 [OneConfig](https://polyfrost.org/projects/oneconfig/)
@@ -21,8 +19,10 @@
 
 - Hypixel组队命令和AutoGG
 - 可自定义的路径点
-- 仅在SkyBlock/Pit中可用的Nametags
-- Slayer辅助功能
+- 可自定义的窗口标题
+- SkyBlock Nametags
+- Slayer辅助功能 (WIP)
 - 半自动Etherwarp路线
+- SkyBlock Wipe Book
 
 **TODO: 支持Fabric 1.21.5版本，以跟进最新的[伐木更新](https://hypixel.net/threads/hypixel-skyblock-0-23-the-foraging-update.5921261/)。**
