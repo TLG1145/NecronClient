@@ -15,6 +15,11 @@
 > [!NOTE]
 > 本项目默认使用[DevAuth](https://github.com/DJtheRedstoner/DevAuth)
 
+## 获取
+
+- 重要更新可在 Latest Releases 中下载
+- 其它小更新可在 Actions 中下载自动构建的mod文件
+
 ## 功能列表
 
 - Hypixel组队命令和AutoGG
