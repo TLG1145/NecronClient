@@ -29,19 +29,19 @@ public class Necron {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new MainMenu());
+        MinecraftForge.EVENT_BUS.register(new AutoGG());
+        MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new ChatCommands());
+        MinecraftForge.EVENT_BUS.register(new Etherwarp());
+        MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
+        MinecraftForge.EVENT_BUS.register(new FakeWipe());
         MinecraftForge.EVENT_BUS.register(new HurtCam());
-        MinecraftForge.EVENT_BUS.register(new TitleManager());
+        MinecraftForge.EVENT_BUS.register(new MainMenu());
+        MinecraftForge.EVENT_BUS.register(new Nametags());
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
         MinecraftForge.EVENT_BUS.register(new RandomRNG());
-        MinecraftForge.EVENT_BUS.register(new Etherwarp());
+        MinecraftForge.EVENT_BUS.register(new TitleManager());
         MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
-        MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
-        MinecraftForge.EVENT_BUS.register(new BlazeDagger());
-        MinecraftForge.EVENT_BUS.register(new AutoGG());
-        MinecraftForge.EVENT_BUS.register(new Nametags());
-        MinecraftForge.EVENT_BUS.register(new FakeWipe());
     }
 
     @Mod.EventHandler
