@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.boop.necron.config.sub.WaypointOptionsImpl.*;
+import static cn.boop.necron.config.impl.WaypointOptionsImpl.*;
 
 public class Waypoint {
     private int id;

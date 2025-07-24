@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-import static cn.boop.necron.config.sub.TitleOptionsImpl.*;
+import static cn.boop.necron.config.impl.TitleOptionsImpl.*;
 
 public class TitleManager {
     private static boolean iconsSet = false;

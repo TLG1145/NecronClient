@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
-import static cn.boop.necron.config.sub.BlazeSwapPotionsImpl.blazeSwap;
+import static cn.boop.necron.config.impl.BlazeSwapPotionsImpl.blazeSwap;
 
 public class BlazeDagger {
     private long lastClickTime = 0L;

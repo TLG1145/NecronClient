@@ -14,7 +14,7 @@ import org.lwjgl.input.Mouse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.boop.necron.config.sub.RouterOptionsImpl.*;
+import static cn.boop.necron.config.impl.RouterOptionsImpl.*;
 
 public class EtherwarpRouter {
     private boolean lastLeftClick = false;

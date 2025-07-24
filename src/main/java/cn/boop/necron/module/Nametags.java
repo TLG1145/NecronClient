@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
 
-import static cn.boop.necron.config.sub.NametagsOptionsImpl.nametags;
+import static cn.boop.necron.config.impl.NametagsOptionsImpl.nametags;
 
 public final class Nametags {
     @SubscribeEvent(priority = EventPriority.LOWEST)

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.*;
 import java.util.regex.*;
 
-import static cn.boop.necron.config.sub.ChatCommandsOptionsImpl.*;
+import static cn.boop.necron.config.impl.ChatCommandsOptionsImpl.*;
 
 public class ChatCommands {
     public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*!(.+)");

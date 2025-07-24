@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import static cn.boop.necron.config.sub.WaypointOptionsImpl.waypoints;
+import static cn.boop.necron.config.impl.WaypointOptionsImpl.waypoints;
 
 public class WaypointEventHandler {
     private boolean lastLeftPressed = false;

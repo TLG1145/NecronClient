@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Mouse;
 
-import static cn.boop.necron.config.sub.EtherwarpOptionsImpl.etherwarp;
+import static cn.boop.necron.config.impl.EtherwarpOptionsImpl.etherwarp;
 
 public class Etherwarp {
     private boolean lastLeftClick = false;

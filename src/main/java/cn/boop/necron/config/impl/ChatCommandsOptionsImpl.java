@@ -1,4 +1,4 @@
-package cn.boop.necron.config.sub;
+package cn.boop.necron.config.impl;
 
 import cc.polyfrost.oneconfig.config.annotations.Checkbox;
 import cc.polyfrost.oneconfig.config.annotations.Switch;

@@ -5,7 +5,7 @@ import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cn.boop.necron.Necron;
-import cn.boop.necron.config.sub.*;
+import cn.boop.necron.config.impl.*;
 
 public class NCConfig extends Config {
     public NCConfig() {

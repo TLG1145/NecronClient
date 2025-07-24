@@ -4,7 +4,7 @@ import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static cn.boop.necron.config.sub.AutoGGOptionsImpl.autoGG;
+import static cn.boop.necron.config.impl.AutoGGOptionsImpl.autoGG;
 
 public class AutoGG {
     private static final String[] WIN_MESSAGE = {

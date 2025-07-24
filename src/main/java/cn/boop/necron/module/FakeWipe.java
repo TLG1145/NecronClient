@@ -16,7 +16,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import static cn.boop.necron.config.sub.FakeWipeOptionsImpl.fakeWipe;
+import static cn.boop.necron.config.impl.FakeWipeOptionsImpl.fakeWipe;
 
 public class FakeWipe {
     public static boolean hasTriggered = false;
