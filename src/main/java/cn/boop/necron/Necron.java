@@ -5,6 +5,7 @@ import cn.boop.necron.config.NCConfig;
 import cn.boop.necron.config.UpdateChecker;
 import cn.boop.necron.gui.MainMenu;
 import cn.boop.necron.module.*;
+import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.event.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -20,7 +21,7 @@ public class Necron {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
-    public static final String VERSION = "0.1.1";
+    public static final String VERSION = "0.1.2";
     public static final String WP_FILE_PATH = "./config/necron/waypoints/";
 
     private static boolean playerEnteredWorld = false;
@@ -32,6 +33,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new AutoGG());
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new ChatCommands());
+        //MinecraftForge.EVENT_BUS.register(new CropNuker());
         MinecraftForge.EVENT_BUS.register(new Etherwarp());
         MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
         MinecraftForge.EVENT_BUS.register(new FakeWipe());
@@ -41,6 +43,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
         MinecraftForge.EVENT_BUS.register(new RandomRNG());
         MinecraftForge.EVENT_BUS.register(new TitleManager());
+        MinecraftForge.EVENT_BUS.register(new Voidgloom());
         MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
     }
 
@@ -52,11 +55,15 @@ public class Necron {
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) return;
+        if (event.phase == TickEvent.Phase.START) {
+            RotationUtils.updateRotations();
+        }
 
-        if (mc.thePlayer != null && !playerEnteredWorld) {
-            playerEnteredWorld = true;
-            new UpdateChecker("TLG1145", "NecronClient", VERSION).checkForUpdates();
+        if (event.phase == TickEvent.Phase.END) {
+            if (mc.thePlayer != null && !playerEnteredWorld) {
+                playerEnteredWorld = true;
+                new UpdateChecker("TLG1145", "NecronClient", VERSION).checkForUpdates();
+            }
         }
     }
 }

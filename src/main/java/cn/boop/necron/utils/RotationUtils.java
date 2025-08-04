@@ -7,6 +7,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RotationUtils {
     private static final int[][] DIRECTIONS = {
@@ -17,6 +18,11 @@ public class RotationUtils {
     private static final java.util.concurrent.ScheduledExecutorService scheduler =
             java.util.concurrent.Executors.newSingleThreadScheduledExecutor();
 
+    private static final AtomicReference<Float> targetYaw = new AtomicReference<>(null);
+    private static final AtomicReference<Float> targetPitch = new AtomicReference<>(null);
+    private static final AtomicReference<Float> rotationSpeed = new AtomicReference<>(5.0f);
+    public static boolean isRotating = false;
+
 
     public static float pitch() {
         return Necron.mc.thePlayer.rotationPitch;
@@ -24,6 +30,59 @@ public class RotationUtils {
 
     public static float yaw() {
         return Necron.mc.thePlayer.rotationYaw;
+    }
+
+    public static void smoothRotateTo(float yaw, float pitch, float speed) {
+        targetYaw.set(normalizeAngle(yaw));
+        targetPitch.set(pitch);
+        rotationSpeed.set(Math.max(speed, 4.0f));
+        isRotating = true;
+    }
+
+    public static void updateRotations() {
+        if (!isRotating) return;
+
+        Float targetYawValue = targetYaw.get();
+        Float targetPitchValue = targetPitch.get();
+
+        if (targetYawValue == null || targetPitchValue == null) {
+            isRotating = false;
+            return;
+        }
+
+        float currentYaw = normalizeAngle(yaw());
+        float currentPitch = pitch();
+
+        targetYawValue = normalizeAngle(targetYawValue);
+
+        float deltaYaw = normalizeAngle(targetYawValue - currentYaw);
+        float deltaPitch = targetPitchValue - currentPitch;
+
+        if (Math.abs(deltaYaw) < 0.1f && Math.abs(deltaPitch) < 0.1f) {
+            setRotation(targetYawValue, targetPitchValue);
+            isRotating = false;
+            targetYaw.set(null);
+            targetPitch.set(null);
+            return;
+        }
+
+        float speed = rotationSpeed.get();
+
+        float yawSpeed = Math.min(speed, Math.max(2.0f, Math.abs(deltaYaw) * 0.3f));
+        float pitchSpeed = Math.min(speed, Math.max(2.0f, Math.abs(deltaPitch) * 0.3f));
+
+        float newYaw = currentYaw + Math.signum(deltaYaw) * Math.min(Math.abs(deltaYaw), yawSpeed);
+        float newPitch = currentPitch + Math.signum(deltaPitch) * Math.min(Math.abs(deltaPitch), pitchSpeed);
+
+        newPitch = MathHelper.clamp_float(newPitch, -90.0f, 90.0f);
+
+        setRotation(newYaw, newPitch);
+    }
+
+    public static float normalizeAngle(float angle) {
+        while (angle > 180) angle -= 360;
+        while (angle < -180) angle += 360;
+        return angle;
     }
 
     public static void setRotation(float yaw, float pitch) {
@@ -139,5 +198,9 @@ public class RotationUtils {
                 break;
             }
         }
+    }
+
+    public static boolean isRotating() {
+        return isRotating;
     }
 }

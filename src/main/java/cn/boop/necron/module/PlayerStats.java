@@ -12,6 +12,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
 
+import static cn.boop.necron.config.impl.SlayerOptionsImpl.killTime;
+
 public class PlayerStats {
     public enum Island {
         PRIVATE_ISLAND("Private Island"),
@@ -68,6 +70,8 @@ public class PlayerStats {
     }
 
     private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
+    private static long startTime = 0L;
+    public static boolean inCombat = true;
     public static Island currentIsland = null;
     public static Floor floor = null;
     public static boolean inHypixel = false;
@@ -140,6 +144,26 @@ public class PlayerStats {
                 }
             }
         }
+    }
+
+    public static void updateCombatState() {
+        boolean currentlyInCombat = ScoreboardUtils.scoreboardContains("Slay the boss!");
+
+        if (currentlyInCombat && !inCombat) {
+            inCombat = true;
+            startTime = System.currentTimeMillis();
+        } else if (!currentlyInCombat && inCombat) {
+            inCombat = false;
+            //inCombat = true;
+            if (killTime) Utils.modMessage("Slayer took §6" + getKillTime() + "§7 to kill!");
+            startTime = 0L;
+        }
+    }
+
+    public static String getKillTime() {
+        long durationMillis = System.currentTimeMillis() - startTime;
+        double seconds = durationMillis / 1000.0;
+        return String.format("%.2fs", seconds);
     }
 
     private int ticks = 0;
