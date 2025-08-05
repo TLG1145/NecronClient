@@ -46,10 +46,49 @@ public class ClientCommands extends CommandBase {
                         double x = Double.parseDouble(args[1]);
                         double y = Double.parseDouble(args[2]);
                         double z = Double.parseDouble(args[3]);
-                        RotationUtils.rotatingToBlock(x, y, z, 0.5f);
+                        RotationUtils.rotatingToBlock(x, y, z, 0.3f);
                         modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
                     } catch (NumberFormatException e) {
-                        System.out.println("Invalid position format");
+                        System.out.println("§cInvalid position format.");
+                    }
+                    break;
+                case "setDir":
+                    if (args.length < 3) {
+                        modMessage("Usage: setDir <waypointID> <direction>");
+                        modMessage("Available directions: forward, backward, left, right.");
+                        break;
+                    }
+                    try {
+                        int waypointId = Integer.parseInt(args[1]);
+                        String direction = args[2].toLowerCase();
+
+                        if (!Arrays.asList("forward", "backward", "left", "right").contains(direction)) {
+                            modMessage("§cInvalid direction.");
+                            modMessage("Available directions: forward, backward, left, right.");
+                            break;
+                        }
+
+                        Waypoint.setWaypointDirection(waypointId, direction);
+                    } catch (NumberFormatException e) {
+                        modMessage("§cInvalid waypoint ID format.");
+                    }
+                    break;
+                case "setRot":
+                    if (args.length < 3) {
+                        modMessage("Usage: setRot <waypointID> <yaw>");
+                        modMessage("The range of the yaw must be in 0~360.");
+                        break;
+                    }
+                    try {
+                        int waypointId = Integer.parseInt(args[1]);
+                        float rotation = Float.parseFloat(args[2]);
+
+                        rotation = rotation % 360;
+                        if (rotation < 0) rotation += 360;
+
+                        Waypoint.setWaypointRotation(waypointId, rotation);
+                    } catch (NumberFormatException e) {
+                        modMessage("§cInvalid number format.");
                     }
                     break;
                 case "stats":
@@ -63,6 +102,9 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
+//                    Voidgloom.tempDisable = !Voidgloom.tempDisable;
+//                    Utils.modMessage("State: " + Voidgloom.tempDisable);
+//                    Utils.modMessage("Slots{soulcry=" + Voidgloom.soulcrySlot + ", wand=" + Voidgloom.wandSlot + "}");
                     break;
                 case "load":
                     if (args.length < 2) {
@@ -71,9 +113,10 @@ public class ClientCommands extends CommandBase {
                     }
                     EtherwarpRouter.loadWaypoints(args[1]);
                     Waypoint.loadWaypoints(args[1]);
+                    CropNuker.setIndex(0);
                     break;
                 default:
-                    modMessage("Unknown command.");
+                    modMessage("§cUnknown command.");
             }
         } else {
             int i;
@@ -84,13 +127,15 @@ public class ClientCommands extends CommandBase {
     }
 
     private static final String[] helpMsg = new String[]{
-            "§8§m--------------------------------",
-            "§b           NecronClient §7v" + Necron.VERSION,
+            "§8§m-------------------------------------",
+            "§b             NecronClient §7v" + Necron.VERSION,
             "§r ",
+            "§b/necron load <file> §f§l»§r§7 加载路径点文件",
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
+            "§b/necron setDir <ID> <direction> §f§l»§r§7 设置路径点的移动方向",
+            "§b/necron setRot <ID> <yaw> §f§l»§r§7 设置路径点的预设旋转角度",
             "§b/necron stats §f§l»§r§7 查看当前玩家信息",
             "§b/necron tips §f§l»§r§7 获取一些神秘文本",
-            "§b/necron load <file> §f§l»§r§7 加载路径点文件",
-            "§r§8§m--------------------------------"
+            "§r§8§m-------------------------------------"
     };
 }

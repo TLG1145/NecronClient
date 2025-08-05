@@ -1,6 +1,7 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
+import cn.boop.necron.config.impl.FarmingOptionsImpl;
 import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.RenderUtils;
 import cn.boop.necron.utils.Utils;
@@ -20,6 +21,8 @@ public class Waypoint {
     private final int x;
     private final int y;
     private final int z;
+    private String direction = "forward";
+    private float rotation = 0.0f;
     private static int waypointCounter = 1;
 
     public Waypoint(int id, int x, int y, int z) {
@@ -27,6 +30,15 @@ public class Waypoint {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public Waypoint(int id, int x, int y, int z, String direction, float rotation) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.direction = direction != null ? direction : "forward";
+        this.rotation = rotation;
     }
 
     public void setId(int id) {
@@ -37,6 +49,13 @@ public class Waypoint {
     public int getX() { return x; }
     public int getY() { return y; }
     public int getZ() { return z; }
+
+    public String getDirection() { return direction; }
+    public void setDirection(String direction) { this.direction = direction != null ? direction : "forward"; }
+
+    public float getRotation() { return rotation; }
+    public void setRotation(float rotation) { this.rotation = rotation; }
+
 
     private static List<Waypoint> waypoints = new ArrayList<>();
     private static String currentFile = null;
@@ -101,6 +120,40 @@ public class Waypoint {
         }
     }
 
+    public static void setWaypointDirection(int waypointId, String direction) {
+        if (currentFile == null) {
+            Utils.modMessage("Waypoints file not loaded.");
+            return;
+        }
+
+        for (Waypoint waypoint : waypoints) {
+            if (waypoint.getId() == waypointId) {
+                waypoint.setDirection(direction);
+                saveWaypoints();
+                Utils.modMessage("Set waypoint #" + waypointId + " direction to " + direction);
+                return;
+            }
+        }
+        Utils.modMessage("Waypoint #" + waypointId + " not found.");
+    }
+
+    public static void setWaypointRotation(int waypointId, float rotation) {
+        if (currentFile == null) {
+            Utils.modMessage("Waypoints file not loaded.");
+            return;
+        }
+
+        for (Waypoint waypoint : waypoints) {
+            if (waypoint.getId() == waypointId) {
+                waypoint.setRotation(rotation);
+                saveWaypoints();
+                Utils.modMessage("Set waypoint #" + waypointId + " rotation to " + rotation + " degrees");
+                return;
+            }
+        }
+        Utils.modMessage("Waypoint #" + waypointId + " not found.");
+    }
+
     private static void saveWaypoints() {
         if (currentFile != null) {
             JsonUtils.saveWaypoints(waypoints, currentFile);
@@ -109,6 +162,7 @@ public class Waypoint {
 
     public static void renderWaypoints(float partialTicks) {
         if (waypoints.isEmpty()) return;
+        if (FarmingOptionsImpl.cropNuker) return;
         Minecraft mc = Minecraft.getMinecraft();
         Entity viewer = mc.getRenderViewEntity();
         if (viewer == null) return;
@@ -155,4 +209,7 @@ public class Waypoint {
         }
     }
 
+    public static List<Waypoint> getWaypoints() {
+        return waypoints;
+    }
 }

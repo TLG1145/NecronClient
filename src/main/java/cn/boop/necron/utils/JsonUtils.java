@@ -2,8 +2,7 @@ package cn.boop.necron.utils;
 
 import cn.boop.necron.module.ChatCommands;
 import cn.boop.necron.module.Waypoint;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
@@ -12,7 +11,10 @@ import java.nio.file.*;
 import java.util.*;
 
 public class JsonUtils {
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(Waypoint.class, new WaypointSerializer())
+            .registerTypeAdapter(Waypoint.class, new WaypointDeserializer())
+            .create();
 
     public static List<String> loadTips() {
         try (InputStream is = ChatCommands.class.getResourceAsStream("/tips.json")) {
@@ -56,6 +58,47 @@ public class JsonUtils {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    private static class WaypointSerializer implements JsonSerializer<Waypoint> {
+        @Override
+        public JsonElement serialize(Waypoint waypoint, java.lang.reflect.Type type, JsonSerializationContext context) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", waypoint.getId());
+            obj.addProperty("x", waypoint.getX());
+            obj.addProperty("y", waypoint.getY());
+            obj.addProperty("z", waypoint.getZ());
+
+            // 添加新属性
+            obj.addProperty("direction", waypoint.getDirection());
+            obj.addProperty("rotation", waypoint.getRotation());
+
+            return obj;
+        }
+    }
+
+    private static class WaypointDeserializer implements JsonDeserializer<Waypoint> {
+        @Override
+        public Waypoint deserialize(JsonElement json, java.lang.reflect.Type type, JsonDeserializationContext context) throws JsonParseException {
+            JsonObject obj = json.getAsJsonObject();
+            int id = obj.get("id").getAsInt();
+            int x = obj.get("x").getAsInt();
+            int y = obj.get("y").getAsInt();
+            int z = obj.get("z").getAsInt();
+
+            String direction = "forward";
+            float rotation = 0.0f;
+
+            if (obj.has("direction")) {
+                direction = obj.get("direction").getAsString();
+            }
+
+            if (obj.has("rotation")) {
+                rotation = obj.get("rotation").getAsFloat();
+            }
+
+            return new Waypoint(id, x, y, z, direction, rotation);
         }
     }
 }
