@@ -8,7 +8,6 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -38,6 +37,9 @@ public class CropNuker {
 
         if (Necron.mc.thePlayer != null && Necron.mc.currentScreen == null) {
             if (cropNuker) {
+                if (!pressed) {
+                    FailSafe.resetPositionTracking();
+                }
                 handleAutoWalk();
                 if (!atWaypoint && !RotationUtils.isRotating()) { // 只有不在路径点处理状态时才启动Nuker
                     startNuker();
@@ -64,11 +66,6 @@ public class CropNuker {
                     new Color(162, 102, 232),
                     2, event.partialTicks);
         }
-    }
-
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Load event) {
-        if(cropNuker) reset();
     }
 
     private static void startNuker() {
@@ -127,10 +124,10 @@ public class CropNuker {
         if (currentWaypointIndex >= waypoints.size()) { // 确保索引在有效范围内
             currentWaypointIndex = 0; // 重新开始
             baseYaw = normalizeAngle(waypoints.get(0).getRotation());
+            FailSafe.resetPositionTracking();
         }
 
         Waypoint currentWaypoint = waypoints.get(currentWaypointIndex);
-
         double distanceToWaypoint = Necron.mc.thePlayer.getDistance( // 检查是否到达路径点
                 currentWaypoint.getX() + 0.5,
                 currentWaypoint.getY() + 0.5,
@@ -148,7 +145,7 @@ public class CropNuker {
             }
         }
 
-        else if (distanceToWaypoint < 0.55) { // 如果足够接近路径点，则认为已到达
+        else if (distanceToWaypoint < 0.6) { // 如果足够接近路径点，则认为已到达
             if (!atWaypoint) {
                 continueMovingAfterWaypoint = true;
                 waypointReachedTime = System.currentTimeMillis();
@@ -156,12 +153,7 @@ public class CropNuker {
                 handleWaypointProcessing();
             }
         } else {
-            if (atWaypoint) {
-                atWaypoint = false;
-            }
-            if (continueMovingAfterWaypoint) {
-                continueMovingAfterWaypoint = false;
-            }
+            if (atWaypoint) atWaypoint = false;
             setMovementKeys(targetDirection);
         }
     }
@@ -187,16 +179,15 @@ public class CropNuker {
             needsDirectionChange = false;
         }
 
-        if (!needsRotation && !needsDirectionChange) { // 如果所有动作都已完成，继续到下一个路径点
-            if (System.currentTimeMillis() - actionStartTime > 500) {
-                atWaypoint = false;
-                currentWaypointIndex++;
-                startNuker();
-            }
+        if (!needsRotation && System.currentTimeMillis() - actionStartTime > 500L) { // 如果所有动作都已完成，继续到下一个路径点
+            atWaypoint = false;
+            currentWaypointIndex++;
+            startNuker();
         }
     }
 
-    private static void reset() {
+    public static void reset(FailSafe.ResetReason reason) {
+        stopNuker();
         cropNuker = false;
         pressed = false;
         targetBlockPos = null;
@@ -205,7 +196,7 @@ public class CropNuker {
         needsDirectionChange = false;
         atWaypoint = false;
         baseYaw = 0;
-        Utils.modMessage("Disabled §6Crop Nuker §7due the world change");
+        Utils.modMessage("Disabled §6Crop Nuker §7" + reason.getMessage());
     }
 
     private void updateTargetBlock() {
@@ -215,6 +206,10 @@ public class CropNuker {
         } else {
             targetBlockPos = null;
         }
+    }
+
+    public static boolean isAtWaypoint() {
+        return atWaypoint;
     }
 
     public static void setIndex(int index) {

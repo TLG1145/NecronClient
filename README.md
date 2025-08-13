@@ -4,7 +4,7 @@
 
 一个用于Hypixel SkyBlock的辅助mod
 
-## 用法
+## 信息
 
 前置模组：
 
@@ -29,5 +29,6 @@
 - Slayer辅助功能 (WIP)
 - 半自动Etherwarp路线
 - SkyBlock Wipe Book
+- Farming Helper
 
 **TODO: 支持Fabric 1.21.5版本，以跟进最新的[伐木更新](https://hypixel.net/threads/hypixel-skyblock-0-23-the-foraging-update.5921261/)。**

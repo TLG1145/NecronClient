@@ -33,9 +33,10 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new AutoGG());
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new ChatCommands());
-        //MinecraftForge.EVENT_BUS.register(new CropNuker());
+        MinecraftForge.EVENT_BUS.register(new CropNuker());
         MinecraftForge.EVENT_BUS.register(new Etherwarp());
         MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
+        MinecraftForge.EVENT_BUS.register(new FailSafe());
         MinecraftForge.EVENT_BUS.register(new FakeWipe());
         MinecraftForge.EVENT_BUS.register(new HurtCam());
         MinecraftForge.EVENT_BUS.register(new MainMenu());
