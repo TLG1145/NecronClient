@@ -13,9 +13,7 @@ plugins {
 val baseGroup: String by project
 val mcVersion: String by project
 val version: String by project
-val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
-val transformerFile = file("src/main/resources/accesstransformer.cfg")
 
 group = "cn.boop.necron"
 
@@ -27,7 +25,6 @@ loom {
     log4jConfigs.from(file("log4j2.xml"))
     runConfigs {
         getByName("client") {
-            // If you don't want mixins, remove these lines
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
             programArgs("--tweakClass", "cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker")
@@ -54,7 +51,6 @@ repositories {
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
     maven("https://repo.essential.gg/repository/maven-public/")
     maven("https://repo.polyfrost.cc/releases")
-    maven("https://repo.polyfrost.cc/snapshots")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -66,7 +62,6 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    //compileOnly("org.spongepowered:mixin:0.8.5")
     compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
     annotationProcessor("org.spongepowered:mixin:0.8.7:processor")
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
@@ -78,10 +73,9 @@ dependencies {
 
 }
 
-// Tasks:
 tasks {
     processResources {
-        inputs.property("version", project.version)
+        inputs.property("version", version)
         inputs.property("mcversion", mcVersion)
         inputs.property("modid", modid)
         inputs.property("basePackage", baseGroup)
@@ -89,8 +83,8 @@ tasks {
         filesMatching(listOf("mcmod.info", "mixins.necronclient.json")) {
             expand(
                 mapOf(
-                    "version" to "0.0.4",
-                    "mcversion" to "1.8.9",
+                    "version" to version,
+                    "mcversion" to mcVersion,
                     "modid" to modid,
                     "basePackage" to baseGroup
                 )
@@ -111,7 +105,7 @@ tasks {
         enabled = false
     }
     named<RemapJarTask>("remapJar") {
-        input.set(shadowJar.get().archiveFile)
+        inputFile.set(shadowJar.get().archiveFile)
         archiveClassifier.set("")
     }
     named<ShadowJar>("shadowJar") {
