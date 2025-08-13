@@ -8,12 +8,12 @@
 
 前置模组：
 
-[OneConfig](https://polyfrost.org/projects/oneconfig/)
-
-[Forge 1.8.9](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html)
+[OneConfig](https://polyfrost.org/projects/oneconfig/) & [Forge 1.8.9](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html)
 
 > [!NOTE]
 > 本项目默认使用[DevAuth](https://github.com/DJtheRedstoner/DevAuth)
+
+[功能使用说明](FEATURES.md)
 
 ## 获取
 
