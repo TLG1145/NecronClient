@@ -35,8 +35,6 @@ public class Voidgloom {
         if (Necron.mc.theWorld == null || Necron.mc.thePlayer == null) return;
         if (Necron.mc.currentScreen != null) return;
 
-        PlayerStats.updateCombatState();
-
         isLeftMouseDown = currentLeftClick;
         isLeftMouseClicked = currentLeftClick && !lastLeftMouseDown;
         lastLeftMouseDown = currentLeftClick;
@@ -130,8 +128,7 @@ public class Voidgloom {
     }
 
     private boolean useSoulcryItem() {
-        if (tempDisable || !PlayerStats.inCombat) return false;
-        return swapToItem(soulcrySlot, true);
+        return !tempDisable && PlayerStats.inCombat && this.swapToItem(soulcrySlot, true);
     }
 
     private boolean useWandItem() {

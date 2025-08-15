@@ -71,9 +71,9 @@ public class PlayerStats {
 
     private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
     private static long startTime = 0L;
-    public static boolean inCombat = true;
     public static Island currentIsland = null;
     public static Floor floor = null;
+    public static boolean inCombat = false;
     public static boolean inHypixel = false;
     public static boolean inSkyBlock = false;
     public static boolean inDungeon = false;
@@ -98,6 +98,7 @@ public class PlayerStats {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
+        updateCombatState();
         if (ticks % 20 == 0) {
             updateWorldStates();
             detectCurrentIsland();
@@ -154,7 +155,6 @@ public class PlayerStats {
             startTime = System.currentTimeMillis();
         } else if (!currentlyInCombat && inCombat) {
             inCombat = false;
-            //inCombat = true;
             if (killTime) Utils.modMessage("Slayer took §6" + getKillTime() + "§7 to kill!");
             startTime = 0L;
         }

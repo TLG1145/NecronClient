@@ -102,9 +102,6 @@ public class ClientCommands extends CommandBase {
                     modMessage(Utils.randomSelect(ChatCommands.tipList));
                     break;
                 case "test":
-//                    Voidgloom.tempDisable = !Voidgloom.tempDisable;
-//                    Utils.modMessage("State: " + Voidgloom.tempDisable);
-//                    Utils.modMessage("Slots{soulcry=" + Voidgloom.soulcrySlot + ", wand=" + Voidgloom.wandSlot + "}");
                     break;
                 case "load":
                     if (args.length < 2) {
