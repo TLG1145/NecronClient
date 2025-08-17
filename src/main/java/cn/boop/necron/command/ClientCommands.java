@@ -99,7 +99,7 @@ public class ClientCommands extends CommandBase {
                             "\n§7§l | §r§7Floor: " + PlayerStats.floor);
                     break;
                 case "tips":
-                    modMessage(Utils.randomSelect(ChatCommands.tipList));
+                    Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bTips §8»§r§7 " + Utils.randomSelect(ChatCommands.tipList)));
                     break;
                 case "test":
                     break;
