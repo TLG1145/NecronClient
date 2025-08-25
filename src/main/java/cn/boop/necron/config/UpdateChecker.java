@@ -64,10 +64,8 @@ public class UpdateChecker {
                     if (latest.compareTo(current) > 0) {
                         latestVersionRef.set(latestVersion);
                         onNewVersionAvailable(currentVersion, latestVersion);
-                        System.out.println("New version available! " + current + " -> " + latest);
-                    } else {
-                        System.out.println("Already at latest version.");
                     }
+
                 } else {
                     Utils.modMessage("§cHTTP Error: " + responseCode);
                 }

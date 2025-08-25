@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(modid = Necron.MODID, name = Necron.MODNAME, version = Necron.VERSION, acceptedMinecraftVersions = "1.8.9", clientSideOnly = true)
 public class Necron {
@@ -23,6 +25,7 @@ public class Necron {
     public static final String MODNAME = "Necron";
     public static final String VERSION = "0.1.2";
     public static final String WP_FILE_PATH = "./config/necron/waypoints/";
+    public static final Logger LOGGER = LogManager.getLogger(Necron.class);
 
     private static boolean playerEnteredWorld = false;
 

@@ -78,7 +78,7 @@ public class Voidgloom {
                     System.out.println("Using wand after delay");
                     useWand();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Necron.LOGGER.warn(e.getMessage());
                 }
             }).start();
         } else {

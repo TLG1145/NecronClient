@@ -32,7 +32,7 @@ public class TitleManager {
                     iconsSet = true;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Necron.LOGGER.warn(e.getMessage());
             }
         }
     }
@@ -49,7 +49,7 @@ public class TitleManager {
 
             Display.setIcon(buffers);
         } catch (IOException e) {
-            e.printStackTrace();
+            Necron.LOGGER.warn(e.getMessage());
         }
     }
 
