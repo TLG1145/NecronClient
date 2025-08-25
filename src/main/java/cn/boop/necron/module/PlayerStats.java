@@ -21,7 +21,7 @@ public class PlayerStats {
         DARK_AUCTION("Dark Auction"),
         SPIDERS_DEN("Spider's Den"),
         CRIMSON_ISLE("Crimson Isle"),
-        KUUDRAS_HOLLOW("Kuudra's Hollow"),
+        KUUDRA("Kuudra"),
         THE_END("The End"),
         GOLD_MINE("Gold Mine"),
         DEEP_CAVERNS("Deep Caverns"),
