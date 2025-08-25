@@ -29,7 +29,7 @@ public class Utils {
     }
 
     public static String getSkyBlockID(ItemStack item) {
-        if(item != null) {
+        if (item != null) {
             NBTTagCompound extraAttributes = item.getSubCompound("ExtraAttributes", false);
             if (extraAttributes != null && extraAttributes.hasKey("id")) {
                 return extraAttributes.getString("id");
@@ -55,5 +55,43 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static int romanToInt(String roman) {
+        if (roman.startsWith("0")) return 0;
+
+        Map<Character, Integer> romanMap = new HashMap<>();
+        romanMap.put('I', 1);
+        romanMap.put('V', 5);
+        romanMap.put('X', 10);
+        romanMap.put('L', 50);
+        romanMap.put('C', 100);
+
+        int result = 0;
+
+        for (int i = 0; i < roman.length(); i++) {
+            int current = romanMap.get(roman.charAt(i));
+            if (i < roman.length() - 1 && current < romanMap.get(roman.charAt(i + 1))) {
+                result -= current;
+            } else {
+                result += current;
+            }
+        }
+
+        return result;
+    }
+
+    public static String clearMcUsername(String username) {
+        if (username == null || username.isEmpty()) return "";
+
+        String cleanName = username.split(" ")[0];
+
+        cleanName = cleanName.replaceAll("[^a-zA-Z0-9_]", "");
+
+        if (cleanName.length() > 16) {
+            cleanName = cleanName.substring(0, 16);
+        }
+
+        return cleanName;
     }
 }

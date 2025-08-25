@@ -5,6 +5,7 @@ import cn.boop.necron.config.NCConfig;
 import cn.boop.necron.config.UpdateChecker;
 import cn.boop.necron.gui.MainMenu;
 import cn.boop.necron.module.*;
+import cn.boop.necron.utils.DungeonUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.event.*;
 import net.minecraft.client.Minecraft;
@@ -37,6 +38,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new ChatCommands());
         MinecraftForge.EVENT_BUS.register(new CropNuker());
+        MinecraftForge.EVENT_BUS.register(new DungeonUtils());
         MinecraftForge.EVENT_BUS.register(new Etherwarp());
         MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
         MinecraftForge.EVENT_BUS.register(new FailSafe());

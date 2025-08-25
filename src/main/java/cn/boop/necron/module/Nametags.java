@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.util.regex.Pattern;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.utils.GLUtils;
-import cn.boop.necron.utils.RenderUtils;
+import cn.boop.necron.utils.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -71,19 +70,41 @@ public final class Nametags {
         GL11.glRotatef(Necron.mc.getRenderManager().playerViewX, 2.0f, 0.0f, 0.0f);
         GL11.glScalef(-scale, -scale, scale);
 
-        String lol = entity.getDisplayName().getFormattedText();
-        lol += " §7" + (int) distance + "m§r";
-        float width = Necron.mc.fontRendererObj.getStringWidth(lol);
+        String nametagText = buildNametagText(entity, (int) distance);
+
+        float width = Necron.mc.fontRendererObj.getStringWidth(nametagText);
         float nw = -width / 2f - 4.6f;
         float width2 = nw - 2.0f * nw;
 
         RenderUtils.drawRoundedRect(nw, -17.0f, width2, -1.0f, 3.0f, new Color(25, 25, 25, 114).getRGB());
-        Necron.mc.fontRendererObj.drawString(lol, (int)(nw + 4.0f), -13, 0xFFFFFF, true);
+        Necron.mc.fontRendererObj.drawString(nametagText, (int)(nw + 4.0f), -13, 0xFFFFFF, true);
 
         GlStateManager.depthMask(true);
         GLUtils.restorePreviousRenderState();
         GlStateManager.popMatrix();
         GL11.glPopMatrix();
+    }
+
+    private String buildNametagText(EntityPlayer entity, int distance) {
+        String playerName = entity.getName();
+
+        if (PlayerStats.inDungeon) {
+            String cleanPlayerName = Utils.clearMcUsername(playerName);
+            DungeonUtils.DungeonPlayer dungeonPlayer = DungeonUtils.dungeonPlayers.get(cleanPlayerName);
+
+            if (dungeonPlayer != null && dungeonPlayer.getPlayerClass() != null) {
+                DungeonUtils.DungeonClass playerClass = dungeonPlayer.getPlayerClass();
+                String classInitial = playerClass.getClassName().substring(0, 1);
+                String classColor = DungeonUtils.getPlayerClassColor(playerName);
+
+                return classColor + "[" + classInitial + "] " + playerName;
+            } else {
+                return "§7" + playerName;
+            }
+        } else {
+            String displayName = entity.getDisplayName().getFormattedText();
+            return displayName + " §7" + distance + "m§r";
+        }
     }
 
     @SubscribeEvent
