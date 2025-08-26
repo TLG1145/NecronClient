@@ -1,5 +1,8 @@
 package cn.boop.necron.module;
 
+import cc.polyfrost.oneconfig.internal.assets.SVGs;
+import cc.polyfrost.oneconfig.renderer.asset.Icon;
+import cc.polyfrost.oneconfig.utils.Notifications;
 import cn.boop.necron.Necron;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -21,6 +24,7 @@ public class FailSafe {
     public void onWorldChange(WorldEvent.Load event) {
         if (cropNuker) {
             CropNuker.reset(ResetReason.WORLD_CHANGE);
+            Notifications.INSTANCE.send("Crop Nuker", ResetReason.WORLD_CHANGE.getMessage(), new Icon(SVGs.WARNING), 5000);
         } else if (Necron.mc.thePlayer != null && !cropNuker) {
             posInit = false;
         }
@@ -56,6 +60,7 @@ public class FailSafe {
 
         if (distance > POSITION_THRESHOLD) {
             CropNuker.reset(ResetReason.TELEPORT);
+            Notifications.INSTANCE.send("Crop Nuker", ResetReason.TELEPORT.getMessage(), new Icon(SVGs.WARNING), 5000);
         }
     }
 
@@ -69,6 +74,7 @@ public class FailSafe {
 
                 if (horizontalMotion < MOTION_THRESHOLD) {
                     CropNuker.reset(ResetReason.MOTION);
+                    Notifications.INSTANCE.send("Crop Nuker", ResetReason.MOTION.getMessage(), new Icon(SVGs.WARNING), 5000);
                 }
 
                 motionCheckTicks = 0;
@@ -83,9 +89,9 @@ public class FailSafe {
     }
 
     public enum ResetReason {
-        WORLD_CHANGE("due to server changed."),
-        TELEPORT("due to position changed."),
-        MOTION("due to incorrect movement.");
+        WORLD_CHANGE("Detection server changed."),
+        TELEPORT("Detection position changed."),
+        MOTION("Detection incorrect movement.");
 
         private final String message;
 
