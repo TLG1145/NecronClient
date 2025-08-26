@@ -15,6 +15,8 @@ import java.util.regex.*;
 public class DungeonUtils {
     public static ArrayList<EntityPlayer> teammates = new ArrayList<>();
     public static Map<String, DungeonPlayer> dungeonPlayers = new HashMap<>();
+    private static boolean hasTriggered = false;
+    private int ticks = 0;
 
     public static class DungeonPlayer {
         private final String playerName;
@@ -33,7 +35,7 @@ public class DungeonUtils {
 
         @Override
         public String toString() {
-            return String.format("DungeonPlayer{name='%s', class=%s, level=%d}",
+            return String.format("DungeonInfo{name='%s', class=%s, level=%d}",
                     playerName, playerClass, classLevel);
         }
     }
@@ -41,6 +43,7 @@ public class DungeonUtils {
     public static void reset() {
         teammates.clear();
         dungeonPlayers.clear();
+        hasTriggered = false;
     }
 
     public enum DungeonClass {
@@ -84,6 +87,12 @@ public class DungeonUtils {
         if (tabList != null) {
             if (teammates.isEmpty()) updateTeammates(tabList);
         }
+
+        if (ticks % 20 == 0) {
+            checkScoreboard();
+            ticks = 0;
+        }
+        ticks++;
     }
 
     @SubscribeEvent
@@ -91,24 +100,30 @@ public class DungeonUtils {
         if (!PlayerStats.inDungeon) return;
 
         String message = StringUtils.stripControlCodes(event.message.getFormattedText()).trim();
-        if ("Starting in 4 seconds.".equals(message)) {
-            reset();
-        } else if ("[NPC] Mort: Here, I found this map when I first entered the dungeon.".equals(message)) {
-            new Thread(() -> {
-                try {
-                    Thread.sleep(1500);
-                    updateDungeonPlayers();
-                }
-                catch (Exception e) {
-                    Necron.LOGGER.error("Error in DungeonUtils.onChat: ", e);
-                }
-            }).start();
-        }
+        if ("Starting in 4 seconds.".equals(message)) reset();
+//      hasMortMessage = "[NPC] Mort: Here, I found this map when I first entered the dungeon.".equals(message);
     }
 
     @SubscribeEvent
     public void onLoad(WorldEvent.Load event) {
         reset();
+    }
+
+    private void checkScoreboard() {
+        boolean check = ScoreboardUtils.scoreboardContains("Starting in:");
+        if (check && !hasTriggered) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(5500);
+                    updateDungeonPlayers();
+                } catch (InterruptedException e) {
+                    Necron.LOGGER.error("Error in DungeonUtils.checkScoreboard: ", e);
+                }
+            }).start();
+            hasTriggered = true;
+        } else if (!check && hasTriggered) {
+            hasTriggered = false;
+        }
     }
 
     private void updateDungeonPlayers() {
@@ -117,11 +132,6 @@ public class DungeonUtils {
             if (tabList == null) return;
 
             parseTabListPlayers(tabList);
-            Necron.LOGGER.info("Dungeon players collected: {}", dungeonPlayers.size());
-            for (Map.Entry<String, DungeonPlayer> entry : dungeonPlayers.entrySet()) {
-                Necron.LOGGER.info("Player: {}", entry.getValue());
-            }
-
             showCurrentClassInfo();
         } catch (Exception e) {
             Necron.LOGGER.error("Error updating dungeon players: ", e);
@@ -193,10 +203,8 @@ public class DungeonUtils {
 
             String text = StringUtils.stripControlCodes(tabList.get(1 + i * 4)).trim();
             String[] parts = text.split(" ");
-            if (parts.length < 2) {
-                Necron.LOGGER.warn("Tab list still loading: {}", text);
-                continue;
-            }
+            if (parts.length < 2) continue;
+
             String username = Utils.clearMcUsername(text.split(" ")[1]);
             if(Objects.equals(username, "")) continue;
 
