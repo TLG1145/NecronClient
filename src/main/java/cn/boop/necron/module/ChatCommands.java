@@ -1,5 +1,6 @@
 package cn.boop.necron.module;
 
+import cn.boop.necron.Necron;
 import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
@@ -12,8 +13,8 @@ import java.util.regex.*;
 import static cn.boop.necron.config.impl.ChatCommandsOptionsImpl.*;
 
 public class ChatCommands {
-    public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*!(.+)");
-    public static final List<String> tipList = new java.util.ArrayList<>(JsonUtils.loadTips());
+    public static final Pattern ChatRegex = Pattern.compile("^Party > (\\[[^]]*?])? ?(\\w{1,16})?: \\s*[!.-](.+)");
+    public static final List<String> tipList = new ArrayList<>(JsonUtils.loadTips());
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -29,7 +30,7 @@ public class ChatCommands {
                         Thread.sleep(100);
                         executeCommand(sender, command);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Necron.LOGGER.error("Error in ChatCommands.onChat: ", e);
                     }
                 }).start();
             }
@@ -40,7 +41,7 @@ public class ChatCommands {
         switch (cmd) {
             case "help":
                 if (!help) return;
-                Utils.chatMessage("/pc 命令列表 -> help, loc, meow, roll, sb, tips, zako");
+                Utils.chatMessage("/pc 命令列表 -> help, loc, meow, nuke, roll, sb, tips, zako");
                 break;
             case "loc":
                 if (!location) return;
@@ -58,6 +59,10 @@ public class ChatCommands {
             case "meow":
                 if (!meow) return;
                 Utils.chatMessage("/pc 喵❤");
+                break;
+            case "nuke":
+                if (!nuke) return;
+                Utils.chatMessage("/p disband");
                 break;
             case "roll":
                 if (!roll) return;
