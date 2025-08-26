@@ -1,6 +1,7 @@
 package cn.boop.necron;
 
 import cn.boop.necron.command.ClientCommands;
+import cn.boop.necron.command.DebugCommands;
 import cn.boop.necron.config.NCConfig;
 import cn.boop.necron.config.UpdateChecker;
 import cn.boop.necron.gui.MainMenu;
@@ -56,6 +57,7 @@ public class Necron {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new ClientCommands());
+        ClientCommandHandler.instance.registerCommand(new DebugCommands());
         NCConfig.INSTANCE.preload();
     }
 

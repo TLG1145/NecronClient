@@ -49,7 +49,7 @@ public class ClientCommands extends CommandBase {
                         RotationUtils.rotatingToBlock(x, y, z, 0.3f);
                         modMessage(String.format("Rotating to Vec3d: (%.1f, %.1f, %.1f)", x, y, z));
                     } catch (NumberFormatException e) {
-                        System.out.println("§cInvalid position format.");
+                        modMessage("§cInvalid position format.");
                     }
                     break;
                 case "setDir":
@@ -91,17 +91,8 @@ public class ClientCommands extends CommandBase {
                         modMessage("§cInvalid number format.");
                     }
                     break;
-                case "stats":
-                    modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + PlayerStats.inHypixel +
-                            "\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
-                            "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon +
-                            "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() +
-                            "\n§7§l | §r§7Floor: " + PlayerStats.floor);
-                    break;
                 case "tips":
                     Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bTips §8»§r§7 " + Utils.randomSelect(ChatCommands.tipList)));
-                    break;
-                case "test":
                     break;
                 case "load":
                     if (args.length < 2) {
@@ -114,6 +105,7 @@ public class ClientCommands extends CommandBase {
                     break;
                 default:
                     modMessage("§cUnknown command.");
+                    break;
             }
         } else {
             int i;
@@ -131,7 +123,6 @@ public class ClientCommands extends CommandBase {
             "§b/necron rotate <x> <y> <z> §f§l»§r§7 将视角旋转至x, y, z",
             "§b/necron setDir <ID> <direction> §f§l»§r§7 设置路径点的移动方向",
             "§b/necron setRot <ID> <yaw> §f§l»§r§7 设置路径点的预设旋转角度",
-            "§b/necron stats §f§l»§r§7 查看当前玩家信息",
             "§b/necron tips §f§l»§r§7 获取一些神秘文本",
             "§r§8§m-------------------------------------"
     };

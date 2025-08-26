@@ -71,6 +71,7 @@ public class PlayerStats {
 
     private static final HashMap<String, Island> ISLAND_MAPPING = createIslandMapping();
     private static long startTime = 0L;
+    private int ticks = 0;
     public static Island currentIsland = null;
     public static Floor floor = null;
     public static boolean inCombat = false;
@@ -165,6 +166,4 @@ public class PlayerStats {
         double seconds = durationMillis / 1000.0;
         return String.format("%.2fs", seconds);
     }
-
-    private int ticks = 0;
 }
