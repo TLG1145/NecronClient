@@ -30,12 +30,14 @@ public class Necron {
     public static final Logger LOGGER = LogManager.getLogger(Necron.class);
 
     private static boolean playerEnteredWorld = false;
+    private static final AutoPath autoPath = new AutoPath();
 
     @SuppressWarnings("InstantiationOfUtilityClass")
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new AutoGG());
+        MinecraftForge.EVENT_BUS.register(autoPath);
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
         MinecraftForge.EVENT_BUS.register(new ChatCommands());
         MinecraftForge.EVENT_BUS.register(new CropNuker());
@@ -73,5 +75,9 @@ public class Necron {
                 new UpdateChecker("TLG1145", "NecronClient", VERSION).checkForUpdates();
             }
         }
+    }
+
+    public static AutoPath getAutoPath() {
+        return autoPath;
     }
 }

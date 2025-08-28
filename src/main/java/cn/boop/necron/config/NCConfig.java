@@ -16,6 +16,8 @@ public class NCConfig extends Config {
     @SubConfig
     public static AutoGGOptionsImpl autoGGOptions = new AutoGGOptionsImpl();
     @SubConfig
+    public static AutoPathOptionsImpl autoPathOptions = new AutoPathOptionsImpl();
+    @SubConfig
     public static ChatCommandsOptionsImpl chatCommandsOptions = new ChatCommandsOptionsImpl();
     @SubConfig
     public static EtherwarpOptionsImpl etherwarpOptions = new EtherwarpOptionsImpl();

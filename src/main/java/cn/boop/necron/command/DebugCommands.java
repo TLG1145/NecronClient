@@ -7,6 +7,7 @@ import cn.boop.necron.utils.DungeonUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +60,23 @@ public class DebugCommands extends CommandBase {
                         modMessage("§cInvalid duration time format.");
                     }
                     break;
+                case "findpath":
+                    if (args.length < 4) {
+                        modMessage("Usage: findpath <x> <y> <z>");
+                        break;
+                    }
+
+                    try {
+                        int x = Integer.parseInt(args[1]);
+                        int y = Integer.parseInt(args[2]);
+                        int z = Integer.parseInt(args[3]);
+
+                        Necron.getAutoPath().setTarget(new BlockPos(x, y, z));
+
+                    } catch (NumberFormatException e) {
+                        Necron.LOGGER.error("§cInvalid position format");
+                    }
+                    break;
                 case "stats":
                     modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + PlayerStats.inHypixel +
                             "\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
@@ -76,7 +94,7 @@ public class DebugCommands extends CommandBase {
                     break;
             }
         } else {
-            modMessage("Debug Commands: dungeonInfo, notification, stats");
+            modMessage("Debug Commands: dungeonInfo, notification, findpath, stats");
         }
     }
 }
