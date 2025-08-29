@@ -4,6 +4,11 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 
  主命令: `/necron`，命令别名: `/nc`
 
+## Auto Path
+使用A*算法的寻路系统
+
+**尚未完成**
+
 ## Blaze Dagger
 如果使用[NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/)模组中的 `/neurename` 命令重命名Blaze武器，将无法使用自动切换功能。
 
@@ -24,6 +29,10 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 ## Fake Wipe
 开启后，每次进入Hypixel服务器会显示SkyBlock Wipe Book。（别真被擦了.jpg）
 
+## Main Menu
+- 可加载自定义背景图，命名格式为 bg1.png，bg2.png……
+- 图片存放路径: "./config/necron/backgrounds/" （也可在配置界面中快捷打开）
+
 ## Random RNG
 - 由Chat Commands中的 !roll 命令触发。
 - 实际概率约为[游戏中](https://wiki.hypixel.net/Catacombs_Floor_VII#BedrockChest__)原概率的10倍。
@@ -37,7 +46,7 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 
 ## Waypoint
 
-> Waypoint文件存放目录: "./config/necron/waypoints/"
+> Waypoint文件存放路径: "./config/necron/waypoints/" （也可在配置界面中快捷打开）
 > 
 > 路径点元素（Box, Line, Text）的显示颜色均可修改
 > 
