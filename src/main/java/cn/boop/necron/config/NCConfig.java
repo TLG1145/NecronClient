@@ -30,6 +30,8 @@ public class NCConfig extends Config {
     @SubConfig
     public static NametagsOptionsImpl nametagsOptions = new NametagsOptionsImpl();
     @SubConfig
+    public static NecronOptionsImpl necronOptions = new NecronOptionsImpl();
+    @SubConfig
     public static RouterOptionsImpl routerOptions = new RouterOptionsImpl();
     @SubConfig
     public static SlayerOptionsImpl slayerOptions = new SlayerOptionsImpl();
