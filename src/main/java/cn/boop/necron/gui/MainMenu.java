@@ -6,29 +6,28 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiModList;
 
+import javax.imageio.ImageIO;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
+import static cn.boop.necron.config.impl.NecronOptionsImpl.*;
+
 public final class MainMenu extends GuiScreen {
-    private static final List<ResourceLocation> BACKGROUND_TEXTURES = new ArrayList<ResourceLocation>() {{
-            add(new ResourceLocation("necron", "gui/bg1.png"));
-            add(new ResourceLocation("necron", "gui/bg2.png"));
-            add(new ResourceLocation("necron", "gui/bg3.png"));
-            add(new ResourceLocation("necron", "gui/bg4.png"));
-            add(new ResourceLocation("necron", "gui/bg5.png"));
-        }};
+    private static final List<ResourceLocation> BACKGROUND_TEXTURES = new ArrayList<>();
+    private static final List<String> BACKGROUND_FILE_PATHS = new ArrayList<>();
     private static final ResourceLocation MOD_ICON =
             new ResourceLocation("necron", "gui/icon.png");
     private static int currentBackgroundIndex = 0;
     private static int nextBackgroundIndex = 1;
     private static long lastSwitchTime = System.currentTimeMillis();
-    private static final long SWITCH_INTERVAL = 10000; // 10秒切换一次
-    private static final long FADE_DURATION = 750; // 0.5秒淡入淡出
     private static float fadeProgress = 0.0f;
     private static boolean isFading = false;
 
@@ -36,6 +35,10 @@ public final class MainMenu extends GuiScreen {
     private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
     private static final float SMOOTH_FACTOR = 0.15f;
+
+    public MainMenu() {
+        loadBackgroundTextures();
+    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -162,13 +165,13 @@ public final class MainMenu extends GuiScreen {
     private void updateBackgroundTransition() {
         long currentTime = System.currentTimeMillis();
 
-        if (!isFading && currentTime - lastSwitchTime >= SWITCH_INTERVAL) {
+        if (!isFading && currentTime - lastSwitchTime >= (switchInterval * 1000L)) {
             isFading = true;
             nextBackgroundIndex = (currentBackgroundIndex + 1) % BACKGROUND_TEXTURES.size();
         }
 
         if (isFading) {
-            fadeProgress = Math.min(1.0f, (float)(currentTime - lastSwitchTime - SWITCH_INTERVAL) / FADE_DURATION);
+            fadeProgress = Math.min(1.0f, (float)(currentTime - lastSwitchTime - (switchInterval * 1000L)) / fadeDuration);
 
             if (fadeProgress >= 1.0f) {
                 currentBackgroundIndex = nextBackgroundIndex;
@@ -176,5 +179,47 @@ public final class MainMenu extends GuiScreen {
                 lastSwitchTime = currentTime;
             }
         }
+    }
+
+    private void loadBackgroundTextures() {
+        BACKGROUND_TEXTURES.clear();
+        BACKGROUND_FILE_PATHS.clear();
+
+        File bgDir = new File(Necron.BG_FILE_PATH);
+        if (!bgDir.exists()) {
+            bgDir.mkdirs();
+            Necron.LOGGER.info("Created backgrounds directory: {}", bgDir.getAbsolutePath());
+        }
+
+        File[] bgFiles = bgDir.listFiles((dir, name) ->
+                name.toLowerCase().endsWith(".png"));
+
+        if (bgFiles != null && bgFiles.length > 0) {
+            for (File file : bgFiles) {
+                try {
+                    BufferedImage image = ImageIO.read(file);
+                    if (image != null) {
+                        DynamicTexture dynamicTexture =
+                                new DynamicTexture(image);
+
+                        ResourceLocation textureLocation = Necron.mc.getTextureManager().getDynamicTextureLocation(
+                                        "bg" + file.getName(), dynamicTexture);
+
+                        BACKGROUND_TEXTURES.add(textureLocation);
+                        BACKGROUND_FILE_PATHS.add(file.getAbsolutePath());
+                        Necron.LOGGER.info("Loaded external background: {}", file.getName());
+                    }
+                } catch (Exception e) {
+                    Necron.LOGGER.error("Failed to load background image: {}", file.getName(), e);
+                }
+            }
+        }
+
+        if (BACKGROUND_TEXTURES.isEmpty()) {
+            Necron.LOGGER.warn("No external backgrounds found, using default backgrounds");
+            BACKGROUND_TEXTURES.add(new ResourceLocation("necron", "gui/bg.png"));
+        }
+
+        Necron.LOGGER.info("Loaded {} background textures", BACKGROUND_TEXTURES.size());
     }
 }
