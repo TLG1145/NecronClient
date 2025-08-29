@@ -42,12 +42,12 @@ public class NecronOptionsImpl extends ModConfig {
     public static int switchInterval = 10;
     @Number(name = "Fade duration (ms)", description = "Fade duration of background", min = 0, max = 1000, subcategory = "Main Menu")
     public static int fadeDuration = 750;
-    @Button(name = "Open background folder", text = "Open", subcategory = "Main Menu")
+    @Button(name = "Open background file folder", text = "Open", subcategory = "Main Menu")
     Runnable openBgPath = () -> {
         try {
-            Desktop.getDesktop().open(new File("./logs/roll_log.txt"));
+            Desktop.getDesktop().open(new File(Necron.BG_FILE_PATH));
         } catch (IOException e) {
-            Notifications.INSTANCE.send("Error", "Failed to open roll log file", new Icon(SVGs.X_CIRCLE_BOLD));
+            Notifications.INSTANCE.send("Error", "Failed to open background folder", new Icon(SVGs.X_CIRCLE_BOLD));
             Necron.LOGGER.error("Failed to open background folder");
         }
     };
