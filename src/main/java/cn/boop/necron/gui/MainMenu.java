@@ -10,13 +10,28 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiModList;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
+import java.util.ArrayList;
 
 public final class MainMenu extends GuiScreen {
-    private static final ResourceLocation BACKGROUND_TEXTURE =
-            new ResourceLocation("necron", "gui/bg1.png");
+    private static final List<ResourceLocation> BACKGROUND_TEXTURES = new ArrayList<ResourceLocation>() {{
+            add(new ResourceLocation("necron", "gui/bg1.png"));
+            add(new ResourceLocation("necron", "gui/bg2.png"));
+            add(new ResourceLocation("necron", "gui/bg3.png"));
+            add(new ResourceLocation("necron", "gui/bg4.png"));
+            add(new ResourceLocation("necron", "gui/bg5.png"));
+        }};
     private static final ResourceLocation MOD_ICON =
             new ResourceLocation("necron", "gui/icon.png");
+    private static int currentBackgroundIndex = 0;
+    private static int nextBackgroundIndex = 1;
+    private static long lastSwitchTime = System.currentTimeMillis();
+    private static final long SWITCH_INTERVAL = 10000; // 10秒切换一次
+    private static final long FADE_DURATION = 750; // 0.5秒淡入淡出
+    private static float fadeProgress = 0.0f;
+    private static boolean isFading = false;
+
     private float mouseXOffset, mouseYOffset;
     private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
@@ -24,6 +39,8 @@ public final class MainMenu extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        updateBackgroundTransition();
+
         float centerX = this.width / 2.0f;
         float centerY = this.height / 2.0f;
         float targetXOffset = (mouseX - centerX) / centerX * MAX_OFFSET;
@@ -31,8 +48,18 @@ public final class MainMenu extends GuiScreen {
         mouseXOffset += (targetXOffset - mouseXOffset) * SMOOTH_FACTOR;
         mouseYOffset += (targetYOffset - mouseYOffset) * SMOOTH_FACTOR;
 
-        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
+        this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURES.get(currentBackgroundIndex));
         drawBackgroundQuad();
+
+        if (isFading) {
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(770, 771);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, fadeProgress);
+            this.mc.getTextureManager().bindTexture(BACKGROUND_TEXTURES.get(nextBackgroundIndex));
+            drawBackgroundQuad();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        }
+
         drawBackgroundRect();
 
         GlStateManager.pushMatrix();
@@ -128,7 +155,26 @@ public final class MainMenu extends GuiScreen {
         int x = (width - rectWidth) / 2;
         int y = (height - rectHeight) / 2;
 
-        RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0x14AEAEAE, true).getRGB());
+        RenderUtils.drawRoundedRect(x, y, x + rectWidth, y + rectHeight, 8.0f, new Color(0xFAEAEAE, true).getRGB());
         RenderUtils.drawBorderedRoundedRect(x, y, rectWidth, rectHeight, 8.0f, 2.0f, new Color(0x73969696, true).getRGB());
+    }
+
+    private void updateBackgroundTransition() {
+        long currentTime = System.currentTimeMillis();
+
+        if (!isFading && currentTime - lastSwitchTime >= SWITCH_INTERVAL) {
+            isFading = true;
+            nextBackgroundIndex = (currentBackgroundIndex + 1) % BACKGROUND_TEXTURES.size();
+        }
+
+        if (isFading) {
+            fadeProgress = Math.min(1.0f, (float)(currentTime - lastSwitchTime - SWITCH_INTERVAL) / FADE_DURATION);
+
+            if (fadeProgress >= 1.0f) {
+                currentBackgroundIndex = nextBackgroundIndex;
+                isFading = false;
+                lastSwitchTime = currentTime;
+            }
+        }
     }
 }
