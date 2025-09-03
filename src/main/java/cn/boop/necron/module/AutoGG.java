@@ -1,5 +1,6 @@
 package cn.boop.necron.module;
 
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,7 +29,7 @@ public class AutoGG {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (autoGG && !PlayerStats.inSkyBlock && event.type == 0) {
+        if (autoGG && !LocationUtils.inSkyBlock && event.type == 0) {
             String message = event.message.getUnformattedText();
             for (String winMsg : WIN_MESSAGE) {
                 if (message.contains(winMsg)) {

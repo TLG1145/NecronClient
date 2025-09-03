@@ -2,6 +2,7 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.JsonUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
 import cn.boop.necron.utils.event.WaypointEventHandler;
@@ -51,7 +52,7 @@ public class EtherwarpRouter {
     public void onTick(TickEvent.ClientTickEvent event) {
         boolean currentLeftClick = Mouse.isButtonDown(0);
 
-        if (router && PlayerStats.inSkyBlock ) {
+        if (router && LocationUtils.inSkyBlock ) {
             if (!lastLeftClick && currentLeftClick && Necron.mc.currentScreen == null) {
                 if (!WaypointEventHandler.isEditingWaypoint) handleLeftClick();
             }
@@ -114,7 +115,7 @@ public class EtherwarpRouter {
                 try {
                     Thread.sleep(300);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Necron.LOGGER.error("EtherwarpRouter", e);
                 }
                 Etherwarp.useEtherwarp();
                 if (devMsg) Utils.modMessage("Etherwarp.");

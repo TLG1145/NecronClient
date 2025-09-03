@@ -2,6 +2,7 @@ package cn.boop.necron.module;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cn.boop.necron.Necron;
+import cn.boop.necron.utils.LocationUtils;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
@@ -41,7 +42,7 @@ public class FakeWipe {
 
     @SubscribeEvent
     public void onWorldUnload(WorldEvent.Unload event) {
-        if(!PlayerStats.inHypixel) wasOnHypixel = false;
+        if(!LocationUtils.inHypixel) wasOnHypixel = false;
     }
 
     private void triggerWipeBook() {

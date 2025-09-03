@@ -2,6 +2,7 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.AxisAlignedBBUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -49,7 +50,7 @@ public class BlazeDagger {
             double y = event.entity.posY;
             double z = event.entity.posZ;
 
-            if (blazeSwap && (isLeftMouseDown() || isLeftMouseClicked) && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick() && AxisAlignedBBUtils.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
+            if (blazeSwap && (isLeftMouseDown() || isLeftMouseClicked) && LocationUtils.inSkyBlock && Necron.mc.currentScreen == null && this.shouldClick() && AxisAlignedBBUtils.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
                 if (entityName.startsWith("CRYSTAL")) {
                     swapToCrystal();
                     return;

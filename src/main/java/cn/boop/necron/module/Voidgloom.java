@@ -2,6 +2,7 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.AxisAlignedBBUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.PlayerUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -106,7 +107,7 @@ public class Voidgloom {
             double y = event.entity.posY;
             double z = event.entity.posZ;
 
-            if (voidgloom && (isLeftMouseDown() || isLeftMouseClicked) && PlayerStats.inSkyBlock && Necron.mc.currentScreen == null && shouldClick()) {
+            if (voidgloom && (isLeftMouseDown() || isLeftMouseClicked) && LocationUtils.inSkyBlock && Necron.mc.currentScreen == null && shouldClick()) {
                 if (entityName.contains(/*"Voidgloom"*/"Dummy")) {
                     if (AxisAlignedBBUtils.isFacingAABB(new AxisAlignedBB(x - 0.5, y - 3.0, z - 0.5, x + 0.5, y + 1.0, z + 0.5), 5.0f)) {
                         Utils.modMessage("> CLICK");

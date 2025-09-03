@@ -1,7 +1,6 @@
 package cn.boop.necron.utils;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.module.PlayerStats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -81,7 +80,7 @@ public class DungeonUtils {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (!PlayerStats.inDungeon) return;
+        if (!LocationUtils.inDungeon) return;
 
         List<String> tabList = getTabList();
         if (tabList != null) {
@@ -97,7 +96,7 @@ public class DungeonUtils {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if (!PlayerStats.inDungeon) return;
+        if (!LocationUtils.inDungeon) return;
 
         String message = StringUtils.stripControlCodes(event.message.getFormattedText()).trim();
         if ("Starting in 4 seconds.".equals(message)) reset();

@@ -2,6 +2,7 @@ package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.JsonUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.ScoreboardUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -46,8 +47,8 @@ public class ChatCommands {
             case "loc":
                 if (!location) return;
                 String msg;
-                if (PlayerStats.inDungeon) msg = "/pc 当前位置: CATACOMBS_" + PlayerStats.floor;
-                else if (PlayerStats.inSkyBlock) msg = "/pc 当前位置: " + PlayerStats.getCurrentIslandName();
+                if (LocationUtils.inDungeon) msg = "/pc 当前位置: CATACOMBS_" + LocationUtils.floor;
+                else if (LocationUtils.inSkyBlock) msg = "/pc 当前位置: " + LocationUtils.getCurrentIslandName();
                 else {
                     String title = ScoreboardUtils.getScoreboardTitle();
                     if (title.isEmpty()) msg = "/pc 当前位置: Limbo";

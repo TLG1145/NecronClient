@@ -7,6 +7,7 @@ import cn.boop.necron.config.UpdateChecker;
 import cn.boop.necron.gui.MainMenu;
 import cn.boop.necron.module.*;
 import cn.boop.necron.utils.DungeonUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.event.*;
 import net.minecraft.client.Minecraft;
@@ -48,6 +49,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new FailSafe());
         MinecraftForge.EVENT_BUS.register(new FakeWipe());
         MinecraftForge.EVENT_BUS.register(new HurtCam());
+        MinecraftForge.EVENT_BUS.register(new LocationUtils());
         MinecraftForge.EVENT_BUS.register(new MainMenu());
         MinecraftForge.EVENT_BUS.register(new Nametags());
         MinecraftForge.EVENT_BUS.register(new PlayerStats());

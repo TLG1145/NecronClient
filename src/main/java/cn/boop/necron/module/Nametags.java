@@ -21,7 +21,7 @@ import static cn.boop.necron.config.impl.NametagsOptionsImpl.nametags;
 public final class Nametags {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (!nametags || !PlayerStats.inSkyBlock) return;
+        if (!nametags || !LocationUtils.inSkyBlock) return;
 
         Minecraft mc = Necron.mc;
         Entity viewer = mc.getRenderViewEntity();
@@ -88,7 +88,7 @@ public final class Nametags {
     private String buildNametagText(EntityPlayer entity, int distance) {
         String playerName = entity.getName();
 
-        if (PlayerStats.inDungeon) {
+        if (LocationUtils.inDungeon) {
             String cleanPlayerName = Utils.clearMcUsername(playerName);
             DungeonUtils.DungeonPlayer dungeonPlayer = DungeonUtils.dungeonPlayers.get(cleanPlayerName);
 
@@ -112,7 +112,7 @@ public final class Nametags {
         if (event.entity instanceof EntityPlayer && event.entity != Necron.mc.thePlayer) {
             EntityPlayer player = (EntityPlayer) event.entity;
 
-            if (PlayerStats.inSkyBlock && nametags && isValidSkyBlockPlayer(player))
+            if (LocationUtils.inSkyBlock && nametags && isValidSkyBlockPlayer(player))
                 event.setCanceled(true);
         }
     }

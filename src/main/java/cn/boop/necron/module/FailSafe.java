@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.internal.assets.SVGs;
 import cc.polyfrost.oneconfig.renderer.asset.Icon;
 import cc.polyfrost.oneconfig.utils.Notifications;
 import cn.boop.necron.Necron;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -36,7 +37,7 @@ public class FailSafe {
 
         if (Necron.mc.thePlayer != null && cropNuker) {
             checkPosition();
-            checkMotion();
+//            checkMotion();
         }
     }
 
@@ -64,25 +65,25 @@ public class FailSafe {
         }
     }
 
-    private void checkMotion() {
-        if (cropNuker && !CropNuker.isAtWaypoint()) {
-            motionCheckTicks++;
-            if (motionCheckTicks >= MOTION_CHECK_DELAY) {
-                double motionX = Necron.mc.thePlayer.posX - lastPlayerX;
-                double motionZ = Necron.mc.thePlayer.posZ - lastPlayerZ;
-                double horizontalMotion = Math.sqrt(motionX * motionX + motionZ * motionZ);
-
-                if (horizontalMotion < MOTION_THRESHOLD) {
-                    CropNuker.reset(ResetReason.MOTION);
-                    Notifications.INSTANCE.send("Crop Nuker", ResetReason.MOTION.getMessage(), new Icon(SVGs.WARNING), 5000);
-                }
-
-                motionCheckTicks = 0;
-            }
-        } else {
-            motionCheckTicks = 0;
-        }
-    }
+//    private void checkMotion() {
+//        if (cropNuker && !CropNuker.isAtWaypoint()) {
+//            motionCheckTicks++;
+//            if (motionCheckTicks >= MOTION_CHECK_DELAY) {
+//                double motionX = Necron.mc.thePlayer.posX - lastPlayerX;
+//                double motionZ = Necron.mc.thePlayer.posZ - lastPlayerZ;
+//                double horizontalMotion = Math.sqrt(motionX * motionX + motionZ * motionZ);
+//
+//                if (horizontalMotion < MOTION_THRESHOLD) {
+//                    CropNuker.reset(ResetReason.MOTION);
+//                    Notifications.INSTANCE.send("Crop Nuker", ResetReason.MOTION.getMessage(), new Icon(SVGs.WARNING), 5000);
+//                }
+//
+//                motionCheckTicks = 0;
+//            }
+//        } else {
+//            motionCheckTicks = 0;
+//        }
+//    }
 
     public static void resetPositionTracking() {
         posInit = false;
@@ -90,8 +91,8 @@ public class FailSafe {
 
     public enum ResetReason {
         WORLD_CHANGE("Detection server changed."),
-        TELEPORT("Detection position changed."),
-        MOTION("Detection incorrect movement.");
+        TELEPORT("Detection position changed.");
+        //MOTION("Detection incorrect movement.");
 
         private final String message;
 

@@ -2,8 +2,8 @@ package cn.boop.necron.command;
 
 import cc.polyfrost.oneconfig.utils.Notifications;
 import cn.boop.necron.Necron;
-import cn.boop.necron.module.PlayerStats;
 import cn.boop.necron.utils.DungeonUtils;
+import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -78,15 +78,15 @@ public class DebugCommands extends CommandBase {
                     }
                     break;
                 case "stats":
-                    modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + PlayerStats.inHypixel +
-                            "\n§7§l | §r§7inSkyBlock: " + PlayerStats.inSkyBlock +
-                            "\n§7§l | §r§7Island: " + PlayerStats.getCurrentIslandName() +
+                    modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + LocationUtils.inHypixel +
+                            "\n§7§l | §r§7inSkyBlock: " + LocationUtils.inSkyBlock +
+                            "\n§7§l | §r§7Island: " + LocationUtils.getCurrentIslandName() +
                             "\n§7§l | §r§7Held item ID: " + Utils.getSkyBlockID(Necron.mc.thePlayer.getHeldItem()) +
                             "\n§7§l | §r§7Held item Name:§r " + Necron.mc.thePlayer.getHeldItem().getDisplayName() +
                             "\n§7§l | §r§7Player health: §c" + Necron.mc.thePlayer.getHealth() +
                             "\n§7" +
-                            "\n§7§l | §r§7inDungeon: " + PlayerStats.inDungeon +
-                            "\n§7§l | §r§7Floor: " + PlayerStats.floor +
+                            "\n§7§l | §r§7inDungeon: " + LocationUtils.inDungeon +
+                            "\n§7§l | §r§7Floor: " + LocationUtils.floor +
                             "\n§7§l | §r§7Instance player(s): " + DungeonUtils.dungeonPlayers.size());
                     break;
                 default:
