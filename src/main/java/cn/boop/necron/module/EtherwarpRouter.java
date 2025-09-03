@@ -131,7 +131,7 @@ public class EtherwarpRouter {
 
                 isProcessing = false;
                 targetPosition = null;
-            }).start();
+            }, "EW-Router").start();
         } else {
             if (itemID.equals("TITANIUM_DRILL_4") ||
                     itemID.equals("DIVAN_DRILL") ||

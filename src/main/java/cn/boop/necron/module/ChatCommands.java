@@ -32,7 +32,7 @@ public class ChatCommands {
                     } catch (Exception e) {
                         Necron.LOGGER.error("Error in ChatCommands.onChat: ", e);
                     }
-                }).start();
+                }, "Chat-Commands").start();
             }
         }
     }

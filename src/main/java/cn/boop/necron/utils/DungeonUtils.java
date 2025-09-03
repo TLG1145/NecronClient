@@ -101,7 +101,6 @@ public class DungeonUtils {
 
         String message = StringUtils.stripControlCodes(event.message.getFormattedText()).trim();
         if ("Starting in 4 seconds.".equals(message)) reset();
-//      hasMortMessage = "[NPC] Mort: Here, I found this map when I first entered the dungeon.".equals(message);
     }
 
     @SubscribeEvent
@@ -119,7 +118,7 @@ public class DungeonUtils {
                 } catch (InterruptedException e) {
                     Necron.LOGGER.error("Error in DungeonUtils.checkScoreboard: ", e);
                 }
-            }).start();
+            }, "Dungeon-Data").start();
             hasTriggered = true;
         } else if (!check && hasTriggered) {
             hasTriggered = false;

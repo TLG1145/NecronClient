@@ -37,9 +37,9 @@ public class Etherwarp {
                     Thread.sleep(50);
                     PlayerUtils.setSneak(false);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Necron.LOGGER.error(e);
                 }
-            }).start();
+            }, "Etherwarp").start();
         }
     }
 }
