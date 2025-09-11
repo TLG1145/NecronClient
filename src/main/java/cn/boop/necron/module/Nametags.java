@@ -30,8 +30,8 @@ public final class Nametags {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-        for (EntityPlayer entity : mc.theWorld.playerEntities) {
-            if (entity == null || entity == mc.thePlayer) continue;
+        for (EntityPlayer entity : Necron.mc.theWorld.playerEntities) {
+            if (entity == null || entity == Necron.mc.thePlayer) continue;
             if (!isValidSkyBlockPlayer(entity)) continue;
 
             double pX = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks;
