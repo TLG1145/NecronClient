@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +22,7 @@ public final class Nametags {
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (!nametags || !LocationUtils.inSkyBlock) return;
 
-        Minecraft mc = Necron.mc;
-        Entity viewer = mc.getRenderViewEntity();
+        Entity viewer = Necron.mc.getRenderViewEntity();
         if (viewer == null) return;
 
         float partialTicks = event.partialTicks;
@@ -32,8 +30,8 @@ public final class Nametags {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-        for (EntityPlayer entity : mc.theWorld.playerEntities) {
-            if (entity == null || entity == mc.thePlayer) continue;
+        for (EntityPlayer entity : Necron.mc.theWorld.playerEntities) {
+            if (entity == null || entity == Necron.mc.thePlayer) continue;
             if (!isValidSkyBlockPlayer(entity)) continue;
 
             double pX = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks;
