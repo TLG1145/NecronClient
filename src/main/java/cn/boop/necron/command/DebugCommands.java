@@ -1,10 +1,7 @@
 package cn.boop.necron.command;
 
-import cc.polyfrost.oneconfig.utils.Notifications;
 import cn.boop.necron.Necron;
-import cn.boop.necron.utils.DungeonUtils;
-import cn.boop.necron.utils.LocationUtils;
-import cn.boop.necron.utils.Utils;
+import cn.boop.necron.utils.*;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -45,21 +42,6 @@ public class DebugCommands extends CommandBase {
                         modMessage(String.valueOf(entry.getValue()));
                     }
                     break;
-                case "notification":
-                    if (args.length < 4) {
-                        modMessage("Usage: notification <title> <message> <duration>");
-                        break;
-                    }
-
-                    try {
-                        String title = args[1];
-                        String message = args[2];
-                        int duration = Integer.parseInt(args[3]);
-                        Notifications.INSTANCE.send(title, message, duration);
-                    } catch (NumberFormatException e) {
-                        modMessage("§cInvalid duration time format.");
-                    }
-                    break;
                 case "findpath":
                     if (args.length < 4) {
                         modMessage("Usage: findpath <x> <y> <z>");
@@ -77,6 +59,10 @@ public class DebugCommands extends CommandBase {
                         Necron.LOGGER.error("§cInvalid position format");
                     }
                     break;
+                case "silent":
+                    RotationUtils.useSilent = !RotationUtils.useSilent;
+                    modMessage((RotationUtils.useSilent ? " §aEnabled" : " §cDisabled") + " §7silent rotation.");
+                    break;
                 case "stats":
                     modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + LocationUtils.inHypixel +
                             "\n§7§l | §r§7inSkyBlock: " + LocationUtils.inSkyBlock +
@@ -89,12 +75,16 @@ public class DebugCommands extends CommandBase {
                             "\n§7§l | §r§7Floor: " + LocationUtils.floor +
                             "\n§7§l | §r§7Instance player(s): " + DungeonUtils.dungeonPlayers.size());
                     break;
+                case "test":
+                    boolean inCH = LocationUtils.currentIsland.getDisplayName().equals("Crystal Hollows");
+                    Utils.modMessage("§7In Crystal Hollows: " + inCH);
+                    break;
                 default:
                     modMessage("§cUnknown debug command.");
                     break;
             }
         } else {
-            modMessage("Debug Commands: dungeonInfo, notification, findpath, stats");
+            modMessage("Debug Commands: dungeonInfo, findpath, silent, stats");
         }
     }
 }

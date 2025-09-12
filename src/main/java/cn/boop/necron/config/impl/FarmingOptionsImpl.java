@@ -3,6 +3,7 @@ package cn.boop.necron.config.impl;
 import cc.polyfrost.oneconfig.config.annotations.*;
 import cc.polyfrost.oneconfig.config.annotations.Number;
 import cc.polyfrost.oneconfig.config.core.OneKeyBind;
+import cn.boop.necron.config.ClientNotification;
 import cn.boop.necron.config.ModConfig;
 import cn.boop.necron.utils.Utils;
 
@@ -13,7 +14,9 @@ public class FarmingOptionsImpl extends ModConfig {
 
         registerKeyBind(cnKey, () -> {
             cropNuker = !cropNuker;
-            Utils.modMessage("§6Crop Nuker §7now" + (cropNuker ? " §aEnabled" : " §cDisabled") + "§7.");
+            String message = "Crop Nuker" + (cropNuker ? " Enabled" : " Disabled");
+            ClientNotification.NotificationType type = (cropNuker ? ClientNotification.NotificationType.ENABLED : ClientNotification.NotificationType.DISABLED);
+            ClientNotification.sendNotification("Module", message, type, 2000);
         });
     }
 
