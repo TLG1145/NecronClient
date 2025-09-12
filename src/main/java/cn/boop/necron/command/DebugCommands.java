@@ -59,10 +59,10 @@ public class DebugCommands extends CommandBase {
                         Necron.LOGGER.error("§cInvalid position format");
                     }
                     break;
-                case "silent":
-                    RotationUtils.useSilent = !RotationUtils.useSilent;
-                    modMessage((RotationUtils.useSilent ? " §aEnabled" : " §cDisabled") + " §7silent rotation.");
-                    break;
+//                case "silent":
+//                    RotationUtils.useSilent = !RotationUtils.useSilent;
+//                    modMessage((RotationUtils.useSilent ? " §aEnabled" : " §cDisabled") + " §7silent rotation.");
+//                    break;
                 case "stats":
                     modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + LocationUtils.inHypixel +
                             "\n§7§l | §r§7inSkyBlock: " + LocationUtils.inSkyBlock +
