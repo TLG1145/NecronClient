@@ -31,7 +31,7 @@ public class EtherwarpRouter {
 
     public static void loadWaypoints(String filename) {
         currentFilename = filename;
-        waypointCache = JsonUtils.loadWaypoints(Necron.WP_FILE_PATH + filename + ".json");
+        waypointCache = JsonUtils.loadWaypoints(Necron.WP_FILE_DIR + filename + ".json");
         routeCompleted = false;
         routerNotified = false;
 

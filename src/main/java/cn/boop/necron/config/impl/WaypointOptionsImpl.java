@@ -28,7 +28,7 @@ public class WaypointOptionsImpl extends ModConfig {
     @Button(name = "Waypoint file(s) folder", text = "Open", description = "Quick-open waypoint folder")
     Runnable openPath = () -> {
         try {
-            Desktop.getDesktop().open(new File(Necron.WP_FILE_PATH));
+            Desktop.getDesktop().open(new File(Necron.WP_FILE_DIR));
         } catch (IOException e) {
             Necron.LOGGER.error("Can't open the waypoint file path!");
         }

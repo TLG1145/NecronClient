@@ -62,7 +62,7 @@ public class Waypoint {
 
     public static void loadWaypoints(String filename) {
         if (filename == null || filename.isEmpty()) return;
-        currentFile = Necron.WP_FILE_PATH + filename + ".json";
+        currentFile = Necron.WP_FILE_DIR + filename + ".json";
         waypoints = JsonUtils.loadWaypoints(currentFile);
 
         if (waypoints.isEmpty()) {

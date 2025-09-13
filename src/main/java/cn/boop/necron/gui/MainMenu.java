@@ -185,7 +185,7 @@ public final class MainMenu extends GuiScreen {
         BACKGROUND_TEXTURES.clear();
         BACKGROUND_FILE_PATHS.clear();
 
-        File bgDir = new File(Necron.BG_FILE_PATH);
+        File bgDir = new File(Necron.BG_FILE_DIR);
         if (!bgDir.exists()) {
             bgDir.mkdirs();
             Necron.LOGGER.info("Created backgrounds directory: {}", bgDir.getAbsolutePath());
@@ -194,7 +194,7 @@ public final class MainMenu extends GuiScreen {
         File[] bgFiles = bgDir.listFiles((dir, name) ->
                 name.toLowerCase().endsWith(".png"));
 
-        if (bgFiles != null && bgFiles.length > 0) {
+        if (bgFiles != null) {
             for (File file : bgFiles) {
                 try {
                     BufferedImage image = ImageIO.read(file);

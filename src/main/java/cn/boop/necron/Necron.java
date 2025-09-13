@@ -2,6 +2,7 @@ package cn.boop.necron;
 
 import cn.boop.necron.command.ClientCommands;
 import cn.boop.necron.command.DebugCommands;
+import cn.boop.necron.config.FontManager;
 import cn.boop.necron.config.NCConfig;
 import cn.boop.necron.config.UpdateChecker;
 import cn.boop.necron.gui.MainMenu;
@@ -27,8 +28,8 @@ public class Necron {
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
     public static final String VERSION = "0.1.3";
-    public static final String WP_FILE_PATH = "./config/necron/waypoints/";
-    public static final String BG_FILE_PATH = "./config/necron/backgrounds/";
+    public static final String WP_FILE_DIR = "./config/necron/waypoints/";
+    public static final String BG_FILE_DIR = "./config/necron/backgrounds/";
     public static final Logger LOGGER = LogManager.getLogger(Necron.class);
 
     private static boolean playerEnteredWorld = false;
@@ -49,6 +50,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
         MinecraftForge.EVENT_BUS.register(new FailSafe());
         MinecraftForge.EVENT_BUS.register(new FakeWipe());
+        //MinecraftForge.EVENT_BUS.register(new GemstoneNuker());
         MinecraftForge.EVENT_BUS.register(new HurtCam());
         MinecraftForge.EVENT_BUS.register(new LocationUtils());
         MinecraftForge.EVENT_BUS.register(new MainMenu());
@@ -58,6 +60,8 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new TitleManager());
         MinecraftForge.EVENT_BUS.register(new Voidgloom());
         MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
+
+        FontManager.initializeFonts();
     }
 
     @Mod.EventHandler

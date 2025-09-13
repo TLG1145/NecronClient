@@ -45,7 +45,7 @@ public class NecronOptionsImpl extends ModConfig {
     @Button(name = "Open background file folder", text = "Open", subcategory = "Main Menu")
     Runnable openBgPath = () -> {
         try {
-            Desktop.getDesktop().open(new File(Necron.BG_FILE_PATH));
+            Desktop.getDesktop().open(new File(Necron.BG_FILE_DIR));
         } catch (IOException e) {
             Notifications.INSTANCE.send("Error", "Failed to open background folder", new Icon(SVGs.X_CIRCLE_BOLD));
             Necron.LOGGER.error("Failed to open background folder");
