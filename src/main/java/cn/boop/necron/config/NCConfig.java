@@ -1,7 +1,7 @@
 package cn.boop.necron.config;
 
 import cc.polyfrost.oneconfig.config.Config;
-import cc.polyfrost.oneconfig.config.annotations.*;
+import cc.polyfrost.oneconfig.config.annotations.SubConfig;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
 import cn.boop.necron.Necron;
@@ -33,6 +33,8 @@ public class NCConfig extends Config {
     public static NametagsOptionsImpl nametagsOptions = new NametagsOptionsImpl();
     @SubConfig
     public static NecronOptionsImpl necronOptions = new NecronOptionsImpl();
+    @SubConfig
+    public static RerollProtectOptionsImpl rerollProtectOptions = new RerollProtectOptionsImpl();
     @SubConfig
     public static RouterOptionsImpl routerOptions = new RouterOptionsImpl();
     @SubConfig

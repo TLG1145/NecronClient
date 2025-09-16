@@ -10,13 +10,11 @@ import java.nio.channels.ReadableByteChannel;
 
 public class FontManager {
     private static final String FONT_DOWNLOAD_URL = "https://github.com/TLG1145/NecronClient/raw/refs/heads/master/fonts/"; // 替换为实际的字体下载地址
-    private static final String FONT_DIR = "config/necron/fonts/";
-
+    public static final String FONT_DIR = "config/necron/fonts/";
     public static final String BOLD_FONT = "Bold.ttf";
     public static final String SEMIBOLD_FONT = "SemiBold.ttf";
     public static final String MEDIUM_FONT = "Medium.ttf";
     public static final String REGULAR_FONT = "Regular.ttf";
-
 
     public static void initializeFonts() {
         File fontDir = new File(FONT_DIR);

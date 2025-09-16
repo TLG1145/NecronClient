@@ -10,7 +10,8 @@ import cn.boop.necron.module.*;
 import cn.boop.necron.utils.DungeonUtils;
 import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.RotationUtils;
-import cn.boop.necron.utils.event.*;
+import cn.boop.necron.utils.event.LootEventHandler;
+import cn.boop.necron.utils.event.WaypointEventHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -53,6 +54,7 @@ public class Necron {
         //MinecraftForge.EVENT_BUS.register(new GemstoneNuker());
         MinecraftForge.EVENT_BUS.register(new HurtCam());
         MinecraftForge.EVENT_BUS.register(new LocationUtils());
+        MinecraftForge.EVENT_BUS.register(new LootEventHandler());
         MinecraftForge.EVENT_BUS.register(new MainMenu());
         MinecraftForge.EVENT_BUS.register(new Nametags());
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
