@@ -20,16 +20,12 @@ import java.util.concurrent.atomic.AtomicReference;
 public class UpdateChecker {
 
     private static final String USER_AGENT = "Necron-Checker";
-    private final String repoOwner;
-    private final String repoName;
     private final String currentVersion;
 
     private static final AtomicBoolean hasChecked = new AtomicBoolean(false);
     private static final AtomicReference<String> latestVersionRef = new AtomicReference<>("");
 
-    public UpdateChecker(String repoOwner, String repoName, String currentVersion) {
-        this.repoOwner = repoOwner;
-        this.repoName = repoName;
+    public UpdateChecker(String currentVersion) {
         this.currentVersion = currentVersion;
     }
 
@@ -38,7 +34,7 @@ public class UpdateChecker {
 
         new Thread(() -> {
             try {
-                URL url = new URL("https://api.github.com/repos/" + repoOwner + "/" + repoName + "/releases/latest");
+                URL url = new URL("https://gitee.com/mixturedg/necron-client-repo/raw/master/version.json");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("User-Agent", USER_AGENT);
@@ -56,7 +52,7 @@ public class UpdateChecker {
                     reader.close();
 
                     JsonObject json = new JsonParser().parse(response.toString()).getAsJsonObject();
-                    String latestVersion = json.get("tag_name").getAsString().replaceAll("^v", "");
+                    String latestVersion = json.get("version").getAsString().replaceAll("^v", "");
 
                     ComparableVersion current = new ComparableVersion(currentVersion.replaceAll("^v", ""));
                     ComparableVersion latest = new ComparableVersion(latestVersion);
@@ -73,7 +69,7 @@ public class UpdateChecker {
                 Utils.modMessage("§c" + e.getMessage());
             } catch (Exception ignored) {
             }
-        }, "Necron Update Checker").start();
+        }, "Update Checker").start();
     }
 
     public void onNewVersionAvailable(String current, String latest) {
@@ -81,7 +77,7 @@ public class UpdateChecker {
         Necron.mc.thePlayer.addChatMessage(new ChatComponentText("§bNecron §8»§r §a§nClick to download")
                 .setChatStyle(new ChatStyle()
                         .setUnderlined(true)
-                        .setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/" + repoOwner + "/" + repoName + "/releases/latest"))
+                        .setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/TLG1145/NecronClient/releases/latest"))
                 ));
     }
 }

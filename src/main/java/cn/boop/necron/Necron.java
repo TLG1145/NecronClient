@@ -28,7 +28,7 @@ public class Necron {
     public static Minecraft mc = Minecraft.getMinecraft();
     public static final String MODID = "necronclient";
     public static final String MODNAME = "Necron";
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.2";
     public static final String WP_FILE_DIR = "./config/necron/waypoints/";
     public static final String BG_FILE_DIR = "./config/necron/backgrounds/";
     public static final Logger LOGGER = LogManager.getLogger(Necron.class);
@@ -82,7 +82,12 @@ public class Necron {
         if (event.phase == TickEvent.Phase.END) {
             if (mc.thePlayer != null && !playerEnteredWorld) {
                 playerEnteredWorld = true;
-                new UpdateChecker("TLG1145", "NecronClient", VERSION).checkForUpdates();
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(2000);
+                        new UpdateChecker(VERSION).checkForUpdates();
+                    } catch (InterruptedException ignored) {}
+                }).start();
             }
         }
     }

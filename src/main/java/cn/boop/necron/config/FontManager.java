@@ -9,7 +9,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
 public class FontManager {
-    private static final String FONT_DOWNLOAD_URL = "https://github.com/TLG1145/NecronClient/raw/refs/heads/master/fonts/"; // 替换为实际的字体下载地址
+    private static final String FONT_DOWNLOAD_URL = "https://gitee.com/mixturedg/necron-client-repo/raw/master/fonts/";
     public static final String FONT_DIR = "config/necron/fonts/";
     public static final String BOLD_FONT = "Bold.ttf";
     public static final String SEMIBOLD_FONT = "SemiBold.ttf";
@@ -37,16 +37,18 @@ public class FontManager {
     }
 
     private static void downloadFont(String fontName) {
-        try {
-            URL website = new URL(FONT_DOWNLOAD_URL + fontName);
-            try (ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-                 FileOutputStream fos = new FileOutputStream(FONT_DIR + File.separator + fontName)) {
-                fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        new Thread(() -> {
+            try {
+                URL website = new URL(FONT_DOWNLOAD_URL + fontName);
+                try (ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+                     FileOutputStream fos = new FileOutputStream(FONT_DIR + File.separator + fontName)) {
+                    fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+                }
+                Necron.LOGGER.info("Successfully downloaded font: {}", fontName);
+            } catch (Exception e) {
+                Necron.LOGGER.error("Failed to download font: {}", fontName, e);
             }
-            Necron.LOGGER.info("Successfully downloaded font: {}", fontName);
-        } catch (Exception e) {
-            Necron.LOGGER.error("Failed to download font: {}", fontName, e);
-        }
+        }, "Download").start();
     }
 
     public static String getFontPath(String fontName) {
