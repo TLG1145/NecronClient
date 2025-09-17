@@ -4,6 +4,8 @@ import cn.boop.necron.utils.LocationUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.regex.Pattern;
+
 import static cn.boop.necron.config.impl.ChatBlockerOptionsImpl.chatBlocker;
 
 public class ChatBlocker {
@@ -11,7 +13,7 @@ public class ChatBlocker {
     public void onChat(ClientChatReceivedEvent event) {
         if (!chatBlocker && !LocationUtils.inSkyBlock) return;
         String msg = event.message.getUnformattedText().toLowerCase();
-        if (msg.startsWith("[")) {
+        if (Pattern.matches("^\\[\\d{1,3}].*", msg)) {
             if (msg.contains("map")
                     || msg.contains("my ah")
                     || msg.contains("visit ")
