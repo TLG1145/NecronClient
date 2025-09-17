@@ -4,10 +4,10 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 
  主命令: `/necron`，命令别名: `/nc`
 
-## Auto Path
-使用A*算法的寻路系统
+ 调试命令: `/ncdebug`，命令别名: `/ncd`
 
-**尚未完成**
+## Auto Path
+使用A*算法的寻路系统 **(WIP)**
 
 ## Blaze Dagger
 如果使用[NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/)模组中的 `/neurename` 命令重命名Blaze武器，将无法使用自动切换功能。
@@ -32,10 +32,15 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 ## Main Menu
 - 可加载自定义背景图，命名格式为 bg1.png，bg2.png……
 - 图片存放路径: "./config/necron/backgrounds/" （也可在配置界面中快捷打开）
+- 背景图轮换速度及显示时长可在Necron Settings中修改。
 
 ## Random RNG
 - 由Chat Commands中的 !roll 命令触发。
 - 实际概率约为[游戏中](https://wiki.hypixel.net/Catacombs_Floor_VII#BedrockChest__)原概率的10倍。
+
+## Reroll Protector
+- 阻止你reroll地牢奖励箱中稀有物品
+- 或者Send RNG to party！
 
 ## Title Manager
 - 可在"Title Text"中输入你想要的文字，并开启"Use your title text"选项以显示自定义标题。
@@ -69,3 +74,4 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 ### 其他提示：
 - 如果需要使用Crop Nuker功能，需要提前设置好路径点，并在配置中绑定一个按键。
 - 使用南瓜/西瓜农场时可使用[Squeaky Mousemat](https://wiki.hypixel.net/Squeaky_Mousemat)物品设置预设俯仰角，持该物品左键单击后再开启Nuker。
+- 相关资源文件夹可通过游戏中Necron Settings子配置来打开
