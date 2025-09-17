@@ -1,11 +1,11 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.Necron;
+import cn.boop.necron.events.WaypointEventHandler;
 import cn.boop.necron.utils.JsonUtils;
 import cn.boop.necron.utils.LocationUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
-import cn.boop.necron.utils.event.WaypointEventHandler;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

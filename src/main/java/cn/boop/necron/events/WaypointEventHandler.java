@@ -1,4 +1,4 @@
-package cn.boop.necron.utils.event;
+package cn.boop.necron.events;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.Waypoint;

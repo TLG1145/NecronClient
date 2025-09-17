@@ -1,4 +1,6 @@
-package cn.boop.necron.utils.event;
+package cn.boop.necron.module;
+
+import cn.boop.necron.Necron;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -6,7 +8,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class RollLogger {
+public class RollResultLogger {
     private static final String LOG_FILE = "logs/roll_log.txt";
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -17,7 +19,7 @@ public class RollLogger {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
             writer.write(line);
         } catch (IOException e) {
-            e.printStackTrace();
+            Necron.LOGGER.error("Error writing to roll log file: {}", e.getMessage());
         }
     }
 }

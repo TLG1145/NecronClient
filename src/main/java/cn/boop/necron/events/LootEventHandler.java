@@ -1,4 +1,4 @@
-package cn.boop.necron.utils.event;
+package cn.boop.necron.events;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.module.LootProtector;
@@ -27,7 +27,7 @@ public class LootEventHandler {
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
         String chestName;
-        if (event.gui instanceof GuiChest && reroll && LocationUtils.inDungeon) {
+        if (event.gui instanceof GuiChest && reroll && (LocationUtils.inDungeon || LocationUtils.getCurrentIslandName().equals("Dungeon Hub"))) {
             GuiChest guiChest = (GuiChest) event.gui;
             ContainerChest container = (ContainerChest) guiChest.inventorySlots;
             IInventory lowerChest = container.getLowerChestInventory();
@@ -103,7 +103,7 @@ public class LootEventHandler {
                 if (LootProtector.isRareItemByName(itemName)) {
                     blockSent = true;
                     Utils.modMessage("§dRNG Item §7dropped: " + items[i].getDisplayName() + "§7!");
-                    if (sendToParty) {
+                    if (sendToParty && LocationUtils.inDungeon) {
                         Utils.chatMessage("/pc NC » 我只是解锁了" + itemName + " 就被管家活活打断了双腿");
                     }
                     break;

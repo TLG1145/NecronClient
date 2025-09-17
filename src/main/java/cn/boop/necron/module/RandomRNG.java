@@ -1,10 +1,11 @@
 package cn.boop.necron.module;
 
 import cn.boop.necron.utils.Utils;
-import cn.boop.necron.utils.event.RollLogger;
 import kotlin.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RandomRNG {
     public static final List<Pair<String, Double>> weightedItems = new ArrayList<>();
@@ -44,7 +45,7 @@ public class RandomRNG {
         StringBuilder sb = new StringBuilder("/pc " + username + " unlocked -> ");
         results.forEach((item, count) -> {
             sb.append(String.format("%s ×%d ", item, count));
-            RollLogger.logRollResult(username, item);
+            RollResultLogger.logRollResult(username, item);
         });
 
         return sb.toString().trim();
