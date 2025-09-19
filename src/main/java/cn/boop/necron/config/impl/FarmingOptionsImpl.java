@@ -32,4 +32,6 @@ public class FarmingOptionsImpl extends ModConfig {
     Runnable runnable = () -> Utils.chatMessage("/setmaxspeed " + maxSpeed);
     @Number(name = "Delay Time", description = "Edit the delay after reach a waypoint", min = 0, max = 100, subcategory = "Crop Nuker")
     public static int delayTime = 50;
+    @Checkbox(name = "Melon mode", description = "Max speed on advanced melon/pumpkin farm", subcategory = "Crop Nuker")
+    public static boolean melonMode = false;
 }

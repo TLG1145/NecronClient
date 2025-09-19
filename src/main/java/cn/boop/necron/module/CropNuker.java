@@ -3,7 +3,6 @@ package cn.boop.necron.module;
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.RenderUtils;
 import cn.boop.necron.utils.RotationUtils;
-import cn.boop.necron.utils.Utils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
@@ -41,7 +40,7 @@ public class CropNuker {
                     FailSafe.resetPositionTracking();
                 }
                 handleAutoWalk();
-                if (!atWaypoint && !RotationUtils.isRotating()) { // 只有不在路径点处理状态时才启动Nuker
+                if (!atWaypoint && !RotationUtils.isRotating()) {
                     startNuker();
                 } else {
                     stopMovement();
@@ -75,8 +74,11 @@ public class CropNuker {
     private static void stopMovement() {
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindRight.getKeyCode(), false);
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindLeft.getKeyCode(), false);
-        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), false);
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindBack.getKeyCode(), false);
+
+        if (!melonMode) {
+            KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), false);
+        }
     }
 
     private static void stopNuker() {
@@ -90,7 +92,9 @@ public class CropNuker {
     }
 
     private static void setMovementKeys(String direction) {
-        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindRight.getKeyCode(), false);
+        if (!melonMode) {
+            KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), false);
+        }
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindLeft.getKeyCode(), false);
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), false);
         KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindBack.getKeyCode(), false);
@@ -104,9 +108,11 @@ public class CropNuker {
                 break;
             case "left":
                 KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindLeft.getKeyCode(), true);
+                if (melonMode) KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), true);
                 break;
             case "right":
                 KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindRight.getKeyCode(), true);
+                if (melonMode) KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindForward.getKeyCode(), true);
                 break;
         }
     }

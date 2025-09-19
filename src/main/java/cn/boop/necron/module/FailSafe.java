@@ -14,6 +14,7 @@ public class FailSafe {
     private static double lastPlayerY = 0;
     private static double lastPlayerZ = 0;
     private static boolean posInit = false;
+    private static boolean voidFalling = false;
     private static final double POSITION_THRESHOLD = 10.0;
     private static final double MOTION_THRESHOLD = 0.1;
     private static int motionCheckTicks = 0;
@@ -23,8 +24,8 @@ public class FailSafe {
     public void onWorldChange(WorldEvent.Load event) {
         if (cropNuker) {
             CropNuker.reset(ResetReason.WORLD_CHANGE);
-            ClientNotification.sendNotification("Crop Nuker", ResetReason.WORLD_CHANGE.getMessage(), ClientNotification.NotificationType.WARN, 5000);
-        } else if (Necron.mc.thePlayer != null && !cropNuker) {
+            ClientNotification.sendNotification("Crop Nuker", ResetReason.WORLD_CHANGE.getMessage(), ClientNotification.NotificationType.WARN, 6000);
+        } else if (Necron.mc.thePlayer != null) {
             posInit = false;
         }
     }
@@ -42,9 +43,11 @@ public class FailSafe {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if (cropNuker && event.type == 0) {
-            String message;
-            message = event.message.getUnformattedText();
-            posInit = (" ☠ You fell into the void.".equals(message));
+            String message = event.message.getUnformattedText();
+            if (" ☠ You fell into the void.".equals(message)) {
+                voidFalling = true;
+                posInit = false;
+            }
         }
     }
 
@@ -66,10 +69,12 @@ public class FailSafe {
         lastPlayerY = Necron.mc.thePlayer.posY;
         lastPlayerZ = Necron.mc.thePlayer.posZ;
 
-        if (distance > POSITION_THRESHOLD) {
+        if (distance > POSITION_THRESHOLD && !voidFalling) {
             CropNuker.reset(ResetReason.TELEPORT);
             ClientNotification.sendNotification("Crop Nuker", ResetReason.TELEPORT.getMessage(), ClientNotification.NotificationType.WARN, 5000);
         }
+
+        voidFalling = false;
     }
 
 //    private void checkMotion() {
@@ -83,7 +88,7 @@ public class FailSafe {
 //                if (horizontalMotion < MOTION_THRESHOLD) {
 //                    CropNuker.reset(ResetReason.MOTION);
 //                    ClientNotification.sendNotification("Crop Nuker", ResetReason.MOTION.getMessage(), ClientNotification.NotificationType.WARN, 5000);
-//        }
+//                }
 //
 //                motionCheckTicks = 0;
 //            }
@@ -94,6 +99,7 @@ public class FailSafe {
 
     public static void resetPositionTracking() {
         posInit = false;
+        voidFalling = false;
     }
 
     public enum ResetReason {
