@@ -40,6 +40,7 @@ public class Necron {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new AutoClicker());
         MinecraftForge.EVENT_BUS.register(new AutoGG());
         MinecraftForge.EVENT_BUS.register(autoPath);
         MinecraftForge.EVENT_BUS.register(new BlazeDagger());
