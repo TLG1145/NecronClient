@@ -18,8 +18,8 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 
 ## Crop Nuker
 **使用风险自负！！！**
-- 带有简易的FailSafe检测。
-- waypoint添加方式详见Waypoints部分。
+- 带有简易的FailSafe **(WIP)** 检测。
+- 农业路径点设置详见Waypoints部分。
 
 ## Etherwarp Router
 - 左键点击时，自动瞄准并etherwarp至下一个路径点（从#1开始）。
@@ -45,6 +45,12 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 ## Title Manager
 - 可在"Title Text"中输入你想要的文字，并开启"Use your title text"选项以显示自定义标题。
 - 自定义图标选项默认开启。如果不想使用自定义图标，需关闭Icon选项并重启游戏。
+
+## Vampire Helper
+- Vampire Slayer辅助
+- 手持铁剑时右键，会自动切换至Holy Ice并使用
+- 自动切换Steak Stake
+- 生命值小于 8❤ 时，自动治疗
 
 ## Voidgloom
 - 尚未完成
@@ -73,5 +79,6 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 
 ### 其他提示：
 - 如果需要使用Crop Nuker功能，需要提前设置好路径点，并在配置中绑定一个按键。
-- 使用南瓜/西瓜农场时可使用[Squeaky Mousemat](https://wiki.hypixel.net/Squeaky_Mousemat)物品设置预设俯仰角，持该物品左键单击后再开启Nuker。
+- 使用南瓜/西瓜农场时可使用[Squeaky Mousemat](https://wiki.hypixel.net/Squeaky_Mousemat)物品设置预设俯仰角。
+- 如果使用高级南瓜/西瓜农场，可以在Farming Helper设置中开启Melon Mode
 - 相关资源文件夹可通过游戏中Necron Settings子配置来打开

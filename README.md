@@ -10,15 +10,18 @@
 
 [OneConfig](https://polyfrost.org/projects/oneconfig/) & [Forge 1.8.9](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html)
 
-> [!NOTE]
-> 本项目默认使用[DevAuth](https://github.com/DJtheRedstoner/DevAuth)
-
 [功能使用说明](FEATURES.md)
+
+> [!CAUTION]
+> 本mod中部分功能可能违反 [Hypixel SkyBlock](https://support.hypixel.net/hc/en-us/articles/4508088842898-Hypixel-SkyBlock-Rules) 规则。
+> 
+> 使用风险自负！
+
 
 ## 获取
 
-- 重要更新可在 Latest Releases 中下载
-- 其它小更新可在 Actions 中下载自动构建的mod文件
+- 重要更新可在 [Releases](https://github.com/TLG1145/NecronClient/releases/latest) 中下载
+- 其它小更新可在 [GitHub Actions](https://github.com/TLG1145/NecronClient/actions) 中下载自动构建的mod文件
 
 ## 功能列表
 
@@ -28,6 +31,8 @@
 - SkyBlock Nametags
 - Slayer辅助功能 (WIP)
 - 半自动Etherwarp路线
+- 防止reroll珍贵物品
+- 聊天过滤器 (SKB Hub #1 be like)
 - SkyBlock Wipe Book
 - Farming Helper
 
