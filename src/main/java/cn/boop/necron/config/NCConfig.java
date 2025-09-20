@@ -14,6 +14,8 @@ public class NCConfig extends Config {
     }
 
     @SubConfig
+    public static AutoClickerOptionsImpl autoClickerOptions = new AutoClickerOptionsImpl();
+    @SubConfig
     public static AutoGGOptionsImpl autoGGOptions = new AutoGGOptionsImpl();
     @SubConfig
     public static AutoPathOptionsImpl autoPathOptions = new AutoPathOptionsImpl();

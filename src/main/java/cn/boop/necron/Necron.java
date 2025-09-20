@@ -61,6 +61,7 @@ public class Necron {
         MinecraftForge.EVENT_BUS.register(new PlayerStats());
         MinecraftForge.EVENT_BUS.register(new RandomRNG());
         MinecraftForge.EVENT_BUS.register(new TitleManager());
+        MinecraftForge.EVENT_BUS.register(new Vampire());
         MinecraftForge.EVENT_BUS.register(new Voidgloom());
         MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
 

@@ -2,11 +2,15 @@ package cn.boop.necron.utils;
 
 import cn.boop.necron.Necron;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class RotationUtils {
@@ -30,6 +34,14 @@ public class RotationUtils {
 
     public static float yaw() {
         return Necron.mc.thePlayer.rotationYaw;
+    }
+
+    public static void setPitch(float pitch) {
+        Necron.mc.thePlayer.rotationPitch = pitch;
+    }
+
+    public static void setYaw(float yaw) {
+        Necron.mc.thePlayer.rotationYaw = yaw;
     }
 
     public static void smoothRotateTo(float yaw, float pitch, float speed) {
@@ -198,6 +210,36 @@ public class RotationUtils {
                 break;
             }
         }
+    }
+
+    public static float[] getRotationToEntity(Entity entity) {
+        Vec3 playerPos = new Vec3(Necron.mc.thePlayer.posX, Necron.mc.thePlayer.posY + Necron.mc.thePlayer.getEyeHeight(), Necron.mc.thePlayer.posZ);
+        Vec3 entityPos = new Vec3(entity.posX, entity.posY - 0.45F, entity.posZ);
+
+        double deltaX = entityPos.xCoord - playerPos.xCoord;
+        double deltaY = entityPos.yCoord - playerPos.yCoord;
+        double deltaZ = entityPos.zCoord - playerPos.zCoord;
+
+        double horizontalDistance = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+        float yaw = (float) Math.toDegrees(Math.atan2(deltaZ, deltaX)) - 90;
+        float pitch = (float) -Math.toDegrees(Math.atan2(deltaY, horizontalDistance));
+
+        return new float[]{yaw, pitch};
+    }
+
+    public static void smoothRotateToEntity(Entity entity, float baseSpeed) {
+        float[] targetRotation = getRotationToEntity(entity);
+        float currentYaw = yaw();
+        float currentPitch = pitch();
+
+        float deltaYaw = MathHelper.wrapAngleTo180_float(targetRotation[0] - currentYaw);
+        float deltaPitch = MathHelper.wrapAngleTo180_float(targetRotation[1] - currentPitch);
+        float distance = Necron.mc.thePlayer.getDistanceToEntity(entity);
+        float dynamicSpeed = baseSpeed * (distance / 5);
+        dynamicSpeed = Math.max(dynamicSpeed, 0.07f); // 设置最小速度限制
+
+        setYaw(currentYaw + deltaYaw * dynamicSpeed);
+        setPitch(currentPitch + deltaPitch * dynamicSpeed);
     }
 
     public static boolean isRotating() {
