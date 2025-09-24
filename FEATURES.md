@@ -9,6 +9,10 @@ Mod配置界面可在OneConfig中的 "3rd Party" 分类中找到。
 ## Auto Path
 使用A*算法的寻路系统 **(WIP)**
 
+## Auto Wardrobe
+- 切换装备后自动关闭Wardrobe界面
+- 阻止Unequip装备
+
 ## Blaze Dagger
 如果使用[NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/)模组中的 `/neurename` 命令重命名Blaze武器，将无法使用自动切换功能。
 

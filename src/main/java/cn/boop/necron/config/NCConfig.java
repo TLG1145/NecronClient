@@ -44,6 +44,8 @@ public class NCConfig extends Config {
     @SubConfig
     public static TitleOptionsImpl titleOptions = new TitleOptionsImpl();
     @SubConfig
+    public static WardrobeOptionsImpl wardrobeOptions = new WardrobeOptionsImpl();
+    @SubConfig
     public static WaypointOptionsImpl waypointOptions = new WaypointOptionsImpl();
 
 

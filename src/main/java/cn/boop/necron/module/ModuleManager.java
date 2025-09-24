@@ -19,6 +19,7 @@ public class ModuleManager {
         modules.add(new AutoClicker());
         modules.add(new AutoGG());
         modules.add(new AutoPath());
+        modules.add(new AutoWardrobe());
         modules.add(new BlazeDagger());
         modules.add(new ChatBlocker());
         modules.add(new ChatCommands());
