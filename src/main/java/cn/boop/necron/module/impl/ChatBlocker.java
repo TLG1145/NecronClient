@@ -1,4 +1,4 @@
-package cn.boop.necron.module;
+package cn.boop.necron.module.impl;
 
 import cn.boop.necron.utils.LocationUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -24,6 +24,10 @@ public class ChatBlocker {
                     || msg.contains("sell")
                     || msg.contains("discord")) {
             event.setCanceled(true);
+            }
+        } else {
+            if (msg.contains("this ability is on cooldown for") || msg.contains("there are blocks in the way!")) {
+                event.setCanceled(true);
             }
         }
     }

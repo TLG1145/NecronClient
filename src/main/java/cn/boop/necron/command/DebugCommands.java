@@ -1,7 +1,11 @@
 package cn.boop.necron.command;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.utils.*;
+import cn.boop.necron.module.ModuleManager;
+import cn.boop.necron.module.impl.PlayerStats;
+import cn.boop.necron.utils.DungeonUtils;
+import cn.boop.necron.utils.LocationUtils;
+import cn.boop.necron.utils.Utils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
@@ -53,7 +57,7 @@ public class DebugCommands extends CommandBase {
                         int y = Integer.parseInt(args[2]);
                         int z = Integer.parseInt(args[3]);
 
-                        Necron.getAutoPath().setTarget(new BlockPos(x, y, z));
+                        ModuleManager.getAutoPath().setTarget(new BlockPos(x, y, z));
 
                     } catch (NumberFormatException e) {
                         Necron.LOGGER.error("§cInvalid position format");
@@ -76,8 +80,8 @@ public class DebugCommands extends CommandBase {
                             "\n§7§l | §r§7Instance player(s): " + DungeonUtils.dungeonPlayers.size());
                     break;
                 case "test":
-                    boolean inCH = LocationUtils.currentIsland.getDisplayName().equals("Crystal Hollows");
-                    Utils.modMessage("§7In Crystal Hollows: " + inCH);
+                    PlayerStats.inCombat = !PlayerStats.inCombat;
+                    modMessage("inCombat: " + (PlayerStats.inCombat ? "§atrue" : "§cfalse"));
                     break;
                 default:
                     modMessage("§cUnknown debug command.");

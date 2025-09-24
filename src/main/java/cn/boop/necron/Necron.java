@@ -5,12 +5,7 @@ import cn.boop.necron.command.DebugCommands;
 import cn.boop.necron.config.FontManager;
 import cn.boop.necron.config.NCConfig;
 import cn.boop.necron.config.UpdateChecker;
-import cn.boop.necron.events.LootEventHandler;
-import cn.boop.necron.events.WaypointEventHandler;
-import cn.boop.necron.gui.MainMenu;
-import cn.boop.necron.module.*;
-import cn.boop.necron.utils.DungeonUtils;
-import cn.boop.necron.utils.LocationUtils;
+import cn.boop.necron.module.ModuleManager;
 import cn.boop.necron.utils.RotationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -34,38 +29,12 @@ public class Necron {
     public static final Logger LOGGER = LogManager.getLogger(Necron.class);
 
     private static boolean playerEnteredWorld = false;
-    private static final AutoPath autoPath = new AutoPath();
 
-    @SuppressWarnings("InstantiationOfUtilityClass")
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new AutoClicker());
-        MinecraftForge.EVENT_BUS.register(new AutoGG());
-        MinecraftForge.EVENT_BUS.register(autoPath);
-        MinecraftForge.EVENT_BUS.register(new BlazeDagger());
-        MinecraftForge.EVENT_BUS.register(new ChatBlocker());
-        MinecraftForge.EVENT_BUS.register(new ChatCommands());
-        MinecraftForge.EVENT_BUS.register(new CropNuker());
-        MinecraftForge.EVENT_BUS.register(new DungeonUtils());
-        MinecraftForge.EVENT_BUS.register(new Etherwarp());
-        MinecraftForge.EVENT_BUS.register(new EtherwarpRouter());
-        MinecraftForge.EVENT_BUS.register(new FailSafe());
-        MinecraftForge.EVENT_BUS.register(new FakeWipe());
-        //MinecraftForge.EVENT_BUS.register(new GemstoneNuker());
-        MinecraftForge.EVENT_BUS.register(new HurtCam());
-        MinecraftForge.EVENT_BUS.register(new LocationUtils());
-        MinecraftForge.EVENT_BUS.register(new LootEventHandler());
-        MinecraftForge.EVENT_BUS.register(new MainMenu());
-        MinecraftForge.EVENT_BUS.register(new Nametags());
-        MinecraftForge.EVENT_BUS.register(new PlayerStats());
-        MinecraftForge.EVENT_BUS.register(new RandomRNG());
-        MinecraftForge.EVENT_BUS.register(new TitleManager());
-        MinecraftForge.EVENT_BUS.register(new Vampire());
-        MinecraftForge.EVENT_BUS.register(new Voidgloom());
-        MinecraftForge.EVENT_BUS.register(new WaypointEventHandler());
-
-        FontManager.initializeFonts();
+        ModuleManager.initModules();
+        FontManager.initFonts();
     }
 
     @Mod.EventHandler
@@ -92,9 +61,5 @@ public class Necron {
                 }).start();
             }
         }
-    }
-
-    public static AutoPath getAutoPath() {
-        return autoPath;
     }
 }

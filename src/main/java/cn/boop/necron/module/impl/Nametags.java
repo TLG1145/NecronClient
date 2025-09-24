@@ -1,7 +1,4 @@
-package cn.boop.necron.module;
-
-import java.awt.Color;
-import java.util.regex.Pattern;
+package cn.boop.necron.module.impl;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.*;
@@ -14,6 +11,9 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.regex.Pattern;
 
 import static cn.boop.necron.config.impl.NametagsOptionsImpl.nametags;
 

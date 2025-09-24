@@ -1,7 +1,7 @@
-package cn.boop.necron.module;
+package cn.boop.necron.module.impl;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.module.pathfinding.AStarPathfinder;
+import cn.boop.necron.utils.PathfinderUtils;
 import cn.boop.necron.utils.RenderUtils;
 import cn.boop.necron.utils.RotationUtils;
 import cn.boop.necron.utils.Utils;
@@ -33,7 +33,7 @@ public class AutoPath {
         if (Necron.mc.thePlayer == null && !autoPath) return;
 
         BlockPos start = Necron.mc.thePlayer.getPosition();
-        path = AStarPathfinder.findPath(start, target);
+        path = PathfinderUtils.findPath(start, target);
         currentPathIndex = 0;
         isFollowing = !path.isEmpty();
 

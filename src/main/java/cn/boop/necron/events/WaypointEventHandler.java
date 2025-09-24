@@ -1,7 +1,7 @@
 package cn.boop.necron.events;
 
 import cn.boop.necron.Necron;
-import cn.boop.necron.module.Waypoint;
+import cn.boop.necron.module.impl.Waypoint;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;

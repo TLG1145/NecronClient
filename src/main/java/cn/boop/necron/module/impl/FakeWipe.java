@@ -1,4 +1,4 @@
-package cn.boop.necron.module;
+package cn.boop.necron.module.impl;
 
 import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils;
 import cn.boop.necron.Necron;

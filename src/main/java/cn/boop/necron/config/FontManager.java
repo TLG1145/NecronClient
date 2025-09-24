@@ -16,7 +16,7 @@ public class FontManager {
     public static final String MEDIUM_FONT = "Medium.ttf";
     public static final String REGULAR_FONT = "Regular.ttf";
 
-    public static void initializeFonts() {
+    public static void initFonts() {
         File fontDir = new File(FONT_DIR);
         if (!fontDir.exists()) {
             fontDir.mkdirs();

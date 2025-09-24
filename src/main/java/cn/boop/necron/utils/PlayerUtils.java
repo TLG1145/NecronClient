@@ -8,6 +8,10 @@ public class PlayerUtils {
          KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindSneak.getKeyCode(), sneak);
     }
 
+    public static void setJump(boolean jump) {
+        KeyBinding.setKeyBindState(Necron.mc.gameSettings.keyBindJump.getKeyCode(), jump);
+    }
+
     public static void rightClick() {
         KeyBinding.onTick(Necron.mc.gameSettings.keyBindUseItem.getKeyCode());
     }

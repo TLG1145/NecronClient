@@ -1,4 +1,4 @@
-package cn.boop.necron.module;
+package cn.boop.necron.module.impl;
 
 import cn.boop.necron.Necron;
 import cn.boop.necron.utils.JsonUtils;
@@ -8,8 +8,12 @@ import cn.boop.necron.utils.Utils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static cn.boop.necron.config.impl.ChatCommandsOptionsImpl.*;
 

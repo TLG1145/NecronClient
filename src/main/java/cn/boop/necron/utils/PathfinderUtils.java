@@ -1,4 +1,4 @@
-package cn.boop.necron.module.pathfinding;
+package cn.boop.necron.utils;
 
 import cn.boop.necron.Necron;
 import net.minecraft.block.*;
@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 import java.util.*;
 
-public class AStarPathfinder {
+public class PathfinderUtils {
     private static class Node implements Comparable<Node> {
         public int x, y, z;
         public BlockPos position;

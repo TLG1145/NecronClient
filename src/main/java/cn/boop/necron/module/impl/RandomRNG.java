@@ -1,4 +1,4 @@
-package cn.boop.necron.module;
+package cn.boop.necron.module.impl;
 
 import cn.boop.necron.utils.Utils;
 import kotlin.Pair;
