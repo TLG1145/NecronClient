@@ -20,7 +20,7 @@ public class ModuleManager {
         modules.add(new AutoGG());
         modules.add(new AutoPath());
         modules.add(new AutoWardrobe());
-        modules.add(new BlazeDagger());
+        //modules.add(new BlazeDagger());   //由于使用该模块有较高概率被ban，故暂时禁用该功能
         modules.add(new ChatBlocker());
         modules.add(new ChatCommands());
         modules.add(new CropNuker());
