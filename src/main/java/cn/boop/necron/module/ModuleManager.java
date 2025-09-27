@@ -32,7 +32,6 @@ public class ModuleManager {
         modules.add(new HurtCam());
         modules.add(new Nametags());
         modules.add(new PlayerStats());
-        modules.add(new RandomRNG());
         modules.add(new TitleManager());
         modules.add(new Vampire());
         modules.add(new Voidgloom());
