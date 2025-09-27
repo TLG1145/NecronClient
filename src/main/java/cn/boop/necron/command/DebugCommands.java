@@ -42,8 +42,12 @@ public class DebugCommands extends CommandBase {
         if (args.length > 0) {
             switch (args[0]) {
                 case "dungeonInfo":
-                    for (Map.Entry<String, DungeonUtils.DungeonPlayer> entry : DungeonUtils.dungeonPlayers.entrySet()) {
-                        modMessage(String.valueOf(entry.getValue()));
+                    if (!DungeonUtils.dungeonPlayers.isEmpty()) {
+                        for (Map.Entry<String, DungeonUtils.DungeonPlayer> entry : DungeonUtils.dungeonPlayers.entrySet()) {
+                            modMessage(String.valueOf(entry.getValue()));
+                        }
+                    } else {
+                        modMessage("§cNo dungeon players found.");
                     }
                     break;
                 case "findpath":
@@ -63,16 +67,20 @@ public class DebugCommands extends CommandBase {
                         Necron.LOGGER.error("§cInvalid position format");
                     }
                     break;
-//                case "silent":
-//                    RotationUtils.useSilent = !RotationUtils.useSilent;
-//                    modMessage((RotationUtils.useSilent ? " §aEnabled" : " §cDisabled") + " §7silent rotation.");
-//                    break;
                 case "stats":
+                    String itemID, itemName;
+                    if (Necron.mc.thePlayer.getHeldItem() != null) {
+                        itemID = Utils.getSkyBlockID(Necron.mc.thePlayer.getHeldItem());
+                        itemName = Necron.mc.thePlayer.getHeldItem().getDisplayName();
+                    } else {
+                        itemID = "";
+                        itemName = "";
+                    }
                     modMessage("Player Stats:\n§7§l | §r§7inHypixel: " + LocationUtils.inHypixel +
                             "\n§7§l | §r§7inSkyBlock: " + LocationUtils.inSkyBlock +
                             "\n§7§l | §r§7Island: " + LocationUtils.getCurrentIslandName() +
-                            "\n§7§l | §r§7Held item ID: " + Utils.getSkyBlockID(Necron.mc.thePlayer.getHeldItem()) +
-                            "\n§7§l | §r§7Held item Name:§r " + Necron.mc.thePlayer.getHeldItem().getDisplayName() +
+                            "\n§7§l | §r§7Held item ID: " + itemID +
+                            "\n§7§l | §r§7Held item Name:§r " + itemName +
                             "\n§7§l | §r§7Player health: §c" + Necron.mc.thePlayer.getHealth() +
                             "\n§7" +
                             "\n§7§l | §r§7inDungeon: " + LocationUtils.inDungeon +
