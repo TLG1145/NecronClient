@@ -19,6 +19,8 @@ public class NecronOptionsImpl extends ModConfig {
         initialize();
     }
 
+    public static boolean customMainMenu = true;
+
     @Button(name = "Open ROLL result", text = "Open", subcategory = "Client")
     Runnable rollResult = () -> {
         try {

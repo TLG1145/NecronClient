@@ -12,17 +12,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiModList;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static cn.boop.necron.config.impl.NecronOptionsImpl.*;
 
 public final class MainMenu extends GuiScreen {
     private static final List<ResourceLocation> BACKGROUND_TEXTURES = new ArrayList<>();
-    private static final List<String> BACKGROUND_FILE_PATHS = new ArrayList<>();
     private static final ResourceLocation MOD_ICON =
             new ResourceLocation("necron", "gui/icon.png");
     private static int currentBackgroundIndex = 0;
@@ -31,17 +31,23 @@ public final class MainMenu extends GuiScreen {
     private static float fadeProgress = 0.0f;
     private static boolean isFading = false;
 
-    private float mouseXOffset, mouseYOffset;
+    private float mouseXOffset, mouseYOffset, lastMouseXOffset = 0.0f, lastMouseYOffset = 0.0f;
     private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
     private static final float SMOOTH_FACTOR = 0.15f;
 
     public MainMenu() {
-        loadBackgroundTextures();
+        if (Necron.mc != null && Necron.mc.getTextureManager() != null) {
+            loadBackgroundTextures();
+        }
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        if (Math.abs(mouseXOffset) < 0.001f && Math.abs(mouseYOffset) < 0.001f) {
+            mouseXOffset = lastMouseXOffset;
+            mouseYOffset = lastMouseYOffset;
+        }
         updateBackgroundTransition();
 
         float centerX = this.width / 2.0f;
@@ -88,6 +94,9 @@ public final class MainMenu extends GuiScreen {
         this.mc.fontRendererObj.drawStringWithShadow(s1, 2, this.height - 10, 0xFFFFFF);
         this.mc.fontRendererObj.drawStringWithShadow(s2, 2, this.height - 20, 0x8EDDFF);
         this.mc.fontRendererObj.drawStringWithShadow(s3, this.width - fontRendererObj.getStringWidth(s3) - 2, this.height - 10, 0xFFFFFF);
+
+        lastMouseXOffset = mouseXOffset;
+        lastMouseYOffset = mouseYOffset;
     }
 
     @Override
@@ -97,6 +106,7 @@ public final class MainMenu extends GuiScreen {
         this.buttonList.add(new ClientButton(2, this.width / 2 - 90, this.height / 2 + 45, 180, 18, "Mods"));
         this.buttonList.add(new ClientButton(3, this.width / 2 - 90, this.height / 2 + 67, 88, 18, "Options"));
         this.buttonList.add(new ClientButton(4, this.width / 2 + 2, this.height / 2 + 67, 88, 18, "Quit"));
+        this.buttonList.add(new ClientButton(5, this.width - 55, 5, 50, 18, "Vanilla"));
         super.initGui();
     }
 
@@ -123,7 +133,18 @@ public final class MainMenu extends GuiScreen {
                 this.mc.shutdown();
                 break;
             }
+            case 5: {
+                customMainMenu = false;
+                this.mc.displayGuiScreen(new GuiMainMenu());
+                break;
+            }
         }
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        if (keyCode == 1 && this.mc.currentScreen instanceof MainMenu) return;
+        super.keyTyped(typedChar, keyCode);
     }
 
     private void drawBackgroundQuad() {
@@ -182,12 +203,10 @@ public final class MainMenu extends GuiScreen {
     }
 
     private void loadBackgroundTextures() {
-        BACKGROUND_TEXTURES.clear();
-        BACKGROUND_FILE_PATHS.clear();
+        if (!BACKGROUND_TEXTURES.isEmpty()) return;
 
         File bgDir = new File(Necron.BG_FILE_DIR);
-        if (!bgDir.exists()) {
-            bgDir.mkdirs();
+        if (!bgDir.exists() && bgDir.mkdirs()) {
             Necron.LOGGER.info("Created backgrounds directory: {}", bgDir.getAbsolutePath());
         }
 
@@ -206,7 +225,6 @@ public final class MainMenu extends GuiScreen {
                                         "bg" + file.getName(), dynamicTexture);
 
                         BACKGROUND_TEXTURES.add(textureLocation);
-                        BACKGROUND_FILE_PATHS.add(file.getAbsolutePath());
                         Necron.LOGGER.info("Loaded external background: {}", file.getName());
                     }
                 } catch (Exception e) {

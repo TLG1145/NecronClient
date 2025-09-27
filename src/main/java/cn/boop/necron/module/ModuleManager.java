@@ -30,7 +30,6 @@ public class ModuleManager {
         modules.add(new FakeWipe());
         //modules.add(new GemstoneNuker());
         modules.add(new HurtCam());
-        modules.add(new MainMenu());
         modules.add(new Nametags());
         modules.add(new PlayerStats());
         modules.add(new RandomRNG());
