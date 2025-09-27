@@ -31,7 +31,7 @@ public final class MainMenu extends GuiScreen {
     private static float fadeProgress = 0.0f;
     private static boolean isFading = false;
 
-    private float mouseXOffset, mouseYOffset, lastMouseXOffset = 0.0f, lastMouseYOffset = 0.0f;
+    private float mouseXOffset, mouseYOffset;
     private static final float MAX_OFFSET = 0.05f;
     private static final float PARALLAX_FACTOR = 0.5f;
     private static final float SMOOTH_FACTOR = 0.15f;
@@ -44,10 +44,6 @@ public final class MainMenu extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if (Math.abs(mouseXOffset) < 0.001f && Math.abs(mouseYOffset) < 0.001f) {
-            mouseXOffset = lastMouseXOffset;
-            mouseYOffset = lastMouseYOffset;
-        }
         updateBackgroundTransition();
 
         float centerX = this.width / 2.0f;
@@ -94,9 +90,6 @@ public final class MainMenu extends GuiScreen {
         this.mc.fontRendererObj.drawStringWithShadow(s1, 2, this.height - 10, 0xFFFFFF);
         this.mc.fontRendererObj.drawStringWithShadow(s2, 2, this.height - 20, 0x8EDDFF);
         this.mc.fontRendererObj.drawStringWithShadow(s3, this.width - fontRendererObj.getStringWidth(s3) - 2, this.height - 10, 0xFFFFFF);
-
-        lastMouseXOffset = mouseXOffset;
-        lastMouseYOffset = mouseYOffset;
     }
 
     @Override
